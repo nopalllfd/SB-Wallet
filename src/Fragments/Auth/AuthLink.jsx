@@ -1,17 +1,17 @@
 import { Link } from 'react-router';
 
-function RegisterAdditionalLink() {
+function AuthLink(props) {
   return (
     <section className="additional-link text-center">
-      Have an account?{' '}
+      {props.children}{' '}
       <Link
-        to="/auth/login"
+        to={props.link}
         className="text-blue-500"
       >
-        Login
+        {props.type}
       </Link>
     </section>
   );
 }
 
-export default RegisterAdditionalLink;
+export default AuthLink;

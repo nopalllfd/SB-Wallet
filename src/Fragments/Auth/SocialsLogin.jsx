@@ -1,6 +1,6 @@
-import { Button } from '../../../components/Button';
+import { Button } from '../../components/Button';
 
-function AlternatifLogin() {
+function SocialsLogin() {
   return (
     <section className="alternatif-login flex gap-2 mt-4">
       <span className="google-button">
@@ -29,4 +29,4 @@ function AlternatifLogin() {
   );
 }
 
-export default AlternatifLogin;
+export default SocialsLogin;

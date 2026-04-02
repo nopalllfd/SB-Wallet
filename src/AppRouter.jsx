@@ -1,4 +1,5 @@
 import './App.css';
+import EnterPinPage from './Pages/Auth/EnterPinPage';
 import ForgotPasswordPage from './Pages/Auth/ForgotPasswordPage';
 import LoginPage from './Pages/Auth/LoginPage';
 import RegisterPage from './Pages/Auth/RegisterPage';
@@ -18,6 +19,10 @@ function AppRouter() {
       <Route
         path="/auth/reset-password"
         element={<ForgotPasswordPage />}
+      />
+      <Route
+        path="/auth/enter-pin"
+        element={<EnterPinPage />}
       />
     </Routes>
   );
