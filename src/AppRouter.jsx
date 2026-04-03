@@ -4,6 +4,7 @@ import ForgotPasswordPage from './Pages/Auth/ForgotPasswordPage';
 import LoginPage from './Pages/Auth/LoginPage';
 import RegisterPage from './Pages/Auth/RegisterPage';
 import { Routes, Route } from 'react-router';
+import HomePage from './Pages/HomePage';
 
 function AppRouter() {
   return (
@@ -23,6 +24,10 @@ function AppRouter() {
       <Route
         path="/auth/enter-pin"
         element={<EnterPinPage />}
+      />
+      <Route
+        path="/"
+        element={<HomePage />}
       />
     </Routes>
   );
