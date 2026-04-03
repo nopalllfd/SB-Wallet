@@ -1,7 +1,18 @@
-import React from 'react';
-
-function Card() {
-  return <div>index</div>;
+function Card(props) {
+  return (
+    <div
+      className=" rounded-xl py-8 px-5 bg-blue-500 flex flex-col gap-2 justify-center items-center
+     text-white"
+    >
+      <img
+        className="bg-white rounded-full w-1/6 p-3"
+        src={props.icon}
+        alt={props.alt}
+      />
+      <h1 className="font-semibold text-center">{props.children}</h1>
+      <p className="text-center font-light">{props.text}</p>
+    </div>
+  );
 }
 
 export default Card;

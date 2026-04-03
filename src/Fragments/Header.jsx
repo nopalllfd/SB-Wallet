@@ -11,7 +11,7 @@ function Header() {
   };
 
   return (
-    <header className="bg-blue-500 px-10 py-5 flex items-center justify-between relative">
+    <header className="bg-blue-500 px-6 md:px-10 py-5 flex items-center justify-between relative">
       <BrandHeader textColor={'text-white'} />
       <button
         onClick={handleClick}
