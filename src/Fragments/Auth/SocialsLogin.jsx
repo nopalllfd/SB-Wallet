@@ -2,7 +2,7 @@ import { Button } from '../../components/Button';
 
 function SocialsLogin() {
   return (
-    <section className="alternatif-login flex md:flex-col gap-2 mt-4">
+    <section className="alternatif-login justify-center flex md:flex-col gap-2 mt-4">
       <span className="google-button">
         <Button
           border={'border'}
