@@ -3,7 +3,7 @@ import BrandHeader from './BrandHeader';
 import { Button } from '../components/Button';
 import { Link } from 'react-router';
 
-function Header() {
+function Header(props) {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const handleClick = () => {
     setIsBurgerOpen(!isBurgerOpen);
@@ -12,12 +12,12 @@ function Header() {
 
   return (
     <header className="bg-blue-500 px-6 md:px-10 py-5 flex items-center justify-between relative">
-      <BrandHeader textColor={'text-white'} />
+      {props.location !== 'dashboard' ? <BrandHeader textColor={'text-white'} /> : 'p'}
       <nav className="hidden md:flex items-center gap-3">
         <Button
           buttonColor="bg-white"
           buttonTextColor="text-blue-500 font-semibold"
-          className="rounded-xl !w-auto !px-6"
+          className="rounded-xl   w-auto! px-6!"
         >
           <Link to="/auth/login">Sign In</Link>
         </Button>
@@ -25,7 +25,7 @@ function Header() {
           buttonColor="bg-transparent"
           buttonTextColor="text-white font-semibold"
           border="border border-white"
-          className="rounded-xl !w-auto !px-6"
+          className="rounded-xl w-auto! px-6!"
         >
           <Link to="/auth/register">Sign Up</Link>
         </Button>

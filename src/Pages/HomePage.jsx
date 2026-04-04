@@ -9,7 +9,7 @@ import Footer from '../Fragments/Footer';
 function HomePage() {
   return (
     <>
-      <Header />
+      <Header location={'home'} />
       <HeroSection />
       <BrandsSection />
       <AboutSection />

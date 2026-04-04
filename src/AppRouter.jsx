@@ -5,6 +5,7 @@ import LoginPage from './Pages/Auth/LoginPage';
 import RegisterPage from './Pages/Auth/RegisterPage';
 import { Routes, Route } from 'react-router';
 import HomePage from './Pages/HomePage';
+import DashboardPage from './Pages/DashboardPage';
 
 function AppRouter() {
   return (
@@ -28,6 +29,10 @@ function AppRouter() {
       <Route
         path="/"
         element={<HomePage />}
+      />
+      <Route
+        path="/dashboard"
+        element={<DashboardPage />}
       />
     </Routes>
   );
