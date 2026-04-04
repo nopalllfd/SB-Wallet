@@ -36,7 +36,7 @@ function TransactionHistory() {
         {data.map((d) => (
           <div className="flex justify-between items-center">
             <img
-              src="public/assets/transaction-profile.svg"
+              src="assets/transaction-profile.svg"
               alt=""
               className=""
             />

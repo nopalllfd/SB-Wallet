@@ -27,7 +27,7 @@ function BalanceSection() {
         </div>
         <img
           className="absolute -bottom-10 rounded-b-2xl w-5/6"
-          src="public/assets/wave.svg"
+          src="assets/wave.svg"
           alt="wave icon"
         />
       </div>

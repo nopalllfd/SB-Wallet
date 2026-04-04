@@ -8,7 +8,7 @@ function ProfileHeader() {
   return (
     <div className="flex text-white gap-2 items-center">
       <img
-        src="public/assets/profile.svg"
+        src="assets/profile.svg"
         alt="profile icon"
         className="w-10"
       />
