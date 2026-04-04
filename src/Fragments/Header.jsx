@@ -2,6 +2,8 @@ import { useState } from 'react';
 import BrandHeader from './BrandHeader';
 import { Button } from '../components/Button';
 import { Link } from 'react-router';
+import ProfileHeader from './ProfileHeader';
+import { NavMenuItem } from '../components/NavMenuItems';
 
 function Header(props) {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -10,9 +12,25 @@ function Header(props) {
     console.log(isBurgerOpen);
   };
 
+  const navItems = [
+    {
+      name: 'dashboard',
+    },
+    {
+      name: 'transfer',
+    },
+    {
+      name: 'top up',
+      path: 'top-up',
+    },
+    {
+      name: 'profile',
+    },
+  ];
+
   return (
-    <header className="bg-blue-500 px-6 md:px-10 py-5 flex items-center justify-between relative">
-      {props.location !== 'dashboard' ? <BrandHeader textColor={'text-white'} /> : 'p'}
+    <header className="bg-blue-700 px-6 md:px-10 py-5 flex items-center justify-between relative border-b-black">
+      {props.location !== 'dashboard' ? <BrandHeader textColor={'text-white'} /> : <ProfileHeader />}
       <nav className="hidden md:flex items-center gap-3">
         <Button
           buttonColor="bg-white"
@@ -40,14 +58,23 @@ function Header(props) {
         />
       </button>
       {isBurgerOpen ? (
-        <nav className="absolute w-screen left-0 -bottom-38 drop-shadow-2xl py-5  z-10 rounded-b-xl flex flex-col bg-white md:hidden">
-          <Button buttonTextColor="text-blue-500 pb-5 text-xl">
-            <Link to="/auth/login">Sign In</Link>
-          </Button>
-          <Button buttonTextColor="text-blue-500 text-xl">
-            <Link to="/auth/register">Sign Up</Link>
-          </Button>
-        </nav>
+        props.location !== 'dashboard' ? (
+          <nav className="absolute w-screen left-0 -bottom-38 drop-shadow-2xl py-5  z-10 rounded-b-xl flex flex-col bg-white md:hidden">
+            <NavMenuItem to="/auth/login">Sign In</NavMenuItem>
+            <NavMenuItem to="/auth/register">Sign Up</NavMenuItem>
+          </nav>
+        ) : (
+          <nav className="absolute w-screen left-0 top-25 drop-shadow-2xl py-5  z-10 rounded-b-xl flex flex-col bg-white md:hidden">
+            {navItems.map((item, idx) => (
+              <NavMenuItem
+                key={idx}
+                to={`/${item.path || item.name}`}
+              >
+                {item.name}
+              </NavMenuItem>
+            ))}
+          </nav>
+        )
       ) : (
         ''
       )}
