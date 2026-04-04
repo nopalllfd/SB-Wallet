@@ -3,6 +3,7 @@ import AboutSection from '../Fragments/Home/AboutSection';
 import BrandsSection from '../Fragments/Home/BrandsSection';
 import FeaturesSection from '../Fragments/Home/FeaturesSection';
 import HeroSection from '../Fragments/Home/HeroSection';
+import TestimonialSection from '../Fragments/Home/TestimonialSection';
 
 function HomePage() {
   return (
@@ -12,6 +13,7 @@ function HomePage() {
       <BrandsSection />
       <AboutSection />
       <FeaturesSection />
+      <TestimonialSection />
     </>
   );
 }
