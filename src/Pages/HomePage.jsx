@@ -4,6 +4,7 @@ import BrandsSection from '../Fragments/Home/BrandsSection';
 import FeaturesSection from '../Fragments/Home/FeaturesSection';
 import HeroSection from '../Fragments/Home/HeroSection';
 import TestimonialSection from '../Fragments/Home/TestimonialSection';
+import Footer from '../Fragments/Footer';
 
 function HomePage() {
   return (
@@ -14,6 +15,7 @@ function HomePage() {
       <AboutSection />
       <FeaturesSection />
       <TestimonialSection />
+      <Footer />
     </>
   );
 }
