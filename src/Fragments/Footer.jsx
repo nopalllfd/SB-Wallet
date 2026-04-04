@@ -23,7 +23,7 @@ function Footer() {
   return (
     <footer className="bg-blue-700 py-10 px-5 flex flex-col gap-6">
       <BrandHeader textColor={'text-white'} />
-      <p className="text-gray-100 w-2/3 font-extralight">Clarity gives you the blocks and components you need to create a truly professional website.</p>
+      <p className="text-gray-100 w-2/3 font-light">Clarity gives you the blocks and components you need to create a truly professional website.</p>
       <div className="contact flex flex-col gap-3">
         <h2 className="text-white font-semibold text-xl">GET IN TOUCH</h2>
 
@@ -60,7 +60,7 @@ function Footer() {
         <h2 className="text-white font-semibold text-xl">NEWSLETTER</h2>
         <InputGroup
           placeholder="Enter your email"
-          className="bg-white"
+          className="bg-white outline-none"
           iconSrc="/assets/inputs/form/email.svg"
           type="email"
           iconAlt="email icon"
