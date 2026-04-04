@@ -8,7 +8,7 @@ function TestimonialSection() {
     },
   ];
   return (
-    <section className="mt-5 flex flex-col items-center justify-center px-5 gap-4 mb-6">
+    <section className="flex flex-col items-center justify-center px-5 gap-4 mb-6">
       <h1 className="text-3xl text-center">Here From Our Customer</h1>
       <p className="text-center text-gray-500">We always do our best for our customers to stay comfortable using the applications we provide</p>
       {data.map((d, idx) => (
