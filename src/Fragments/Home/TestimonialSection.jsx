@@ -18,18 +18,18 @@ function TestimonialSection() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center px-5 gap-4 mb-6">
-      <div className="w-full flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl text-center md:text-left">Here From Our Customer</h1>
-          <p className="text-center text-gray-500 md:text-left">We always do our best for our customers to stay comfortable using the applications we provide</p>
+    <section className="flex flex-col items-center justify-center px-5 gap-8 mb-6">
+      <div className="w-full flex flex-col gap-3 md:items-center md:justify-center">
+        <div className="flex flex-col justify-center items-center gap-2 md:max-w-xl">
+          <h1 className="text-3xl text-center md:text-4xl">Here From Our Customer</h1>
+          <p className="text-center text-gray-500">We always do our best for our customers to stay comfortable using the applications we provide</p>
         </div>
       </div>
 
-      <div className="relative w-full">
+      <div className="relative w-full md:flex md:justify-center">
         <div
           ref={listRef}
-          className="w-full flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden md:gap-12"
+          className="w-full md:w-5/6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden md:gap-12"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {data.map((d, idx) => (
@@ -60,7 +60,7 @@ function TestimonialSection() {
         <button
           type="button"
           onClick={() => scrollByPage('left')}
-          className="hidden md:flex absolute left-1/3 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-blue-500 text-white items-center justify-center hover:bg-blue-600"
+          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-blue-500 text-white items-center justify-center hover:bg-blue-600"
         >
           <span className="sr-only">Previous</span>
           <svg
@@ -83,7 +83,7 @@ function TestimonialSection() {
         <button
           type="button"
           onClick={() => scrollByPage('right')}
-          className="hidden md:flex absolute left-2/3 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-blue-500 text-white items-center justify-center hover:bg-blue-600"
+          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-blue-500 text-white items-center justify-center hover:bg-blue-600"
         >
           <span className="sr-only">Next</span>
           <svg
