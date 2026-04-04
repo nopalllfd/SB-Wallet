@@ -10,7 +10,7 @@ function ForgotPasswordForm() {
           id="email"
           name="email"
           placeholder="Enter Your Email"
-          iconSrc="../src/assets/inputs/form/email.svg"
+          iconSrc="/assets/inputs/form/email.svg"
           iconAlt="email icon"
         >
           Email

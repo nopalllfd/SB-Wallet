@@ -26,7 +26,7 @@ function LoginPage() {
       <div className="icon pe-5 bg-blue-500 max-sm:hidden">
         <img
           className="w-full"
-          src="../../src/assets/auth/login-page.svg"
+          src="/assets/auth/login-page.svg"
           alt="login page icon"
         />
       </div>

@@ -9,7 +9,7 @@ function SocialsLogin() {
           className="px-18 py-4 cursor-pointer md:py-2 md:flex md:items-center md:justify-center md:gap-2 rounded-3xl border-gray-400"
         >
           <img
-            src="../src/assets/inputs/google.svg"
+            src="/assets/inputs/google.svg"
             alt="google icon"
             className="w-6"
           />
@@ -22,7 +22,7 @@ function SocialsLogin() {
           className="px-18 py-4 cursor-pointer md:py-2 md:flex md:items-center md:justify-center md:gap-2 rounded-3xl border-gray-400"
         >
           <img
-            src="../src/assets/inputs/facebook.svg"
+            src="/assets/inputs/facebook.svg"
             alt="facebook icon"
             className="w-6"
           />

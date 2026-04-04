@@ -27,7 +27,7 @@ function EnterPinPage() {
         {' '}
         <img
           className="w-1/2"
-          src="../../src/assets/auth/enter-pin.svg"
+          src="/assets/auth/enter-pin.svg"
           alt="login page icon"
         />
       </div>

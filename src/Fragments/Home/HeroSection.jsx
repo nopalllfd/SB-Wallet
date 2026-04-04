@@ -4,7 +4,7 @@ function HeroSection() {
   return (
     <section className="flex flex-col gap-4 items-start px-7">
       <img
-        src="../../src/assets/home/hero.svg"
+        src="/assets/home/hero.svg"
         alt="hero icon"
         className="w-full ms-5"
       />
@@ -14,11 +14,11 @@ function HeroSection() {
       <p className="text-gray-600 text-xl mt-4">Available on</p>
       <div className="socials flex gap-10 items-center mt-4">
         <img
-          src="../../src/assets/home/playstore.svg"
+          src="/assets/home/playstore.svg"
           alt=""
         />
         <img
-          src="../../src/assets/home/appstore.svg"
+          src="/assets/home/appstore.svg"
           alt=""
         />
       </div>

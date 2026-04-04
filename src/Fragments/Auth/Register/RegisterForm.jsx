@@ -55,7 +55,7 @@ function RegisterForm() {
             id="email"
             name="email"
             placeholder="Enter Your Email"
-            iconSrc="../src/assets/inputs/form/email.svg"
+            iconSrc="/assets/inputs/form/email.svg"
             iconAlt="email icon"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -68,10 +68,10 @@ function RegisterForm() {
             id="password"
             name="password"
             placeholder="Enter Your Password"
-            iconSrc="../src/assets/inputs/form/password.svg"
+            iconSrc="/assets/inputs/form/password.svg"
             iconAlt="password icon"
-            eyelashIconOpenSrc="../src/assets/inputs/form/eyelash-open.svg"
-            eyelashIconCloseSrc="../src/assets/inputs/form/eyelash.svg"
+            eyelashIconOpenSrc="/assets/inputs/form/eyelash-open.svg"
+            eyelashIconCloseSrc="/assets/inputs/form/eyelash.svg"
             eyelashIconAlt="eyelash icon"
             isPassword={true}
             onChange={handleChangePassword}
@@ -84,10 +84,10 @@ function RegisterForm() {
             id="confirm-password"
             name="confirm-password"
             placeholder="Enter Confirm Password"
-            iconSrc="../src/assets/inputs/form/password.svg"
+            iconSrc="/assets/inputs/form/password.svg"
             iconAlt="confirm-password icon"
-            eyelashIconOpenSrc="../src/assets/inputs/form/eyelash-open.svg"
-            eyelashIconCloseSrc="../src/assets/inputs/form/eyelash.svg"
+            eyelashIconOpenSrc="/assets/inputs/form/eyelash-open.svg"
+            eyelashIconCloseSrc="/assets/inputs/form/eyelash.svg"
             eyelashIconAlt="eyelash icon"
             isPassword={true}
             onChange={handleChangeConfirmPassword}

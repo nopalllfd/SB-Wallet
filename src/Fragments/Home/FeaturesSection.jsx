@@ -5,12 +5,12 @@ function FeaturesSection() {
     <section className="relative px-5 pt-10 pb-36 lg:pb-48 mb-40 flex flex-col lg:flex-row justify-center items-center max-w-7xl mx-auto w-full gap-10">
       <div className="absolute left-0 right-0 top-40 lg:top-0 bottom-0 -z-50 flex flex-col w-full overflow-hidden">
         <img
-          src="../../src/assets/home/features/Vector-1.svg"
+          src="/assets/home/features/Vector-1.svg"
           alt=""
           className="w-full h-[55%] object-cover object-top"
         />
         <img
-          src="../../src/assets/home/features/Vector.svg"
+          src="/assets/home/features/Vector.svg"
           alt=""
           className="w-full h-[55%] object-cover object-bottom -mt-2"
         />
@@ -18,7 +18,7 @@ function FeaturesSection() {
 
       <div className="w-full lg:w-1/2 flex justify-center lg:justify-end lg:pr-10 z-10">
         <img
-          src="../../src/assets/home/features/mobile.svg"
+          src="/assets/home/features/mobile.svg"
           alt="Mobile App Features"
           className="w-[280px] md:w-[350px] lg:w-full lg:max-w-md object-contain"
         />
@@ -33,7 +33,7 @@ function FeaturesSection() {
           <div className="flex w-full gap-4 items-center text-left">
             <div className="bg-white flex w-14 h-14 lg:w-16 lg:h-16 shrink-0 justify-center items-center rounded-full">
               <img
-                src="../../src/assets/home/features/fee.svg"
+                src="/assets/home/features/fee.svg"
                 alt="small fee icon"
                 className="w-6 lg:w-8"
               />
@@ -47,7 +47,7 @@ function FeaturesSection() {
           <div className="flex w-full gap-4 items-center text-left">
             <div className="bg-white flex w-14 h-14 lg:w-16 lg:h-16 shrink-0 justify-center items-center rounded-full">
               <img
-                src="../../src/assets/home/features/data.svg"
+                src="/assets/home/features/data.svg"
                 alt="data secured icon"
                 className="w-6 lg:w-8"
               />
@@ -61,7 +61,7 @@ function FeaturesSection() {
           <div className="flex w-full gap-4 items-center text-left">
             <div className="bg-white flex w-14 h-14 lg:w-16 lg:h-16 shrink-0 justify-center items-center rounded-full">
               <img
-                src="../../src/assets/home/features/user.svg"
+                src="/assets/home/features/user.svg"
                 alt="user friendly icon"
                 className="w-6 lg:w-8"
               />

@@ -26,7 +26,7 @@ function RegisterPage() {
       <div className="icon w-full bg-blue-500 max-sm:hidden">
         <img
           className="w-full"
-          src="../../src/assets/auth/register-page.svg"
+          src="/assets/auth/register-page.svg"
           alt="register page icon"
         />
       </div>

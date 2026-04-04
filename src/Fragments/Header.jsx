@@ -18,7 +18,7 @@ function Header() {
         className="cursor-pointer md:hidden"
       >
         <img
-          src="../../src/assets/burger-bar.svg"
+          src="/assets/burger-bar.svg"
           alt="burger bar icon"
         />
       </button>

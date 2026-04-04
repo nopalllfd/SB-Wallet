@@ -1,7 +1,7 @@
 function TestimonialSection() {
   const data = [
     {
-      img: '../../src/assets/home/testimonials/sherina.svg',
+      img: '/assets/home/testimonials/sherina.svg',
       name: 'Sherina Claw',
       rate: 5,
       msg: '“I use this app since 2 years ago and this is the best app that I’ve ever use in my entire life”',
@@ -22,7 +22,7 @@ function TestimonialSection() {
           />
           <h2 className="font-bold text-xl">{d.name}</h2>
           <div className="star flex gap-3">
-            {Array(d.rate).fill(<img src="../../src/assets/home/testimonials/star.svg" />)} {d.rate}
+            {Array(d.rate).fill(<img src="/assets/home/testimonials/star.svg" />)} {d.rate}
           </div>
           <div className="separator text-4xl font-bold">"</div>
           <p className="text-gray-500 text-center">{d.msg}</p>
@@ -30,7 +30,7 @@ function TestimonialSection() {
       ))}
       <div className="py-4">
         <img
-          src="../../src/assets/home/testimonials/scroll.svg"
+          src="/assets/home/testimonials/scroll.svg"
           alt="scroll icon"
         />
       </div>

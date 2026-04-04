@@ -29,14 +29,14 @@ function Footer() {
 
         <div className="flex gap-2 items-center">
           <img
-            src="../../src/assets/home/footer/tel.svg"
+            src="/assets/home/footer/tel.svg"
             alt="telephone icon"
           />
           <p className="text-white">+62 5637 8882 9901</p>
         </div>
         <div className="flex gap-2 items-center">
           <img
-            src="../../src/assets/home/footer/email.svg"
+            src="/assets/home/footer/email.svg"
             alt="email icon"
           />
           <p className="text-white">contact@zwallet.com</p>
@@ -48,7 +48,7 @@ function Footer() {
           {socials.map((data) => (
             <div className="bg-white w-12 h-12 rounded-full flex items-center justify-center">
               <img
-                src={`../../src/assets/home/footer/${data.name}.svg`}
+                src={`/assets/home/footer/${data.name}.svg`}
                 alt={`${data.name} icon`}
                 width={data.width}
               />
@@ -61,7 +61,7 @@ function Footer() {
         <InputGroup
           placeholder="Enter your email"
           className="bg-white"
-          iconSrc="../../src/assets/inputs/form/email.svg"
+          iconSrc="/assets/inputs/form/email.svg"
           type="email"
           iconAlt="email icon"
         />
