@@ -3,7 +3,7 @@ import { useState } from 'react';
 function ProfileHeader() {
   const [email, _] = useState(() => {
     const data = JSON.parse(localStorage.getItem('users'));
-    return data.email || 'Pengguna';
+    return data?.email || 'Pengguna';
   });
   return (
     <div className="flex text-white gap-2 items-center">
