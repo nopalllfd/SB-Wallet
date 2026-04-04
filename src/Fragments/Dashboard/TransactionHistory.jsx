@@ -29,7 +29,7 @@ function TransactionHistory() {
   return (
     <section className="transaction-history px-6 mt-5">
       <header className="flex justify-between">
-        <h2 className="text-lg font-semibold">Transaction History</h2>
+        <h2 className="text-md font-semibold">Transaction History</h2>
         <p className="text-blue-700">See All</p>
       </header>
       <div className="flex flex-col gap-4 mt-5">
