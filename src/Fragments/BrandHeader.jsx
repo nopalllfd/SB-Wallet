@@ -5,7 +5,7 @@ function BrandHeader(props) {
         src="/assets/e-wallet.svg"
         alt="e-wallet icon"
       />
-      <h2 className={`text-blue-800 font-normal text-2xl ${props.textColor}`}>E-Wallet</h2>
+      <h2 className={`text-blue-800 font-normal text-2xl ${props.textColor}`}>SB-Wallet</h2>
     </section>
   );
 }
