@@ -1,6 +1,6 @@
 function BrandsSection() {
   return (
-    <section className="brands flex items-center justify-center gap-12 flex-col py-20 mt-10 bg-gray-200">
+    <section className="brands flex items-center justify-center gap-12 flex-col py-20 mt-10 bg-gray-200 md:flex-row md:flex-wrap md:gap-8 lg:flex-nowrap">
       <img
         src="/assets/home/brands/microsoft.svg"
         alt="microsoft icon"
