@@ -10,26 +10,38 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
-    const existingValue = JSON.parse(localStorage.getItem('users'));
+    setErrorMsg('');
+    const email = e.target.email.value?.trim?.() ?? '';
+    const password = e.target.password.value ?? '';
+
+    let existingValue = null;
+    try {
+      existingValue = JSON.parse(localStorage.getItem('users') || 'null');
+    } catch {
+      existingValue = null;
+    }
+
+    if (!existingValue?.email || !existingValue?.password) {
+      setErrorMsg('Akun belum terdaftar, silakan Register terlebih dahulu');
+      return;
+    }
+
     if (email !== existingValue.email || password !== existingValue.password) {
       setErrorMsg('Kredensial yang anda masukkan salah');
-    } else {
-      localStorage.setItem('isLogin', true);
-      navigate('/');
+      return;
     }
+
+    localStorage.setItem('isLogin', 'true');
+    navigate('/');
   };
 
   return (
     <>
-      <section
-        onSubmit={handleSubmit}
-        className="input-group "
-      >
+      <section className="input-group ">
         <form
           action=""
           className="flex flex-col gap-4"
+          onSubmit={handleSubmit}
         >
           <p className="text-red-500 text-center text-sm ">{errorMsg ? errorMsg : ''}</p>
           <InputGroup

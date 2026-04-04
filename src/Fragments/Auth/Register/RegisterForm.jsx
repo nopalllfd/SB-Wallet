@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { Button } from '../../../components/Button';
 import { InputGroup } from '../../../components/Input';
+import { useNavigate } from 'react-router';
 
 function RegisterForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [_, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [errorPwdMsg, setErrorPwdMsg] = useState('');
   const [errorEmailMsg, setErrorEmailMsg] = useState('');
   const [confirmErrorPwdMsg, setConfirmErrorPwdMsg] = useState('');
-  console.log(email);
+
   const handleChangePassword = (e) => {
     const value = e.target.value;
     setPassword(value);
@@ -30,17 +32,42 @@ function RegisterForm() {
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const existingUsers = JSON.parse(localStorage.getItem('users'));
-    if (existingUsers.email == email) {
-      setErrorEmailMsg('Email sudah digunakan!');
-    } else {
-      setErrorEmailMsg('');
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setErrorEmailMsg('Email wajib diisi');
+      return;
     }
+
+    if (password.length < 7) {
+      setErrorPwdMsg('Password minimal 7 karakter');
+      return;
+    }
+
+    if (!confirmPassword || confirmPassword !== password) {
+      setConfirmErrorPwdMsg('Konfirmasi password harus sama dengan password!');
+      return;
+    }
+
+    let existingUsers = null;
+    try {
+      existingUsers = JSON.parse(localStorage.getItem('users') || 'null');
+    } catch {
+      existingUsers = null;
+    }
+
+    if (existingUsers?.email === trimmedEmail) {
+      setErrorEmailMsg('Email sudah digunakan!');
+      return;
+    }
+
+    setErrorEmailMsg('');
     const data = {
-      email: email,
+      email: trimmedEmail,
       password: password,
     };
     localStorage.setItem('users', JSON.stringify(data));
+    navigate('/auth/login');
   };
   return (
     <>
@@ -58,7 +85,10 @@ function RegisterForm() {
             iconSrc="/assets/inputs/form/email.svg"
             iconAlt="email icon"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (errorEmailMsg) setErrorEmailMsg('');
+            }}
           >
             Email
           </InputGroup>
