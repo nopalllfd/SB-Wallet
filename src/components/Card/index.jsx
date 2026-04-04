@@ -1,11 +1,11 @@
 function Card(props) {
   return (
     <div
-      className=" rounded-xl py-8 px-5 bg-blue-500 flex flex-col gap-2 justify-center items-center
+      className=" rounded-xl py-8 px-5 md:px-3 md:py-6 bg-blue-500 flex flex-col gap-2 justify-center items-center
      text-white"
     >
       <img
-        className="bg-white rounded-full w-1/6 p-3"
+        className="bg-white rounded-full w-1/6 md:w-1/3 p-3"
         src={props.icon}
         alt={props.alt}
       />

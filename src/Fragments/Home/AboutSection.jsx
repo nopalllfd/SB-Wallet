@@ -8,7 +8,7 @@ function AboutSection() {
           <h1 className="w-1/2 text-3xl font-normal text-center md:w-full md:text-left">About The Aplication</h1>
           <p className="text-center text-gray-500 md:text-left">We have some great features from the application and it’s totally free to use by all users around the world.</p>
         </div>
-        <div className="flex flex-col gap-5 w-full md:w-1/2">
+        <div className="flex flex-col md:flex-row gap-5 w-full md:w-1/2">
           <Card
             icon={'/assets/home/about/support.svg'}
             alt={'support icon'}
