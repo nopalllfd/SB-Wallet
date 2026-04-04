@@ -14,17 +14,17 @@ function Header(props) {
 
   const navItems = [
     {
-      name: 'dashboard',
+      name: 'Dashboard',
     },
     {
-      name: 'transfer',
+      name: 'Transfer',
     },
     {
-      name: 'top up',
+      name: 'Top up',
       path: 'top-up',
     },
     {
-      name: 'profile',
+      name: 'Profile',
     },
   ];
 
@@ -64,7 +64,7 @@ function Header(props) {
             <NavMenuItem to="/auth/register">Sign Up</NavMenuItem>
           </nav>
         ) : (
-          <nav className="absolute w-screen left-0 top-25 drop-shadow-2xl py-5  z-10 rounded-b-xl flex flex-col bg-white md:hidden">
+          <nav className="absolute w-screen left-0 top-21 drop-shadow-2xl py-5  z-10 rounded-b-xl flex flex-col bg-white md:hidden">
             {navItems.map((item, idx) => (
               <NavMenuItem
                 key={idx}

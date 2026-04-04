@@ -27,7 +27,7 @@ function TransactionHistory() {
   ];
   console.log(data);
   return (
-    <section className="transaction-history px-8 mt-5">
+    <section className="transaction-history px-8 mt-5 pb-8">
       <header className="flex justify-between">
         <h2 className="text-md font-semibold">Transaction History</h2>
         <p className="text-blue-700">See All</p>
