@@ -34,12 +34,12 @@ function ChartSection() {
     ],
   };
   return (
-    <section className="px-3 mt-6 flex flex-col gap-6">
+    <section className="px-8 mt-6 flex flex-col gap-6">
       <header className="flex justify-around gap-2">
         <h2 className="title flex font-semibold text-md">Income Chart</h2>
         <div className="buttons flex gap-2 items-center justify-center">
-          <button className="bg-gray-300 px-5 py-1 rounded-md">Income</button>
-          <button className="bg-gray-300 px-5 py-1 rounded-md">7 Days</button>
+          <button className="bg-gray-300 px-5 py-1 text-sm rounded-md">Income</button>
+          <button className="bg-gray-300 px-5 py-1 text-sm rounded-md">7 Days</button>
         </div>
       </header>
       <div className="chart">
