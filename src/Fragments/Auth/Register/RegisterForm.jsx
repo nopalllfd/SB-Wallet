@@ -14,7 +14,7 @@ function RegisterForm() {
     const value = e.target.value;
     setPassword(value);
     if (value.length < 7 && value.length > 0) {
-      setErrorPwdMsg('Password minimal 5 karakter');
+      setErrorPwdMsg('Password minimal 7 karakter');
     } else {
       setErrorPwdMsg('');
     }
