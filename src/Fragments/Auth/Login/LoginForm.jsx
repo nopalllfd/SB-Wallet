@@ -32,7 +32,7 @@ function LoginForm() {
     }
 
     localStorage.setItem('isLogin', 'true');
-    navigate('/');
+    navigate('/dashboard');
   };
 
   return (
