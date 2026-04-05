@@ -34,6 +34,10 @@ function AppRouter() {
         path="/dashboard"
         element={<DashboardPage />}
       />
+      <Route
+        path="/transaction"
+        element={<DashboardPage />}
+      />
     </Routes>
   );
 }

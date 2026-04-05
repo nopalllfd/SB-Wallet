@@ -1,19 +1,73 @@
 import { useState } from 'react';
+import { Button } from '../components/Button';
+import { Link } from 'react-router';
 
-function ProfileHeader() {
+function ProfileHeader({ textColor = 'text-white' }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, _] = useState(() => {
-    const data = JSON.parse(localStorage.getItem('users'));
+    let data = null;
+    try {
+      data = JSON.parse(localStorage.getItem('users') || 'null');
+    } catch {
+      data = null;
+    }
     return data?.email || 'Pengguna';
   });
+  const modalItem = [
+    {
+      name: 'Profile',
+      path: 'profile',
+    },
+    {
+      name: 'Logout',
+      path: 'auth/logout',
+      isLogout: true,
+    },
+  ];
+  const handleClick = () => {
+    return setIsModalOpen(!isModalOpen);
+  };
   return (
-    <div className="flex text-white gap-2 items-center">
+    <div className={`flex ${textColor} gap-2 md:gap-4 items-center md:flex-row-reverse relative justify-center`}>
+      <div
+        onClick={handleClick}
+        className="hidden md:block relative cursor-pointer"
+      >
+        <img
+          src="public/assets/utils/arrow-down.svg"
+          alt="arrow down icon"
+        />
+      </div>
+      {isModalOpen && (
+        <div className="absolute -bottom-30 right-5 px-4 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
+          {modalItem.map((item, idx) => (
+            <Button
+              buttonTextColor="text-blue-700 font-semibold"
+              border="border border-white"
+              className={`rounded-xl flex gap-6 items-center w-auto px-6 text-left transition-all hover:bg-blue-700 ${item.isLogout && 'text-red-500 hover:bg-red-500'} hover:text-white`}
+            >
+              <img
+                src={`public/assets/dashboard/nav-item/${item.path}.svg`}
+                alt={`${item.name} icon`}
+              />
+              <Link
+                key={idx}
+                to={`/${item.path}`}
+              >
+                {item.name}
+              </Link>
+            </Button>
+          ))}
+        </div>
+      )}
+
       <img
-        src="assets/profile.svg"
+        src="public/assets/profile.svg"
         alt="profile icon"
         className="w-10"
       />
-      <div className="">
-        <div className="greetings text-ultralight text-sm">Hello,</div>
+      <div>
+        <div className="greetings text-ultralight text-sm md:hidden">Hello,</div>
         <div className="greetings text-normal text-md">{email}</div>
       </div>
     </div>

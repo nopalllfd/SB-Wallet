@@ -25,18 +25,20 @@ function TransactionHistory() {
       isMinus: true,
     },
   ];
-  console.log(data);
   return (
-    <section className="transaction-history px-8 mt-5 pb-8">
+    <section className="transaction-history px-8 mt-5 pb-8 md:px-0 md:mt-0">
       <header className="flex justify-between">
         <h2 className="text-md font-semibold">Transaction History</h2>
         <p className="text-blue-700">See All</p>
       </header>
       <div className="flex flex-col gap-4 mt-5">
-        {data.map((d) => (
-          <div className="flex justify-between items-center">
+        {data.map((d, idx) => (
+          <div
+            key={idx}
+            className="flex justify-between items-center"
+          >
             <img
-              src="assets/transaction-profile.svg"
+              src="/assets/transaction-profile.svg"
               alt=""
               className=""
             />

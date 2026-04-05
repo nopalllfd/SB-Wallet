@@ -1,6 +1,6 @@
 function BrandHeader(props) {
   return (
-    <section className={`icons flex justify-start items-center gap-3`}>
+    <section className={`icons flex justify-start items-center gap-3 max-sm:hidden`}>
       <img
         src="/assets/e-wallet.svg"
         alt="e-wallet icon"

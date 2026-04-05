@@ -24,7 +24,6 @@ function FeaturesSection() {
         />
       </div>
 
-      {/* TEXT CONTENT */}
       <div className="flex flex-col w-full lg:w-1/2 gap-6 z-10 items-center lg:items-start text-center lg:text-left lg:pl-10">
         <div className="text-3xl md:text-4xl lg:text-4xl text-white font-bold leading-snug">All The Great Zwallet Features.</div>
         <p className="text-gray-200 font-light text-base md:text-lg w-full max-w-lg">We have some great features from the application and it’s totally free to use by all users around the world.</p>

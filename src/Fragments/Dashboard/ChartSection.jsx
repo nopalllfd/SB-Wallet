@@ -34,8 +34,8 @@ function ChartSection() {
     ],
   };
   return (
-    <section className="px-8 mt-6 flex flex-col gap-6">
-      <header className="flex justify-around gap-2">
+    <section className="px-8 mt-6 md:mt-0 flex flex-col gap-6 md:px-2 md:py-4 md:border md:border-gray-200 md:bg-white md:rounded-md">
+      <header className="flex justify-around md:justify-between gap-2">
         <h2 className="title flex font-semibold text-md">Income Chart</h2>
         <div className="buttons flex gap-2 items-center justify-center">
           <button className="bg-gray-300 px-5 py-1 text-sm rounded-md">Income</button>
@@ -43,7 +43,7 @@ function ChartSection() {
         </div>
       </header>
       <div className="chart">
-        <div style={{ width: '100%', height: '200px' }}>
+        <div className="w-full h-50 md:h-80">
           <Bar
             options={options}
             data={data}
