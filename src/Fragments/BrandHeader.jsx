@@ -1,6 +1,7 @@
 function BrandHeader(props) {
+  console.log(props.location);
   return (
-    <section className={`icons flex justify-start items-center gap-3 max-sm:hidden`}>
+    <section className={`icons flex justify-start items-center gap-3 ${props.location == 'home' ? '' : 'max-sm:hidden'}`}>
       <img
         src="/assets/e-wallet.svg"
         alt="e-wallet icon"

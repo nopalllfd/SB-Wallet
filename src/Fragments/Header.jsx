@@ -37,7 +37,10 @@ function Header(props) {
 
   return (
     <header className="bg-blue-700 px-6 md:px-10 py-5 flex items-center justify-between relative border-b-black">
-      <BrandHeader textColor="text-white" />
+      <BrandHeader
+        location={props.location}
+        textColor="text-white"
+      />
       {isDashboard && <ProfileHeader />}
       {!isDashboard && (
         <nav className="hidden md:flex items-center gap-3">
