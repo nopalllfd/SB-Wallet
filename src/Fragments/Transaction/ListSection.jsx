@@ -55,9 +55,9 @@ function ListSection() {
         </div>
       ))}
       {isModalOpen && (
-        <>
-          <div className="absolute z-10 bg-black opacity-50 -top-60 -right-6 h-screen w-screen"></div>
-          <div className="absolute z-20 bg-white h-auto w-full p-10 rounded-lg">
+        <div className="">
+          <div className="absolute z-10 bg-black opacity-50 -top-60 -right-6 h-screen w-screen  "></div>
+          <div className="absolute z-20 bg-white top-0 h-auto w-full px-10 py-5 rounded-xl">
             {userDetail.map((d, idx) => (
               <div
                 key={idx}
@@ -99,7 +99,7 @@ function ListSection() {
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
     </section>
   );
