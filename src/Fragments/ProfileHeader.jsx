@@ -39,12 +39,12 @@ function ProfileHeader({ textColor = 'text-white' }) {
         />
       </div>
       {isModalOpen && (
-        <div className="absolute -bottom-30 right-5 px-4 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
+        <div className="absolute -bottom-30 right-5 px-3 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
           {modalItem.map((item, idx) => (
             <Button
               buttonTextColor="text-blue-700 font-semibold"
               border="border border-white"
-              className={`rounded-xl flex gap-6 items-center w-auto px-6 text-left transition-all hover:bg-blue-700 ${item.isLogout && 'text-red-500 hover:bg-red-500'} hover:text-white`}
+              className={`rounded-xl flex gap-6 items-center w-auto px-8 text-left transition-all hover:bg-blue-700 ${item.isLogout && 'text-red-500 hover:bg-red-500'} hover:text-white`}
             >
               <img
                 src={`assets/dashboard/nav-item/${item.path}.svg`}
