@@ -4,7 +4,7 @@ import ProfileHeader from '../Fragments/ProfileHeader';
 import { Link } from 'react-router';
 import { useLocation } from 'react-router';
 
-export const DashboardLayout = ({ navItems, children }) => {
+export const DashboardLayout = ({ navItems, children, locationDetail }) => {
   function LastUrl() {
     const location = useLocation();
     const splitted = location.pathname.split('/');
@@ -53,7 +53,10 @@ export const DashboardLayout = ({ navItems, children }) => {
 
         <div className="min-w-0">
           <div className="md:hidden">
-            <Header location="dashboard" />
+            <Header
+              locationDetail={locationDetail}
+              location={'dashboard'}
+            />
           </div>
           <main className="md:px-8 lg:px-10 md:py-8">{children}</main>
         </div>

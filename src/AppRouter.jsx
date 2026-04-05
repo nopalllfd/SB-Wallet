@@ -6,6 +6,8 @@ import RegisterPage from './Pages/Auth/RegisterPage';
 import { Routes, Route } from 'react-router';
 import HomePage from './Pages/HomePage';
 import DashboardPage from './Pages/DashboardPage';
+import TransferPage from './Pages/TransferPage';
+import TransactionPage from './Pages/TransactionPage';
 
 function AppRouter() {
   return (
@@ -35,8 +37,12 @@ function AppRouter() {
         element={<DashboardPage />}
       />
       <Route
+        path="/transfer"
+        element={<TransferPage />}
+      />
+      <Route
         path="/transaction"
-        element={<DashboardPage />}
+        element={<TransactionPage />}
       />
     </Routes>
   );

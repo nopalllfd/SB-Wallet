@@ -11,6 +11,7 @@ function Header(props) {
     setIsBurgerOpen(!isBurgerOpen);
   };
   const isDashboard = props.location === 'dashboard';
+  console.log(props.locationDetail);
 
   const navItems = [
     {
@@ -41,7 +42,7 @@ function Header(props) {
         location={props.location}
         textColor="text-white"
       />
-      {isDashboard && <ProfileHeader />}
+      {isDashboard && (props.locationDetail ? <ProfileHeader /> : <ProfileHeader />)}
       {!isDashboard && (
         <nav className="hidden md:flex items-center gap-3">
           <Button
