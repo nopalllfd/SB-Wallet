@@ -34,7 +34,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
         className="hidden md:block relative cursor-pointer"
       >
         <img
-          src="public/assets/utils/arrow-down.svg"
+          src="assets/utils/arrow-down.svg"
           alt="arrow down icon"
         />
       </div>
@@ -47,7 +47,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
               className={`rounded-xl flex gap-6 items-center w-auto px-6 text-left transition-all hover:bg-blue-700 ${item.isLogout && 'text-red-500 hover:bg-red-500'} hover:text-white`}
             >
               <img
-                src={`public/assets/dashboard/nav-item/${item.path}.svg`}
+                src={`assets/dashboard/nav-item/${item.path}.svg`}
                 alt={`${item.name} icon`}
               />
               <Link
@@ -62,7 +62,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
       )}
 
       <img
-        src="public/assets/profile.svg"
+        src="assets/profile.svg"
         alt="profile icon"
         className="w-10"
       />

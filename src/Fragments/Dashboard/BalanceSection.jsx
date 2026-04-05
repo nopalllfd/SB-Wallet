@@ -7,8 +7,8 @@ const balanceData = [
     amount: '500.000',
     percentage: '+2%',
     percentageColor: 'text-green-400',
-    iconSrc: 'public/assets/dashboard/balance.svg',
-    chartIconSrc: 'public/assets/dashboard/up-chart.svg',
+    iconSrc: 'assets/dashboard/balance.svg',
+    chartIconSrc: 'assets/dashboard/up-chart.svg',
   },
   {
     id: 2,
@@ -16,8 +16,8 @@ const balanceData = [
     amount: '500.000',
     percentage: '+11.01%',
     percentageColor: 'text-green-400',
-    iconSrc: 'public/assets/dashboard/income.svg',
-    chartIconSrc: 'public/assets/dashboard/up-chart.svg',
+    iconSrc: 'assets/dashboard/income.svg',
+    chartIconSrc: 'assets/dashboard/up-chart.svg',
   },
   {
     id: 3,
@@ -25,8 +25,8 @@ const balanceData = [
     amount: '500.000',
     percentage: '-5.06%',
     percentageColor: 'text-red-500',
-    iconSrc: 'public/assets/dashboard/expense.svg',
-    chartIconSrc: 'public/assets/dashboard/down-chart.svg',
+    iconSrc: 'assets/dashboard/expense.svg',
+    chartIconSrc: 'assets/dashboard/down-chart.svg',
   },
 ];
 
