@@ -26,7 +26,7 @@ function TransactionHistory() {
     },
   ];
   return (
-    <section className="transaction-history px-8 mt-5 pb-8 md:px-2 md:bg-white md:border-gray-200 md:rounded-sm md:mt-2 md:border md:py-2">
+    <section className="transaction-history px-8 mt-5 pb-8 md:px-3 md:w-80 md:bg-white md:border-gray-200 md:rounded-sm md:mt-2 md:border md:py-2">
       <header className="flex justify-between">
         <h2 className="text-md font-semibold">Transaction History</h2>
         <p className="text-blue-700">See All</p>

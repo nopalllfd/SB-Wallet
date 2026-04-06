@@ -16,7 +16,7 @@ function DashboardPage() {
 
   return (
     <DashboardLayout navItems={navItems}>
-      <div className="md:grid md:grid-cols-3 md:gap-6">
+      <div className="md:grid md:grid-cols-3 md:gap-2">
         <div className="flex flex-col gap-6 md:col-span-2">
           <BalanceSection />
           <ButtonSection />
