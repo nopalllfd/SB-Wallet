@@ -1,3 +1,12 @@
+/**
+ * @param {object} props
+ * @param {React.ReactNode} [props.children]
+ * @param {string} [props.icon]
+ * @param {string} [props.text]
+ * @param {string} [props.alt]
+ * @returns {JSX.Element}
+ */
+
 function Card(props) {
   return (
     <div

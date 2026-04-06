@@ -44,6 +44,10 @@ function AppRouter() {
         path="/transaction"
         element={<TransactionPage />}
       />
+      <Route
+        path="/transfer/:userId"
+        element={<TransferPage />}
+      />
     </Routes>
   );
 }

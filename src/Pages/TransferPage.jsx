@@ -1,3 +1,4 @@
+import { useParams } from 'react-router';
 import HeaderSection from '../Fragments/Transfer/HeaderSection';
 import HeaderSectionDesktopOnly from '../Fragments/Transfer/HeaderSectionDesktopOnly';
 import ListSection from '../Fragments/Transfer/ListSection';
@@ -13,6 +14,7 @@ function TransferPage() {
     { name: 'Logout', path: '/auth/logout', isLogout: true },
   ];
 
+  const { userId } = useParams();
   return (
     <DashboardLayout
       location="dashboard"
@@ -20,11 +22,17 @@ function TransferPage() {
       navItems={navItems}
     >
       <main className="max-md:py-6 px-6 flex flex-col gap-8 ">
-        <HeaderSectionDesktopOnly />
-        <div className="md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
-          <HeaderSection />
-          <ListSection />
-        </div>
+        {userId ? (
+          'isi ada user id nya wowoow'
+        ) : (
+          <>
+            <HeaderSectionDesktopOnly />
+            <div className="md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
+              <HeaderSection />
+              <ListSection />
+            </div>
+          </>
+        )}
       </main>
     </DashboardLayout>
   );
