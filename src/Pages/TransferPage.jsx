@@ -23,7 +23,7 @@ function TransferPage() {
     >
       <main className="max-md:py-6 px-6 flex flex-col gap-8 ">
         {userId ? (
-          'isi ada user id nya wowoow'
+          `id user : ${userId}`
         ) : (
           <>
             <HeaderSectionDesktopOnly />
