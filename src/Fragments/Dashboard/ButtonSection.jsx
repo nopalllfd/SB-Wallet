@@ -11,6 +11,10 @@ function ButtonSection() {
             buttonTextColor={'text-white'}
             className={'rounded-xl md:rounded-md'}
           >
+            <img
+              src={'assets/utils/top-up.svg'}
+              alt="top up icon"
+            />
             <p>Top Up</p>
           </Button>
           <Button
@@ -18,6 +22,11 @@ function ButtonSection() {
             buttonTextColor={'text-white'}
             className={'rounded-xl md:rounded-md'}
           >
+            <img
+              src={'assets/utils/top-up.svg'}
+              alt="transfer icon"
+            />
+
             <p>Transfer</p>
           </Button>
         </div>
