@@ -12,7 +12,7 @@ function HeaderSection() {
           name={'search'}
           iconSrc={'assets/utils/search.svg'}
           iconAlt={'search icon'}
-          className={'text-md font-normal'}
+          className={'text-sm font-normal'}
           placeholder={'Enter Number or Full Name'}
         />
       </div>

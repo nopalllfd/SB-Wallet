@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Button } from '../components/Button';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router';
 
 function ProfileHeader({ textColor = 'text-white' }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,23 +39,29 @@ function ProfileHeader({ textColor = 'text-white' }) {
       </div>
       {isModalOpen && (
         <div className="absolute -bottom-30 right-5 px-3 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
-          {modalItem.map((item, idx) => (
-            <Button
-              buttonTextColor="text-blue-700 font-semibold"
-              border="border border-white"
-              className={`rounded-xl flex gap-6 items-center w-auto px-8 text-left transition-all hover:bg-blue-700 ${item.isLogout && 'text-red-500 hover:bg-red-500'} hover:text-white`}
+          {modalItem.map((item) => (
+            <NavLink
+              key={item.path}
+              to={`/${item.path}`}
+              className={({ isActive }) => {
+                const base = 'rounded-xl flex gap-6 items-center w-auto px-8 py-2 text-left transition-all font-semibold';
+                if (item.isLogout) {
+                  return `${base} text-red-500 hover:bg-red-500 hover:text-white`;
+                }
+                return `${base} text-blue-700 hover:bg-blue-700 hover:text-white ${isActive ? 'bg-blue-700 text-white' : ''}`;
+              }}
             >
-              <img
-                src={`assets/dashboard/nav-item/${item.path}.svg`}
-                alt={`${item.name} icon`}
-              />
-              <Link
-                key={idx}
-                to={`/${item.path}`}
-              >
-                {item.name}
-              </Link>
-            </Button>
+              {({ isActive }) => (
+                <>
+                  <img
+                    src={`/assets/dashboard/nav-item/${item.path}.svg`}
+                    alt={`${item.name} icon`}
+                    className={`${!item.isLogout && isActive ? 'brightness-0 invert' : ''}`}
+                  />
+                  <span>{item.name}</span>
+                </>
+              )}
+            </NavLink>
           ))}
         </div>
       )}

@@ -3,7 +3,7 @@ import { Field } from '../../components/Input/field';
 
 function HeaderSection() {
   return (
-    <div className="flex flex-col gap-5 md:flex-row md:justify-between">
+    <div className="flex flex-col gap-5 md:flex-row md:justify-between md:pb-10">
       <div>
         <h1 className="font-semibold text-xl">Find Transaction</h1>
       </div>
@@ -12,7 +12,7 @@ function HeaderSection() {
           name={'search'}
           iconSrc={'assets/utils/search.svg'}
           iconAlt={'search icon'}
-          className={'text-md font-normal'}
+          className={'text-sm font-normal'}
           placeholder={'Enter Number or Full Name'}
         />
       </div>

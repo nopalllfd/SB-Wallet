@@ -63,7 +63,7 @@ function BalanceSection() {
       <div className="absolute top-0 left-0 right-0 h-30 bg-blue-700 md:bg-gray-50 border-t md:border-none border-gray-200 z-0"></div>
 
       <div className="container w-full h-full relative z-10 flex flex-col items-center justify-center">
-        <div className="balance-card h-30 md:relative md:top-2 bg-white relative w-5/6 flex gap-8 text-xs py-5 justify-between px-6 rounded-2xl top-10 md:h-auto md:w-full md:max-w-4xl md:bg-transparent md:gap-6 md:px-0 md:py-0 md:justify-center">
+        <div className="balance-card h-30 md:relative md:top-2 bg-white relative w-5/6 flex gap-8 text-xs py-5 justify-between px-6 rounded-2xl top-10 md:h-auto md:w-full md:max-w-4xl md:bg-transparent md:gap-2 md:px-0 md:py-0 md:justify-center">
           {balanceData.map((item) => (
             <StatCard
               iconSrc={item.iconSrc}

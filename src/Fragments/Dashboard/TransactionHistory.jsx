@@ -24,6 +24,30 @@ function TransactionHistory() {
       total: '-100.000',
       isMinus: true,
     },
+    {
+      name: 'Floyd Miles',
+      status: 'Send',
+      total: '-50.000',
+      isMinus: true,
+    },
+    {
+      name: 'Floyd Miles',
+      status: 'Send',
+      total: '+60.000',
+      isMinus: false,
+    },
+    {
+      name: 'Floyd Miles',
+      status: 'Send',
+      total: '+100.000',
+      isMinus: false,
+    },
+    {
+      name: 'Floyd Miles',
+      status: 'Send',
+      total: '-100.000',
+      isMinus: true,
+    },
   ];
   return (
     <section className="transaction-history px-8 mt-5 pb-8 md:px-3 md:w-80 md:bg-white md:border-gray-200 md:rounded-sm md:mt-2 md:border md:py-2">

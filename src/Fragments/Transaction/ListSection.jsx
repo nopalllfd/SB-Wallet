@@ -30,34 +30,38 @@ function ListSection() {
     }
     return setIsModalOpen(!isModalOpen);
   };
-  console.log(userDetail);
   return (
-    <section className="flex flex-col relative">
+    <section className="flex flex-col">
       {data.map((d, idx) => (
         <div
           key={idx}
           onClick={() => {
             handleClick(d, idx);
           }}
-          className={`flex justify-between items-center bg-gray-100 border-b border-gray-300 p-3 rounded-md ${idx % 2 == 0 ? 'bg-white' : ''}`}
+          className={`grid grid-cols-[1fr_auto] md:grid-cols-[3.25rem_1fr_auto] items-center gap-3 border-b cursor-pointer border-gray-300 px-4 py-3 rounded-md ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`}
         >
           <img
-            src={`assets/users/Ghaluh.svg`}
+            src="/assets/users/Ghaluh.svg"
             alt={`${d.name} icon`}
-            className="w-13 max-md:hidden"
+            className="w-13 hidden md:block"
           />
-          <div className="flex-2 max-md:ms-0 md:ms-30 md:me-30 md:flex md:gap-4 md:items-center md:justify-between">
-            <p className="text-lg text-gray-700">{d.name}</p>
-            <p className="text-gray-700">{d.telp}</p>
+          <div className="min-w-0 flex flex-col gap-1 md:grid md:grid-cols-[25rem_1fr] md:items-center md:gap-6">
+            <p className="text-base md:text-lg md:text-left md:ps-30 text-gray-700 truncate">{d.name}</p>
+            <p className="text-sm md:text-left text-gray-600 truncate">{d.telp}</p>
           </div>
 
-          <p className={`${d.isProfit ? 'text-green-500' : 'text-red-500'} text-lg font-semibold`}>{d.value}</p>
+          <p className={`${d.isProfit ? 'text-green-500' : 'text-red-500'} text-base md:text-lg font-semibold whitespace-nowrap`}>{d.value}</p>
         </div>
       ))}
       {isModalOpen && (
-        <div className="">
-          <div className="absolute z-10 bg-black opacity-50 -top-60 -right-6 h-screen w-screen  "></div>
-          <div className="absolute z-20 bg-white -top-30 h-auto w-full px-10 py-5 rounded-xl">
+        <div className="fixed inset-0 z-50">
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/50"
+            onClick={handleClick}
+            aria-label="Close modal"
+          />
+          <div className="relative mx-auto mt-18 w-[min(92vw,34rem)] rounded-xl bg-white px-8 py-6 shadow-lg">
             {userDetail.map((d, idx) => (
               <div
                 key={idx}
@@ -67,25 +71,27 @@ function ListSection() {
 
                 <hr />
                 <img
-                  src={`assets/users/Ghaluh.svg`}
+                  src="/assets/users/Ghaluh.svg"
                   alt={`${d.name} photo`}
                   className="w-20"
                 />
-                <div>
-                  <h1 className="font-semibold text-sm">Name:</h1>
-                  <p>{d.name}</p>
-                </div>
-                <div>
-                  <h1 className="font-semibold text-sm">Phone:</h1>
-                  <p>{d.telp}</p>
-                </div>
-                <div>
-                  <h1 className="font-semibold text-sm">Status:</h1>
-                  <p>{!d.isProfit ? `Transfer Success` : `Transfer Success`}</p>
-                </div>
-                <div>
-                  <h1 className="text-sm">Amount:</h1>
-                  <p className={`${!d.isProfit ? `text-red-500` : `text-green-500`}`}>{d.value}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h1 className="font-semibold text-sm">Name:</h1>
+                    <p>{d.name}</p>
+                  </div>
+                  <div>
+                    <h1 className="font-semibold text-sm">Phone:</h1>
+                    <p>{d.telp}</p>
+                  </div>
+                  <div>
+                    <h1 className="font-semibold text-sm">Status:</h1>
+                    <p>Transfer Success</p>
+                  </div>
+                  <div>
+                    <h1 className="text-sm">Amount:</h1>
+                    <p className={`${!d.isProfit ? 'text-red-500' : 'text-green-500'}`}>{d.value}</p>
+                  </div>
                 </div>
                 <button className="bg-white text-sm border-2 py-2 font-semibold rounded-lg border-red-500 text-red-500">DELETE</button>
                 <Button
