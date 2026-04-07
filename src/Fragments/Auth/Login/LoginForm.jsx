@@ -3,16 +3,21 @@ import { Button } from '../../../components/Button';
 import { InputGroup } from '../../../components/Input';
 import ForgotPasswordLink from './ForgotPasswordLink';
 import { useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
 
 function LoginForm() {
   const [errorMsg, setErrorMsg] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (data) => {
     setErrorMsg('');
-    const email = e.target.email.value?.trim?.() ?? '';
-    const password = e.target.password.value ?? '';
+    const email = data.email.trim();
+    const password = data.password;
 
     let existingValue = null;
     try {
@@ -38,27 +43,30 @@ function LoginForm() {
   return (
     <>
       <section className="input-group ">
-        <form
-          action=""
-          className="flex flex-col gap-4"
-          onSubmit={handleSubmit}
-        >
+        <form action="" className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           <p className="text-red-500 text-center text-sm ">{errorMsg ? errorMsg : ''}</p>
           <InputGroup
-            type="email"
             id="email"
-            name="email"
+            {...register('email', {
+              required: 'Email tidak boleh kosong',
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Format email salah',
+              },
+            })}
             placeholder="Enter Your Email"
             iconSrc="/assets/inputs/form/email.svg"
             iconAlt="email icon"
           >
             Email
           </InputGroup>
-          <p></p>
+          {errors.email ? <p className={'text-red-500'}>{errors.email.message}</p> : <p></p>}
           <InputGroup
             type="password"
             id="password"
-            name="password"
+            {...register('password', {
+              required: 'Password tidak boleh kosong',
+            })}
             placeholder="Enter Your Password"
             iconSrc="/assets/inputs/form/password.svg"
             iconAlt="password icon"
@@ -69,15 +77,11 @@ function LoginForm() {
           >
             Password
           </InputGroup>
-          <p></p>
+          {errors.password ? <p className={'text-red-500'}>{errors.password.message}</p> : <p></p>}
 
           <ForgotPasswordLink />
           <section className="submit-button">
-            <Button
-              buttonColor={'bg-blue-600'}
-              buttonTextColor={'text-white'}
-              className={'rounded-xl'}
-            >
+            <Button buttonColor={'bg-blue-600'} buttonTextColor={'text-white'} className={'rounded-xl'}>
               Login
             </Button>
           </section>

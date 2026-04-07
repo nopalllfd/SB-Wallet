@@ -2,6 +2,8 @@
  * @typedef {Object.<string, any>} InputRestProps
  */
 
+import { forwardRef } from 'react';
+
 /**
  * @param {string} type
  * @param {function} onChange
@@ -10,13 +12,6 @@
  * @returns {JSX.Element}
  */
 
-export const Input = ({ type, onChange, className = '', ...props }) => {
-  return (
-    <input
-      {...props}
-      type={type}
-      className={`outline-none flex-1 w-full min-w-0 ${className}`}
-      onChange={onChange}
-    />
-  );
-};
+export const Input = forwardRef(({ type, onChange, className = '', ...props }, ref) => {
+  return <input {...props} ref={ref} type={type} className={`outline-none flex-1 w-full min-w-0 ${className}`} onChange={onChange} />;
+});

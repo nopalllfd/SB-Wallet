@@ -38,7 +38,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
         />
       </div>
       {isModalOpen && (
-        <div className="absolute -bottom-30 right-5 px-3 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
+        <div className="absolute -bottom-30 right-5 px-3 Z-100 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
           {modalItem.map((item) => (
             <NavLink
               key={item.path}

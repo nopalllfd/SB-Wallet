@@ -11,10 +11,12 @@ function HeaderSection(props) {
         <div className="md:w-1/3">
           <Field
             name={'search'}
+            value={props.searchQuery}
             iconSrc={'/assets/utils/search.svg'}
             iconAlt={'search icon'}
-            className={'text-sm font-normal'}
+            className={'text-sm font-normal flex-row-reverse'}
             placeholder={'Enter Number or Full Name'}
+            onChange={(e) => props.onSearchChange(e.target.value)}
           />
         </div>
       ) : (

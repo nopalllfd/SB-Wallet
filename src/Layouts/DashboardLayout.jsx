@@ -23,17 +23,17 @@ export const DashboardLayout = ({ navItems, children, locationDetail }) => {
 
       <div className="md:grid md:grid-cols-[16rem_1fr] lg:grid-cols-[18rem_1fr]">
         <aside className="hidden md:flex bg-white text-black border-r border-gray-300 flex-col">
-          <nav className="flex flex-col py-6 px-4 gap-3">
+          <nav className="flex flex-col py-6 ps-4 gap-3">
             {navItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) => {
-                  const base = 'flex items-center gap-3 px-4 py-3 justify-start w-4/5 rounded-md transition-all';
+                  const base = 'flex items-center gap-3 px-5 py-2.5 justify-start w-4/5 rounded-md transition-all';
                   if (item.isLogout) {
                     return `${base} text-red-500 hover:bg-red-500 hover:text-white`;
                   }
-                  return `${base} hover:bg-blue-700 hover:text-white ${isActive ? 'bg-blue-700 text-white' : ''}`;
+                  return `${base} hover:bg-blue-100 hover:text-blue-700 ${isActive ? 'bg-blue-700 text-white' : ''}`;
                 }}
               >
                 {({ isActive }) => (
@@ -58,7 +58,7 @@ export const DashboardLayout = ({ navItems, children, locationDetail }) => {
               location={'dashboard'}
             />
           </div>
-          <main className="md:px-8 lg:px-10 md:py-8 overflow-hidden">{children}</main>
+          <main className="md:px-8 pt-18 lg:px-10 md:py-8 overflow-hidden">{children}</main>
         </div>
       </div>
     </div>

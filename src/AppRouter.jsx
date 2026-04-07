@@ -8,6 +8,7 @@ import HomePage from './Pages/HomePage';
 import DashboardPage from './Pages/DashboardPage';
 import TransferPage from './Pages/TransferPage';
 import TransactionPage from './Pages/TransactionPage';
+import TransferDetailPage from './Pages/TransferDetailPage';
 
 function AppRouter() {
   return (
@@ -46,7 +47,7 @@ function AppRouter() {
       />
       <Route
         path="/transfer/:userId"
-        element={<TransferPage />}
+        element={<TransferDetailPage />}
       />
     </Routes>
   );

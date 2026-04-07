@@ -21,7 +21,7 @@ function ButtonSection() {
           <Button
             buttonColor={'bg-blue-700'}
             buttonTextColor={'text-white'}
-            className={'rounded-xl md:rounded-md flex justify-between gap-1 md:px-2 items-center'}
+            className={'rounded-xl md:rounded-md flex justify-between md:gap-2 md:px-2 md:pe-4 items-center'}
           >
             <img
               src={'assets/utils/transfer.svg'}
