@@ -2,7 +2,7 @@ import { Button } from '../../components/Button';
 
 function HeroSection() {
   return (
-    <section className="flex flex-col gap-4 items-start px-7 md:flex-row md:items-center md:justify-between md:gap-10 md:px-10 md:py-10 lg:px-14">
+    <section className="flex flex-col pt-18 md:pt-28 gap-4 items-start px-7 md:flex-row md:items-center md:justify-between md:gap-10 md:px-10 md:py-10 lg:px-14">
       <img
         src="/assets/home/hero.svg"
         alt="hero icon"

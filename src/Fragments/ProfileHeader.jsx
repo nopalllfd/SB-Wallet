@@ -33,7 +33,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
         className="hidden md:block relative cursor-pointer"
       >
         <img
-          src="assets/utils/arrow-down.svg"
+          src="/assets/utils/arrow-down.svg"
           alt="arrow down icon"
         />
       </div>
@@ -67,7 +67,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
       )}
 
       <img
-        src="assets/profile.svg"
+        src="/assets/profile.svg"
         alt="profile icon"
         className="w-10"
       />

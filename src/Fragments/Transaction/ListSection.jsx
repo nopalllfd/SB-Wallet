@@ -23,6 +23,24 @@ function ListSection() {
       value: '50.000',
       isProfit: true,
     },
+    {
+      name: 'Ghaluh',
+      telp: '(239) 555-0108',
+      value: '50.000',
+      isProfit: true,
+    },
+    {
+      name: 'Albert Flores',
+      telp: '(239) 555-0108',
+      value: '50.000',
+      isProfit: false,
+    },
+    {
+      name: 'Bessie Cooper',
+      telp: '(239) 555-0108',
+      value: '50.000',
+      isProfit: true,
+    },
   ];
   const handleClick = (item) => {
     if (!isModalOpen) {
@@ -38,19 +56,25 @@ function ListSection() {
           onClick={() => {
             handleClick(d, idx);
           }}
-          className={`grid grid-cols-[1fr_auto] md:grid-cols-[3.25rem_1fr_auto] items-center gap-3 border-b cursor-pointer border-gray-300 px-4 py-3 rounded-md ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`}
+          className={`grid grid-cols-[1fr_auto] md:grid-cols-[auto_auto_auto_auto] items-center gap-3 border-b cursor-pointer border-gray-300 px-4 py-3 rounded-md ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`}
         >
           <img
             src="/assets/users/Ghaluh.svg"
             alt={`${d.name} icon`}
             className="w-13 hidden md:block"
           />
-          <div className="min-w-0 flex flex-col gap-1 md:grid md:grid-cols-[25rem_1fr] md:items-center md:gap-6">
-            <p className="text-base md:text-lg md:text-left md:ps-30 text-gray-700 truncate">{d.name}</p>
-            <p className="text-sm md:text-left text-gray-600 truncate">{d.telp}</p>
+          <div className="min-w-0 flex flex-col gap-1 md:grid md:grid-cols-[18rem_1fr] md:items-center">
+            <p className="text-base md:text-lg md:text-left md:ps-20  text-gray-700 truncate">{d.name}</p>
+            <p className="text-sm md:text-left text-gray-600 md:pe-20 truncate">{d.telp}</p>
           </div>
 
-          <p className={`${d.isProfit ? 'text-green-500' : 'text-red-500'} text-base md:text-lg font-semibold whitespace-nowrap`}>{d.value}</p>
+          <p className={`${d.isProfit ? 'text-green-500' : 'text-red-500'} text-base md:text-lg font-semibold whitespace-nowrap pe-10`}>{d.value}</p>
+          <button className="delete hidden md:block">
+            <img
+              src="/assets/utils/trash-red.svg"
+              alt="trash icon"
+            />
+          </button>
         </div>
       ))}
       {isModalOpen && (

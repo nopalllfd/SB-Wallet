@@ -37,7 +37,7 @@ function Header(props) {
   ];
 
   return (
-    <header className="bg-blue-700 px-6 md:px-10 py-5 flex items-center justify-between relative border-b-black">
+    <header className="bg-blue-700 z-20 px-3 md:px-10 py-4 md:py-3 fixed w-full flex items-center justify-between border-b-black">
       <BrandHeader
         location={props.location}
         textColor="text-white"

@@ -14,19 +14,19 @@ function ButtonSection() {
             <img
               src={'assets/utils/top-up.svg'}
               alt="top up icon"
-              className="w-5"
+              className="w-4"
             />
             <p>Top Up</p>
           </Button>
           <Button
             buttonColor={'bg-blue-700'}
             buttonTextColor={'text-white'}
-            className={'rounded-xl md:rounded-md flex justify-between items-center'}
+            className={'rounded-xl md:rounded-md flex justify-between gap-1 md:px-2 items-center'}
           >
             <img
               src={'assets/utils/transfer.svg'}
               alt="transfer icon"
-              className="w-5"
+              className="w-4"
             />
 
             <p>Transfer</p>

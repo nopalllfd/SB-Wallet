@@ -58,7 +58,7 @@ export const DashboardLayout = ({ navItems, children, locationDetail }) => {
               location={'dashboard'}
             />
           </div>
-          <main className="md:px-8 lg:px-10 md:py-8">{children}</main>
+          <main className="md:px-8 lg:px-10 md:py-8 overflow-hidden">{children}</main>
         </div>
       </div>
     </div>
