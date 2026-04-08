@@ -38,18 +38,11 @@ function Header(props) {
 
   return (
     <header className="bg-blue-700 z-20 px-3 md:px-10 py-4 md:py-3 fixed w-full flex items-center justify-between border-b-black">
-      <BrandHeader
-        location={props.location}
-        textColor="text-white"
-      />
+      <BrandHeader location={props.location} textColor="text-white" />
       {isDashboard && (props.locationDetail ? <ProfileHeader /> : <ProfileHeader />)}
       {!isDashboard && (
         <nav className="hidden md:flex items-center gap-3">
-          <Button
-            buttonColor="bg-white"
-            buttonTextColor="text-blue-500 font-semibold"
-            className="rounded-xl   w-auto! px-6!"
-          >
+          <Button buttonColor="bg-white" buttonTextColor="text-blue-500 font-semibold" className="rounded-xl   w-auto! px-6!">
             <Link to="/auth/login">Sign In</Link>
           </Button>
           <Button
@@ -64,14 +57,8 @@ function Header(props) {
       )}
 
       <div className="burger-bar md:hidden">
-        <button
-          onClick={handleClick}
-          className="cursor-pointer md:hidden"
-        >
-          <img
-            src="/assets/burger-bar.svg"
-            alt="burger bar icon"
-          />
+        <button onClick={handleClick} className="cursor-pointer md:hidden">
+          <img src="/assets/burger-bar.svg" alt="burger bar icon" />
         </button>
       </div>
       {isBurgerOpen ? (
@@ -81,12 +68,9 @@ function Header(props) {
             <NavMenuItem to="/auth/register">Sign Up</NavMenuItem>
           </nav>
         ) : (
-          <nav className="absolute w-screen left-0 top-21 drop-shadow-2xl py-5  z-20 rounded-b-xl flex flex-col bg-white md:hidden">
+          <nav className="absolute w-screen left-0 top-19 drop-shadow-2xl py-5  z-20 rounded-b-xl flex flex-col bg-white md:hidden">
             {navItems.map((item, idx) => (
-              <NavMenuItem
-                key={idx}
-                to={`/${item.path}`}
-              >
+              <NavMenuItem key={idx} to={`/${item.path}`}>
                 {item.name}
               </NavMenuItem>
             ))}
