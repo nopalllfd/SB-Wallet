@@ -9,25 +9,17 @@ function ButtonSection() {
           <Button
             buttonColor={'bg-blue-700'}
             buttonTextColor={'text-white'}
-            className={'rounded-xl md:rounded-md flex justify-between items-center'}
+            className={'rounded-xl md:rounded-md flex max-md:justify-around justify-between items-center'}
           >
-            <img
-              src={'assets/utils/top-up.svg'}
-              alt="top up icon"
-              className="w-4"
-            />
+            <img src={'assets/utils/top-up.svg'} alt="top up icon" className="w-4" />
             <p>Top Up</p>
           </Button>
           <Button
             buttonColor={'bg-blue-700'}
             buttonTextColor={'text-white'}
-            className={'rounded-xl md:rounded-md flex justify-between md:gap-2 md:px-2 md:pe-4 items-center'}
+            className={'rounded-xl md:rounded-md flex max-md:justify-around justify-between md:gap-2 md:px-2 md:pe-4 items-center'}
           >
-            <img
-              src={'assets/utils/transfer.svg'}
-              alt="transfer icon"
-              className="w-4"
-            />
+            <img src={'assets/utils/transfer.svg'} alt="transfer icon" className="w-4" />
 
             <p>Transfer</p>
           </Button>
