@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { InputGroup } from '../../../components/Input';
 import { Button } from '../../../components/Button';
-import Modal from '../../../components/Input/Modal';
+import Modal from '../../../components/Modal/Modal';
 import AuthLink from '../../Auth/AuthLink';
 
 function TransferDetail(props) {
@@ -79,29 +79,17 @@ function TransferDetail(props) {
       <div className="">
         <section className="flex flex-col gap-5 py-6">
           <div className="flex items-center gap-4 bg-gray-100 p-4 rounded-md">
-            <img
-              src={`/assets/users/Ghaluh.svg`}
-              alt={`${selectedUser.name} icon`}
-              className="w-16"
-            />
+            <img src={`/assets/users/Ghaluh.svg`} alt={`${selectedUser.name} icon`} className="w-16" />
             <div>
               <p className="text-xl font-bold">{selectedUser.name}</p>
               <p className="text-gray-600">{selectedUser.telp}</p>
             </div>
           </div>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4"
-          >
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
               <label className="block text-md font-medium mb-1">Amount</label>
-              <InputGroup
-                iconSrc={'/assets/transfer/money.svg'}
-                iconAlt={'money icon'}
-                placeholder={'Enter nominal transfer'}
-                type={'number'}
-              >
+              <InputGroup iconSrc={'/assets/transfer/money.svg'} iconAlt={'money icon'} placeholder={'Enter nominal transfer'} type={'number'}>
                 <p className="text-sm text-gray-600 mb-2"> Type the amount you want to transfer and then press continue to the next steps.</p>
               </InputGroup>
             </div>
@@ -109,11 +97,7 @@ function TransferDetail(props) {
               <label className="block text-md font-medium mb-1">Notes</label>
               <p className="text-sm text-gray-600 mb-2"> You can add some notes for this transfer such as payment coffee or something</p>
 
-              <textarea
-                placeholder="Enter some notes"
-                className="w-full border border-gray-400 p-3 rounded-xl resize-none"
-                rows="3"
-              ></textarea>
+              <textarea placeholder="Enter some notes" className="w-full border border-gray-400 p-3 rounded-xl resize-none" rows="3"></textarea>
             </div>
             <Button
               buttonColor={'bg-blue-700'}
@@ -124,10 +108,7 @@ function TransferDetail(props) {
           </form>
         </section>
         <>
-          <Modal
-            open={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          >
+          <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <p className="text-sm font-bold text-gray-500">Transfer to {selectedUser.name}</p>
             <div className="border-b border-gray-400"></div>
             <div className="text pt-10 flex flex-col gap-3">
@@ -147,71 +128,22 @@ function TransferDetail(props) {
       [&>input]:focus:border-blue-500
     "
                 >
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    name="pin"
-                    maxLength="1"
-                  />
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    name="pin"
-                    maxLength="1"
-                  />
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    name="pin"
-                    maxLength="1"
-                  />
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    name="pin"
-                    maxLength="1"
-                  />
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    name="pin"
-                    maxLength="1"
-                  />
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    name="pin"
-                    maxLength="1"
-                  />
-                  <input
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    name="pin"
-                    maxLength="1"
-                  />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" name="pin" maxLength="1" />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" name="pin" maxLength="1" />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" name="pin" maxLength="1" />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" name="pin" maxLength="1" />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" name="pin" maxLength="1" />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" name="pin" maxLength="1" />
+                  <input type="text" inputMode="numeric" pattern="[0-9]*" name="pin" maxLength="1" />
                 </form>
 
                 <section className="submit-button">
-                  <Button
-                    buttonColor={'bg-blue-600'}
-                    buttonTextColor={'text-white'}
-                    className={'rounded-xl'}
-                  >
+                  <Button buttonColor={'bg-blue-600'} buttonTextColor={'text-white'} className={'rounded-xl'}>
                     Next
                   </Button>
                 </section>
               </div>
-              <AuthLink
-                link="/auth/reset-pin"
-                type="Reset"
-              >
+              <AuthLink link="/auth/reset-pin" type="Reset">
                 Forgot Your Pin?
               </AuthLink>
             </div>

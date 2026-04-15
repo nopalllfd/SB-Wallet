@@ -9,46 +9,23 @@ import DashboardPage from './Pages/DashboardPage';
 import TransferPage from './Pages/TransferPage';
 import TransactionPage from './Pages/TransactionPage';
 import TransferDetailPage from './Pages/TransferDetailPage';
+import ProfilePage from './Pages/ProfilePage';
 
 function AppRouter() {
   return (
     <Routes>
-      <Route
-        path="/auth/register"
-        element={<RegisterPage />}
-      />
-      <Route
-        path="/auth/login"
-        element={<LoginPage />}
-      />
-      <Route
-        path="/auth/reset-password"
-        element={<ForgotPasswordPage />}
-      />
-      <Route
-        path="/auth/enter-pin"
-        element={<EnterPinPage />}
-      />
-      <Route
-        path="/"
-        element={<HomePage />}
-      />
-      <Route
-        path="/dashboard"
-        element={<DashboardPage />}
-      />
-      <Route
-        path="/transfer"
-        element={<TransferPage />}
-      />
-      <Route
-        path="/transaction"
-        element={<TransactionPage />}
-      />
-      <Route
-        path="/transfer/:userId"
-        element={<TransferDetailPage />}
-      />
+      <Route path="auth">
+        <Route path="login" element={<LoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
+        <Route path="pin" element={<EnterPinPage />} />
+        <Route path="forgot/password" element={<ForgotPasswordPage />} />
+      </Route>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/transfer" element={<TransferPage />} />
+      <Route path="/transaction" element={<TransactionPage />} />
+      <Route path="/transfer/:userId" element={<TransferDetailPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   );
 }

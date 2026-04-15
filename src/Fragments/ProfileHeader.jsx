@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router';
 
 function ProfileHeader({ textColor = 'text-white' }) {
+  const { user } = useSelector((state) => state.users);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, _] = useState(() => {
     let data = null;
@@ -28,14 +30,8 @@ function ProfileHeader({ textColor = 'text-white' }) {
   };
   return (
     <div className={`flex ${textColor} gap-2 md:gap-4 items-center md:flex-row-reverse relative justify-center`}>
-      <div
-        onClick={handleClick}
-        className="hidden md:block relative cursor-pointer"
-      >
-        <img
-          src="/assets/utils/arrow-down.svg"
-          alt="arrow down icon"
-        />
+      <div onClick={handleClick} className="hidden md:block relative cursor-pointer">
+        <img src="/assets/utils/arrow-down.svg" alt="arrow down icon" />
       </div>
       {isModalOpen && (
         <div className="absolute -bottom-30 right-5 px-3 Z-100 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
@@ -66,14 +62,10 @@ function ProfileHeader({ textColor = 'text-white' }) {
         </div>
       )}
 
-      <img
-        src="/assets/profile.svg"
-        alt="profile icon"
-        className="w-10"
-      />
+      <img src="/assets/profile.svg" alt="profile icon" className="w-10" />
       <div>
         <div className="greetings text-ultralight text-sm md:hidden">Hello,</div>
-        <div className="greetings text-normal text-md">{email}</div>
+        <div className="greetings text-normal text-md">{user.fullName ? user.fullName : email}</div>
       </div>
     </div>
   );

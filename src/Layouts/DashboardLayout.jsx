@@ -3,7 +3,15 @@ import Header from '../Fragments/Header';
 import ProfileHeader from '../Fragments/ProfileHeader';
 import { NavLink } from 'react-router';
 
-export const DashboardLayout = ({ navItems, children, locationDetail }) => {
+export const DashboardLayout = ({ children, locationDetail }) => {
+  const navItems = [
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Transfer', path: '/transfer' },
+    { name: 'Transaction', path: '/transaction' },
+    { name: 'Top up', path: '/top-up' },
+    { name: 'Profile', path: '/profile' },
+    { name: 'Logout', path: '/auth/logout', isLogout: true },
+  ];
   const getIconSrc = (item) => {
     if (item.isLogout) return '/assets/dashboard/nav-item/auth/logout.svg';
     const base = String(item.path || '').replace(/^\//, '');
@@ -53,10 +61,7 @@ export const DashboardLayout = ({ navItems, children, locationDetail }) => {
 
         <div className="min-w-0">
           <div className="md:hidden">
-            <Header
-              locationDetail={locationDetail}
-              location={'dashboard'}
-            />
+            <Header locationDetail={locationDetail} location={'dashboard'} />
           </div>
           <main className="md:px-8 pt-18 lg:px-10 md:py-8 overflow-hidden">{children}</main>
         </div>

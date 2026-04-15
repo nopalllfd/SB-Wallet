@@ -59,6 +59,8 @@ function ListSection(props) {
   const filteredData = data.filter((item) => {
     return item.name.toLowerCase().includes(props.searchQuery.toLowerCase());
   });
+
+  // filter pake state
   return (
     <section className="flex flex-col gap-3 py-6 z-0 relative">
       {filteredData.length > 0 ? (

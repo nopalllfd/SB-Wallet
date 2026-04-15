@@ -1,50 +1,57 @@
-import { useState } from 'react';
 import { Button } from '../../../components/Button';
 import { InputGroup } from '../../../components/Input';
 import ForgotPasswordLink from './ForgotPasswordLink';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../../redux/slice/userSlice';
+import { LoadingIndicator } from '../../../components/application/loading-indicator/loading-indicator';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import ToastSuccess from '../../../components/toast/Toast';
 function LoginForm() {
-  const [errorMsg, setErrorMsg] = useState('');
+  const { user, isLogin, loading, error } = useSelector((state) => state.users);
+  console.log(user, loading);
+
+  const dispatch = useDispatch();
+  console.log(user);
+  console.log(isLogin);
+  const { data: existingValue } = useLocalStorage('users');
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    setErrorMsg('');
-    const email = data.email.trim();
-    const password = data.password;
-
-    let existingValue = null;
+  const onSubmit = async (data) => {
     try {
-      existingValue = JSON.parse(localStorage.getItem('users') || 'null');
-    } catch {
-      existingValue = null;
+      const { email, password } = data;
+      console.log(data);
+      console.log('PPPPPPP');
+      if (!existingValue?.email || !existingValue?.password) {
+        throw new Error('Akun belum terdaftar');
+      }
+      if (email !== existingValue.email || password !== existingValue.password) {
+        throw new Error('Email atau password salah');
+      }
+      console.log('DISPATCHHHHHHHHHh');
+      await dispatch(loginUser({ email, existingValue })).unwrap();
+      navigate('/dashboard');
+      <ToastSuccess />;
+    } catch (err) {
+      setError('email', {
+        type: 'manual',
+        message: err.message,
+      });
     }
-
-    if (!existingValue?.email || !existingValue?.password) {
-      setErrorMsg('Akun belum terdaftar, silakan Register terlebih dahulu');
-      return;
-    }
-
-    if (email !== existingValue.email || password !== existingValue.password) {
-      setErrorMsg('Kredensial yang anda masukkan salah');
-      return;
-    }
-
-    localStorage.setItem('isLogin', 'true');
-    navigate('/dashboard');
   };
 
   return (
     <>
-      <section className="input-group ">
-        <form action="" className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-          <p className="text-red-500 text-center text-sm ">{errorMsg ? errorMsg : ''}</p>
+      <section className="input-group flex flex-col items-center">
+        {error ? <p className={'text-red-500'}>{error}</p> : <p></p>}
+        <form action="" className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(onSubmit)}>
           <InputGroup
             id="email"
             {...register('email', {
@@ -78,11 +85,10 @@ function LoginForm() {
             Password
           </InputGroup>
           {errors.password ? <p className={'text-red-500'}>{errors.password.message}</p> : <p></p>}
-
           <ForgotPasswordLink />
           <section className="submit-button">
             <Button buttonColor={'bg-blue-600'} buttonTextColor={'text-white'} className={'rounded-xl'}>
-              Login
+              {loading ? <LoadingIndicator /> : 'Login'}
             </Button>
           </section>
         </form>

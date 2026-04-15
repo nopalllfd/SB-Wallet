@@ -1,118 +1,88 @@
-import { useState } from 'react';
 import { Button } from '../../../components/Button';
 import { InputGroup } from '../../../components/Input';
 import { useNavigate } from 'react-router';
+import { useForm } from 'react-hook-form';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
 
 function RegisterForm() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [errorPwdMsg, setErrorPwdMsg] = useState('');
-  const [errorEmailMsg, setErrorEmailMsg] = useState('');
-  const [confirmErrorPwdMsg, setConfirmErrorPwdMsg] = useState('');
+  const {
+    register,
+    handleSubmit,
+    setError,
+    getValues,
+    formState: { errors },
+  } = useForm({ mode: 'onChange' });
+  const {data: existingUsers, setItem} = useLocalStorage('users')
 
-  const handleChangePassword = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    if (value.length < 7 && value.length > 0) {
-      setErrorPwdMsg('Password minimal 7 karakter');
-    } else {
-      setErrorPwdMsg('');
-    }
-  };
-  const handleChangeConfirmPassword = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-    if (value != password) {
-      setConfirmErrorPwdMsg('Konfirmasi password harus sama dengan password!');
-    } else {
-      setConfirmErrorPwdMsg('');
-    }
-  };
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-      setErrorEmailMsg('Email wajib diisi');
-      return;
-    }
-
-    if (password.length < 7) {
-      setErrorPwdMsg('Password minimal 7 karakter');
-      return;
-    }
-
-    if (!confirmPassword || confirmPassword !== password) {
-      setConfirmErrorPwdMsg('Konfirmasi password harus sama dengan password!');
-      return;
-    }
-
-    let existingUsers = null;
-    try {
-      existingUsers = JSON.parse(localStorage.getItem('users') || 'null');
-    } catch {
-      existingUsers = null;
-    }
+  const handleFormSubmit = (data) => {
+    console.log(data.email);
+    const trimmedEmail = data.email.trim();
 
     if (existingUsers?.email === trimmedEmail) {
-      setErrorEmailMsg('Email sudah digunakan!');
+      setError('email', {
+        type: 'manual',
+        message: 'Email ini sudah digunakan',
+      });
       return;
     }
 
-    setErrorEmailMsg('');
-    const data = {
+    const users = {
       email: trimmedEmail,
-      password: password,
+      password: data.password,
     };
-    localStorage.setItem('users', JSON.stringify(data));
+    setItem(users)
     navigate('/auth/login');
   };
   return (
     <>
       <section className="input-group ">
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={handleFormSubmit}
-          action=""
-        >
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleFormSubmit)} action="">
           <InputGroup
-            type="email"
             id="email"
-            name="email"
+            type="email"
             placeholder="Enter Your Email"
             iconSrc="/assets/inputs/form/email.svg"
             iconAlt="email icon"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              if (errorEmailMsg) setErrorEmailMsg('');
-            }}
+            {...register('email', {
+              required: 'email tidak boleh kosong',
+              pattern: {
+                value: /\S+@\S+\.\S+/,
+                message: 'Format email salah',
+              },
+            })}
           >
             Email
           </InputGroup>
-          <p className="text-red-500 text-xs">{errorEmailMsg ? errorEmailMsg : ''}</p>
+          {errors.email ? <p className={'text-red-500'}>{errors.email.message}</p> : <p></p>}
           <InputGroup
-            type="password"
             id="password"
-            name="password"
+            type="password"
             placeholder="Enter Your Password"
             iconSrc="/assets/inputs/form/password.svg"
             iconAlt="password icon"
+            {...register('password', {
+              required: 'password tidak boleh kosong',
+              minLength: {
+                value: 7,
+                message: 'Minimal 7 karakter',
+              },
+            })}
             eyelashIconOpenSrc="/assets/inputs/form/eyelash-open.svg"
             eyelashIconCloseSrc="/assets/inputs/form/eyelash.svg"
             eyelashIconAlt="eyelash icon"
             isPassword={true}
-            onChange={handleChangePassword}
           >
             Password
           </InputGroup>
-          <p className="text-red-500 text-xs">{errorPwdMsg ? errorPwdMsg : ''}</p>
+          {errors.password ? <p className={'text-red-500'}>{errors.password.message}</p> : <p></p>}
           <InputGroup
             type="password"
             id="confirm-password"
-            name="confirm-password"
+            {...register('confirmPassword', {
+              required: 'confirm password tidak boleh kosong',
+              validate: (val) => val === getValues('password') || 'confirm password tidak cocok',
+            })}
             placeholder="Enter Confirm Password"
             iconSrc="/assets/inputs/form/password.svg"
             iconAlt="confirm-password icon"
@@ -120,17 +90,12 @@ function RegisterForm() {
             eyelashIconCloseSrc="/assets/inputs/form/eyelash.svg"
             eyelashIconAlt="eyelash icon"
             isPassword={true}
-            onChange={handleChangeConfirmPassword}
           >
             Confirm Password
           </InputGroup>
-          <p className="text-red-500 text-xs">{confirmErrorPwdMsg ? confirmErrorPwdMsg : ''}</p>
+          {errors.confirmPassword ? <p className={'text-red-500'}>{errors.confirmPassword.message}</p> : <p></p>}
           <section className="submit-button">
-            <Button
-              buttonColor={'bg-blue-600'}
-              buttonTextColor={'text-white'}
-              className={'rounded-xl'}
-            >
+            <Button buttonColor={'bg-blue-600'} buttonTextColor={'text-white'} className={'rounded-xl'}>
               Register
             </Button>
           </section>
