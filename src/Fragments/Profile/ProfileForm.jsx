@@ -14,7 +14,7 @@ function ProfileForm() {
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onChange' });
-  const { user, loading } = useSelector((state) => state.users);
+  const { user, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const onSubmitForm = async (data) => {

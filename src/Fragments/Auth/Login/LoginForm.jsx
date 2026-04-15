@@ -6,16 +6,15 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/slice/userSlice';
 import { LoadingIndicator } from '../../../components/application/loading-indicator/loading-indicator';
-import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import ToastSuccess from '../../../components/toast/Toast';
+
 function LoginForm() {
-  const { user, isLogin, loading, error } = useSelector((state) => state.users);
+  const { user, loading, error } = useSelector((state) => state.user);
   console.log(user, loading);
 
   const dispatch = useDispatch();
-  console.log(user);
-  console.log(isLogin);
-  const { data: existingValue } = useLocalStorage('users');
+  const { users } = useSelector((state) => state.register);
+  console.log(users);
   const {
     register,
     handleSubmit,
@@ -27,11 +26,11 @@ function LoginForm() {
   const onSubmit = async (data) => {
     try {
       const { email, password } = data;
-      console.log(data);
-      console.log('PPPPPPP');
-      if (!existingValue?.email || !existingValue?.password) {
-        throw new Error('Akun belum terdaftar');
+      const existingValue = users.find((obj) => obj.email == email);
+      if (!existingValue) {
+        throw new Error('Email belum terdaftar');
       }
+      console.log(existingValue);
       if (email !== existingValue.email || password !== existingValue.password) {
         throw new Error('Email atau password salah');
       }

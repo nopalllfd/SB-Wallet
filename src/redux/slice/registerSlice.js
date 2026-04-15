@@ -11,11 +11,11 @@ export const registerSlice = createSlice({
   name: 'register',
   initialState,
   reducers: {
-    register: (state, { payload }) => {
-      state.users = payload;
+    registerUser: (state, { payload }) => {
+      state.users.push(payload);
     },
   },
 });
 
-export const { register } = registerSlice.actions;
+export const { registerUser } = registerSlice.actions;
 export default registerSlice.reducer;

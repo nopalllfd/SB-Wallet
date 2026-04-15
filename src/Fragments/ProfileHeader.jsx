@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router';
 
 function ProfileHeader({ textColor = 'text-white' }) {
-  const { user } = useSelector((state) => state.users);
+  const { user } = useSelector((state) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [email, _] = useState(() => {
     let data = null;

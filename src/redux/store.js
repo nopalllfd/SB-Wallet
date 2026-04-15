@@ -11,7 +11,7 @@ export const userPersistConfig = {
 };
 
 export const registerPersistConfig = {
-  ket: 'users',
+  key: 'userRegister',
   storage,
 };
 

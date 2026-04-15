@@ -2,7 +2,9 @@ import { Button } from '../../../components/Button';
 import { InputGroup } from '../../../components/Input';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { registerUser } from '../../../redux/slice/registerSlice';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -13,13 +15,18 @@ function RegisterForm() {
     getValues,
     formState: { errors },
   } = useForm({ mode: 'onChange' });
-  const {data: existingUsers, setItem} = useLocalStorage('users')
+  const { users } = useSelector((state) => state.register);
+  const [isExist, setIsExist] = useState(false);
+  const dispatch = useDispatch();
 
+  console.log(users);
   const handleFormSubmit = (data) => {
-    console.log(data.email);
+    console.log(users);
     const trimmedEmail = data.email.trim();
-
-    if (existingUsers?.email === trimmedEmail) {
+    const existingValue = users?.some((obj) => obj.email == trimmedEmail);
+    console.log(existingValue);
+    setIsExist(existingValue);
+    if (isExist) {
       setError('email', {
         type: 'manual',
         message: 'Email ini sudah digunakan',
@@ -27,11 +34,11 @@ function RegisterForm() {
       return;
     }
 
-    const users = {
+    const userRegister = {
       email: trimmedEmail,
       password: data.password,
     };
-    setItem(users)
+    dispatch(registerUser(userRegister));
     navigate('/auth/login');
   };
   return (
