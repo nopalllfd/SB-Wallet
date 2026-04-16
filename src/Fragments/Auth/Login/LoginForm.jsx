@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/slice/userSlice';
 import { LoadingIndicator } from '../../../components/application/loading-indicator/loading-indicator';
-import ToastSuccess from '../../../components/toast/Toast';
 
 function LoginForm() {
   const { user, loading, error } = useSelector((state) => state.user);
