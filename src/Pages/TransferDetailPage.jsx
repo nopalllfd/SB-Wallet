@@ -8,7 +8,7 @@ function TransferDetailPage() {
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Transfer', path: '/transfer' },
     { name: 'Transaction', path: '/transaction' },
-    { name: 'Top up', path: '/top-up' },
+    { name: 'Top up', path: '/topup' },
     { name: 'Profile', path: '/profile' },
     { name: 'Logout', path: '/auth/logout', isLogout: true },
   ];

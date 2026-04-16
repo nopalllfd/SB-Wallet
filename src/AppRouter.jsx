@@ -10,6 +10,7 @@ import TransferPage from './Pages/TransferPage';
 import TransactionPage from './Pages/TransactionPage';
 import TransferDetailPage from './Pages/TransferDetailPage';
 import ProfilePage from './Pages/ProfilePage';
+import TopUpPage from './Pages/TopUpPage';
 
 function AppRouter() {
   return (
@@ -26,6 +27,7 @@ function AppRouter() {
       <Route path="/transaction" element={<TransactionPage />} />
       <Route path="/transfer/:userId" element={<TransferDetailPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/topup" element={<TopUpPage />} />
     </Routes>
   );
 }

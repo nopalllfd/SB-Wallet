@@ -24,7 +24,7 @@ function Header(props) {
     },
     {
       name: 'Top up',
-      path: 'top-up',
+      path: 'topup',
     },
     {
       name: 'Transaction',

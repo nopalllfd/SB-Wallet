@@ -11,7 +11,7 @@ function ButtonSection() {
             buttonTextColor={'text-white'}
             className={'rounded-xl md:rounded-md flex max-md:justify-around justify-between items-center'}
           >
-            <img src={'assets/utils/top-up.svg'} alt="top up icon" className="w-4" />
+            <img src={'assets/utils/topup.svg'} alt="top up icon" className="w-4" />
             <p>Top Up</p>
           </Button>
           <Button

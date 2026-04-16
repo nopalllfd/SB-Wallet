@@ -26,7 +26,7 @@ function ProfileForm() {
   };
   return (
     <section className="flex flex-col gap-4">
-      <div className="profile-picture flex justify-between items-center">
+      <div className="profile-picture flex justify-between md:justify-start md:gap-3 items-center">
         <img className="rounded-md" src="https://i.postimg.cc/K8wXZyh5/Rectangle-651.jpg" alt="" />
         <div className="buttons flex flex-col gap-3">
           <Button
