@@ -6,7 +6,7 @@ function HeaderSectionDesktopOnly() {
           src="/assets/utils/history-blue.svg"
           alt="history icon"
         />
-        <h2 className="font-semibold">History Transaction</h2>
+        <h2 className="font-semibold text-gray-900">History Transaction</h2>
       </div>
     </header>
   );

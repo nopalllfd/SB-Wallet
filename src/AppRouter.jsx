@@ -11,6 +11,8 @@ import TransactionPage from './Pages/TransactionPage';
 import TransferDetailPage from './Pages/TransferDetailPage';
 import ProfilePage from './Pages/ProfilePage';
 import TopUpPage from './Pages/TopUpPage';
+import ProfileChangePinPage from './Pages/ProfileChangePinPage';
+import ProfileChangePasswordPage from './Pages/ProfileChangePasswordPage';
 
 function AppRouter() {
   return (
@@ -27,6 +29,8 @@ function AppRouter() {
       <Route path="/transaction" element={<TransactionPage />} />
       <Route path="/transfer/:userId" element={<TransferDetailPage />} />
       <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/profile/change/pin" element={<ProfileChangePinPage />} />
+      <Route path="/profile/change/password" element={<ProfileChangePasswordPage />} />
       <Route path="/topup" element={<TopUpPage />} />
     </Routes>
   );

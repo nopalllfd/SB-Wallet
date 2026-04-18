@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/slice/userSlice';
 import { LoadingIndicator } from '../../../components/application/loading-indicator/loading-indicator';
+import { toast } from 'react-hot-toast';
 
 function LoginForm() {
   const { user, loading, error } = useSelector((state) => state.user);
@@ -35,9 +36,10 @@ function LoginForm() {
       }
       console.log('DISPATCHHHHHHHHHh');
       await dispatch(loginUser({ email, existingValue })).unwrap();
+      toast.success('Login berhasil');
       navigate('/dashboard');
-      <ToastSuccess />;
     } catch (err) {
+      toast.error(err?.message || 'Login gagal');
       setError('email', {
         type: 'manual',
         message: err.message,
@@ -70,7 +72,11 @@ function LoginForm() {
             type="password"
             id="password"
             {...register('password', {
-              required: 'Password tidak boleh kosong',
+              required: 'password tidak boleh kosong',
+              minLength: {
+                value: 7,
+                message: 'Minimal 7 karakter',
+              },
             })}
             placeholder="Enter Your Password"
             iconSrc="/assets/inputs/form/password.svg"

@@ -14,8 +14,24 @@ export const registerSlice = createSlice({
     registerUser: (state, { payload }) => {
       state.users.push(payload);
     },
+    updateUserPassword: (state, { payload }) => {
+      const { email, newPassword } = payload || {};
+      const targetEmail = String(email || '').trim();
+      if (!targetEmail) return;
+      const user = state.users.find((u) => u?.email === targetEmail);
+      if (!user) return;
+      user.password = newPassword;
+    },
+    updateUserPin: (state, { payload }) => {
+      const { email, pin } = payload || {};
+      const targetEmail = String(email || '').trim();
+      if (!targetEmail) return;
+      const user = state.users.find((u) => u?.email === targetEmail);
+      if (!user) return;
+      user.pin = pin;
+    },
   },
 });
 
-export const { registerUser } = registerSlice.actions;
+export const { registerUser, updateUserPassword, updateUserPin } = registerSlice.actions;
 export default registerSlice.reducer;

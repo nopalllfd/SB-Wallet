@@ -20,7 +20,7 @@ function HeaderSectionDesktopOnly(props) {
           src="/assets/utils/transfer-blue.svg"
           alt="transfer icon"
         />
-        <h2 className="font-semibold">Transfer Money</h2>
+        <h2 className="font-semibold text-gray-900">Transfer Money</h2>
       </div>
       <div className="flex items-center justify-start w-full max-w-3xl p-4 font-sans">
         {headerData.map((d) => (

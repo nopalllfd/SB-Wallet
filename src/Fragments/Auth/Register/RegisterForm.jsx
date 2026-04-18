@@ -3,8 +3,8 @@ import { InputGroup } from '../../../components/Input';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
 import { registerUser } from '../../../redux/slice/registerSlice';
+import { toast } from 'react-hot-toast';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -16,7 +16,6 @@ function RegisterForm() {
     formState: { errors },
   } = useForm({ mode: 'onChange' });
   const { users } = useSelector((state) => state.register);
-  const [isExist, setIsExist] = useState(false);
   const dispatch = useDispatch();
 
   console.log(users);
@@ -25,8 +24,8 @@ function RegisterForm() {
     const trimmedEmail = data.email.trim();
     const existingValue = users?.some((obj) => obj.email == trimmedEmail);
     console.log(existingValue);
-    setIsExist(existingValue);
-    if (isExist) {
+    if (existingValue) {
+      toast.error('Email ini sudah digunakan');
       setError('email', {
         type: 'manual',
         message: 'Email ini sudah digunakan',
@@ -39,6 +38,7 @@ function RegisterForm() {
       password: data.password,
     };
     dispatch(registerUser(userRegister));
+    toast.success('Register berhasil');
     navigate('/auth/login');
   };
   return (

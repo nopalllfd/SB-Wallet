@@ -34,32 +34,40 @@ function ProfileHeader({ textColor = 'text-white' }) {
         <img src="/assets/utils/arrow-down.svg" alt="arrow down icon" />
       </div>
       {isModalOpen && (
-        <div className="absolute -bottom-30 right-5 px-3 Z-100 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
-          {modalItem.map((item) => (
-            <NavLink
-              key={item.path}
-              to={`/${item.path}`}
-              className={({ isActive }) => {
-                const base = 'rounded-xl flex gap-6 items-center w-auto px-8 py-2 text-left transition-all font-semibold';
-                if (item.isLogout) {
-                  return `${base} text-red-500 hover:bg-red-500 hover:text-white`;
-                }
-                return `${base} text-blue-700 hover:bg-blue-700 hover:text-white ${isActive ? 'bg-blue-700 text-white' : ''}`;
-              }}
-            >
-              {({ isActive }) => (
-                <>
-                  <img
-                    src={`/assets/dashboard/nav-item/${item.path}.svg`}
-                    alt={`${item.name} icon`}
-                    className={`${!item.isLogout && isActive ? 'brightness-0 invert' : ''}`}
-                  />
-                  <span>{item.name}</span>
-                </>
-              )}
-            </NavLink>
-          ))}
-        </div>
+        <>
+          <button
+            type="button"
+            className="fixed inset-0 z-40 cursor-default bg-transparent"
+            aria-label="Close menu"
+            onClick={() => setIsModalOpen(false)}
+          />
+          <div className="absolute -bottom-30 right-5 px-3 z-50 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
+            {modalItem.map((item) => (
+              <NavLink
+                key={item.path}
+                to={`/${item.path}`}
+                className={({ isActive }) => {
+                  const base = 'rounded-xl flex gap-6 items-center w-auto px-8 py-2 text-left transition-all font-semibold';
+                  if (item.isLogout) {
+                    return `${base} text-red-500 hover:bg-red-500 hover:text-white`;
+                  }
+                  return `${base} text-blue-700 hover:bg-blue-700 hover:text-white ${isActive ? 'bg-blue-700 text-white' : ''}`;
+                }}
+              >
+                {({ isActive }) => (
+                  <>
+                    <img
+                      src={`/assets/dashboard/nav-item/${item.path}.svg`}
+                      alt={`${item.name} icon`}
+                      className={`${!item.isLogout && isActive ? 'brightness-0 invert' : ''}`}
+                    />
+                    <span>{item.name}</span>
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </div>
+        </>
       )}
 
       <img src="/assets/profile.svg" alt="profile icon" className="w-10" />

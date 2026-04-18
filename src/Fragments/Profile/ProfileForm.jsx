@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { updateUser } from '../../redux/slice/userSlice';
 import { useState } from 'react';
 import { LoadingIndicator } from '../../components/application/loading-indicator/loading-indicator';
+import { toast } from 'react-hot-toast';
 
 function ProfileForm() {
   const [isEdit, setIsEdit] = useState(false);
@@ -18,11 +19,16 @@ function ProfileForm() {
   const dispatch = useDispatch();
 
   const onSubmitForm = async (data) => {
-    const newData = {
-      ...data,
-    };
-    await dispatch(updateUser(newData)).unwrap();
-    setIsEdit(false);
+    try {
+      const newData = {
+        ...data,
+      };
+      await dispatch(updateUser(newData)).unwrap();
+      toast.success('Profile berhasil diperbarui');
+      setIsEdit(false);
+    } catch (err) {
+      toast.error(err?.message || 'Gagal memperbarui profile');
+    }
   };
   return (
     <section className="flex flex-col gap-4">
@@ -112,13 +118,13 @@ function ProfileForm() {
           <div className="password">
             <h1>Password</h1>
             <h1 className="text-blue-700">
-              <Link>Change Password</Link>
+              <Link to="/profile/change/password">Change Password</Link>
             </h1>
           </div>
           <div className="pin">
             <h1>Pin</h1>
             <h1 className="text-blue-700">
-              <Link>Change Pin</Link>
+              <Link to="/profile/change/pin">Change Pin</Link>
             </h1>
           </div>
         </div>

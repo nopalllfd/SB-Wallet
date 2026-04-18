@@ -1,11 +1,10 @@
-import { InputGroup } from '../../components/Input';
 import { Field } from '../../components/Input/field';
 
 function HeaderSection() {
   return (
-    <div className="flex flex-col gap-5 md:flex-row md:justify-between md:pb-10">
+    <div className="flex flex-col gap-5 md:flex-row md:justify-between">
       <div>
-        <h1 className="font-semibold text-xl">Find Transaction</h1>
+        <h1 className="font-semibold text-xl text-gray-900">Find Transaction</h1>
       </div>
       <div className="md:w-1/3">
         <Field

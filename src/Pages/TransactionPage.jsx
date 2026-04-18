@@ -4,19 +4,11 @@ import { DashboardLayout } from '../Layouts/DashboardLayout';
 import HeaderSectionDesktopOnly from '../Fragments/Transaction/HeaderSectionDesktopOnly';
 
 function TransactionPage() {
-  const navItems = [
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Transfer', path: '/transfer' },
-    { name: 'Transaction', path: '/transaction' },
-    { name: 'Top up', path: '/topup' },
-    { name: 'Profile', path: '/profile' },
-    { name: 'Logout', path: '/auth/logout', isLogout: true },
-  ];
   return (
-    <DashboardLayout navItems={navItems}>
+    <DashboardLayout locationDetail="transaction">
       <section className="max-md:py-6 px-6 flex flex-col gap-8">
         <HeaderSectionDesktopOnly />
-        <div className="md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
+        <div className="bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
           <HeaderSection />
           <ListSection />
         </div>

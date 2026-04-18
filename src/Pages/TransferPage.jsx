@@ -10,15 +10,6 @@ function TransferPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState('');
 
-  const navItems = [
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Transfer', path: '/transfer' },
-    { name: 'Transaction', path: '/transaction' },
-    { name: 'Top up', path: '/topup' },
-    { name: 'Profile', path: '/profile' },
-    { name: 'Logout', path: '/auth/logout', isLogout: true },
-  ];
-
   const debouncedSearch = useDebounce(inputValue, 700);
   useEffect(() => {
     if (debouncedSearch) {
@@ -34,11 +25,11 @@ function TransferPage() {
 
   const searchQuery = searchParams.get('search') || '';
   return (
-    <DashboardLayout location="dashboard" locationDetail="transfer" navItems={navItems}>
+    <DashboardLayout locationDetail="transfer">
       <main className="max-md:py-6 px-6 flex flex-col gap-8 relative">
         <>
           <HeaderSectionDesktopOnly step={1} />
-          <div className="md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
+          <div className="bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
             <HeaderSection searchQuery={inputValue} onSearchChange={handleChange} />
             <ListSection searchQuery={searchQuery} />
           </div>

@@ -1,11 +1,11 @@
-import { InputGroup } from '../../components/Input';
-import { Field } from '../../components/Input/field';
-
 function HeaderSection() {
   return (
     <div className="flex flex-col gap-5 md:flex-row md:justify-between ">
       <div>
-        <h1 className="font-semibold text-xl">Profile</h1>
+        <div className="flex items-center gap-3">
+          <img src="/assets/profile/user-blue.svg" alt="profile icon" className="w-6 h-6" />
+          <h1 className="font-semibold text-md text-gray-900">Profile</h1>
+        </div>
       </div>
     </div>
   );
