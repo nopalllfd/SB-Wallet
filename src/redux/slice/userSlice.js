@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { delay } from '../../utils/delay';
+import { updateUser, updateUserPin } from './registerSlice';
 
 const initialState = {
   isLogin: false,
@@ -9,24 +10,19 @@ const initialState = {
 };
 
 export const loginUser = createAsyncThunk('user/loginUser', async (data) => {
-  const { email, existingValue } = data;
   try {
     await delay(2000);
   } catch (error) {
     throw new Error(error);
   }
 
-  return {
-    email,
-    fullName: existingValue.fullName || '',
-  };
+  return data;
 });
 
-export const updateUser = createAsyncThunk('user/updateUser', async (data) => {
+export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
   try {
-    console.log('MASOOKKKKKKK');
-    await delay(2000);
-    return data;
+    await delay(1000);
+    return true;
   } catch (error) {
     throw new Error(error);
   }
@@ -35,12 +31,7 @@ export const updateUser = createAsyncThunk('user/updateUser', async (data) => {
 export const userSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.user = { fullName: '', email: '' };
-      state.isLogin = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addAsyncThunk(loginUser, {
@@ -59,6 +50,21 @@ export const userSlice = createSlice({
           prevState.error = error.message;
         },
       })
+      .addAsyncThunk(logoutUser, {
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+        },
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.user = null;
+          prevState.isLogin = false;
+        },
+        rejected: (prevState, { error }) => {
+          prevState.loading = false;
+          prevState.error = error.message;
+        },
+      })
       .addAsyncThunk(updateUser, {
         pending: (prevState) => {
           prevState.loading = true;
@@ -66,10 +72,11 @@ export const userSlice = createSlice({
         },
         fulfilled: (prevState, { payload }) => {
           prevState.loading = false;
-          if (prevState.user) {
+          const { targetId, newData } = payload;
+          if (prevState.user && prevState.user.id == targetId) {
             prevState.user = {
               ...prevState.user,
-              ...payload,
+              ...newData,
             };
           }
         },
@@ -77,9 +84,16 @@ export const userSlice = createSlice({
           prevState.loading = false;
           prevState.error = error.message;
         },
+      })
+      .addAsyncThunk(updateUserPin, {
+        fulfilled: (state, { payload }) => {
+          const { email, pin } = payload || {};
+          if (state.user && state.user.email == email) {
+            state.user.hasPin = pin !== '';
+          }
+        },
       });
   },
 });
 
-export const { logout } = userSlice.actions;
 export default userSlice.reducer;

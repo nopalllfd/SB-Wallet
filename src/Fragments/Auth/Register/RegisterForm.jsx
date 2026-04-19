@@ -19,7 +19,7 @@ function RegisterForm() {
   const dispatch = useDispatch();
 
   console.log(users);
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = async (data) => {
     console.log(users);
     const trimmedEmail = data.email.trim();
     const existingValue = users?.some((obj) => obj.email == trimmedEmail);
@@ -37,9 +37,13 @@ function RegisterForm() {
       email: trimmedEmail,
       password: data.password,
     };
-    dispatch(registerUser(userRegister));
-    toast.success('Register berhasil');
-    navigate('/auth/login');
+    try {
+      await dispatch(registerUser(userRegister)).unwrap();
+      toast.success('Register berhasil');
+      navigate('/auth/login');
+    } catch (error) {
+      toast.error(error?.message || 'Register gagal');
+    }
   };
   return (
     <>

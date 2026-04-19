@@ -30,14 +30,22 @@ function LoginForm() {
       if (!existingValue) {
         throw new Error('Email belum terdaftar');
       }
-      console.log(existingValue);
-      if (email !== existingValue.email || password !== existingValue.password) {
+      if (password !== existingValue.password) {
         throw new Error('Email atau password salah');
       }
+      const hasPin = existingValue.pin !== '';
       console.log('DISPATCHHHHHHHHHh');
-      await dispatch(loginUser({ email, existingValue })).unwrap();
-      toast.success('Login berhasil');
-      navigate('/dashboard');
+      const { password: _password, pin: _pin, ...userData } = existingValue;
+
+      await dispatch(loginUser({ ...userData, hasPin })).unwrap();
+
+      if (hasPin) {
+        toast.success('Login berhasil');
+        navigate('/dashboard');
+      } else {
+        toast.error('Enter your pin first');
+        navigate('/auth/pin');
+      }
     } catch (err) {
       toast.error(err?.message || 'Login gagal');
       setError('email', {

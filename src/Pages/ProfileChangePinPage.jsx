@@ -46,7 +46,7 @@ function ProfileChangePinPage() {
     if (index > 0) focusIndex(index - 1);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (pinValue.length !== 6) {
       toast.error('PIN harus 6 digit');
@@ -56,9 +56,13 @@ function ProfileChangePinPage() {
       toast.error('Silakan login terlebih dahulu');
       return;
     }
-    dispatch(updateUserPin({ email, pin: pinValue }));
-    toast.success('PIN berhasil diubah');
-    navigate('/profile');
+    try {
+      await dispatch(updateUserPin({ email, pin: pinValue })).unwrap();
+      toast.success('PIN berhasil diubah');
+      navigate('/profile');
+    } catch (error) {
+      toast.error(error?.message || 'PIN gagal diubah');
+    }
   };
 
   return (

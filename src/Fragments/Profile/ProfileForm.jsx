@@ -3,7 +3,7 @@ import { Button } from '../../components/Button';
 import { InputGroup } from '../../components/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { updateUser } from '../../redux/slice/userSlice';
+import { updateUser } from '../../redux/slice/registerSlice';
 import { useState } from 'react';
 import { LoadingIndicator } from '../../components/application/loading-indicator/loading-indicator';
 import { toast } from 'react-hot-toast';
@@ -19,10 +19,14 @@ function ProfileForm() {
   const dispatch = useDispatch();
 
   const onSubmitForm = async (data) => {
+    console.log('first');
     try {
       const newData = {
-        ...data,
+        targetId: user.id,
+        newData: { ...data },
       };
+      console.log(newData);
+
       await dispatch(updateUser(newData)).unwrap();
       toast.success('Profile berhasil diperbarui');
       setIsEdit(false);

@@ -22,7 +22,7 @@ function ProfileChangePasswordPage() {
     formState: { errors },
   } = useForm({ mode: 'onChange' });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const email = user?.email || '';
     if (!email) {
       toast.error('Silakan login terlebih dahulu');
@@ -40,9 +40,13 @@ function ProfileChangePasswordPage() {
       return;
     }
 
-    dispatch(updateUserPassword({ email, newPassword: data.newPassword }));
-    toast.success('Password berhasil diubah');
-    navigate('/profile');
+    try {
+      await dispatch(updateUserPassword({ email, newPassword: data.newPassword })).unwrap();
+      toast.success('Password berhasil diubah');
+      navigate('/profile');
+    } catch (error) {
+      toast.error(error?.message || 'Password gagal diubah');
+    }
   };
 
   return (
