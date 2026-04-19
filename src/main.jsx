@@ -12,8 +12,8 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={store}>
+        <ToastSuccess />
         <PersistGate persistor={persistor} loading={null}>
-          <ToastSuccess />
           <AppRouter />
         </PersistGate>
       </Provider>

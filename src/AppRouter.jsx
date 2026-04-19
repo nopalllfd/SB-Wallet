@@ -1,6 +1,7 @@
 import './App.css';
 import EnterPinPage from './Pages/Auth/EnterPinPage';
 import ForgotPasswordPage from './Pages/Auth/ForgotPasswordPage';
+import ForgotPasswordChangePage from './Pages/Auth/ForgotPasswordChangePage';
 import LoginPage from './Pages/Auth/LoginPage';
 import RegisterPage from './Pages/Auth/RegisterPage';
 import { Routes, Route } from 'react-router';
@@ -22,6 +23,7 @@ function AppRouter() {
         <Route path="register" element={<RegisterPage />} />
         <Route path="pin" element={<EnterPinPage />} />
         <Route path="forgot/password" element={<ForgotPasswordPage />} />
+        <Route path="forgot/password/change" element={<ForgotPasswordChangePage />} />
       </Route>
       <Route path="/" element={<HomePage />} />
       <Route path="/dashboard" element={<DashboardPage />} />

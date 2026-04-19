@@ -11,7 +11,7 @@ function DashboardPage() {
         <div className="flex flex-col gap-6 md:col-span-2">
           <BalanceSection />
           <ButtonSection />
-          <ChartSection />
+          {/* <ChartSection /> */}
         </div>
         <div className="mt-6 md:mt-0">
           <TransactionHistory />

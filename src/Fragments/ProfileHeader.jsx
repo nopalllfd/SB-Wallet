@@ -17,12 +17,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
     if (!open) return null;
     return (
       <>
-        <button
-          type="button"
-          className="fixed inset-0 z-40 cursor-default bg-black/40"
-          aria-label="Close confirm dialog"
-          onClick={onCancel}
-        />
+        <button type="button" className="fixed inset-0 z-40 cursor-default bg-black/40" aria-label="Close confirm dialog" onClick={onCancel} />
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="w-full max-w-sm rounded-lg bg-white p-5 shadow-lg">
             <div className="flex flex-col gap-2">
@@ -32,22 +27,12 @@ function ProfileHeader({ textColor = 'text-white' }) {
 
             <div className="mt-5 flex gap-3">
               <div className="flex-1">
-                <Button
-                  onClick={onCancel}
-                  buttonColor="bg-gray-100"
-                  buttonTextColor="text-gray-800"
-                  className="rounded-md"
-                >
+                <Button onClick={onCancel} buttonColor="bg-gray-100" buttonTextColor="text-gray-800" className="rounded-md">
                   Batal
                 </Button>
               </div>
               <div className="flex-1">
-                <Button
-                  onClick={onConfirm}
-                  buttonColor="bg-red-500"
-                  buttonTextColor="text-white"
-                  className="rounded-md"
-                >
+                <Button onClick={onConfirm} buttonColor="bg-red-500" buttonTextColor="text-white" className="rounded-md">
                   {isLoading ? 'Logout...' : 'Logout'}
                 </Button>
               </div>
@@ -144,7 +129,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
       <img src="/assets/profile.svg" alt="profile icon" className="w-10" />
       <div>
         <div className="greetings text-ultralight text-sm md:hidden">Hello,</div>
-        <div className="greetings text-normal text-md">{user.fullName ? user.fullName : user.email}</div>
+        <div className="greetings text-normal text-md">{user?.fullName || user?.email}</div>
       </div>
     </div>
   );

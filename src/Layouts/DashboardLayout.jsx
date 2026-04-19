@@ -1,7 +1,10 @@
+import { useEffect } from 'react';
 import BrandHeader from '../Fragments/BrandHeader';
 import Header from '../Fragments/Header';
 import ProfileHeader from '../Fragments/ProfileHeader';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
+import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 export const DashboardLayout = ({ children, locationDetail }) => {
   const navItems = [
@@ -12,11 +15,21 @@ export const DashboardLayout = ({ children, locationDetail }) => {
     { name: 'Profile', path: '/profile' },
     { name: 'Logout', path: '/auth/logout', isLogout: true },
   ];
+  const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
   const getIconSrc = (item) => {
     if (item.isLogout) return '/assets/dashboard/nav-item/auth/logout.svg';
     const base = String(item.path || '').replace(/^\//, '');
     return `/assets/dashboard/nav-item/${base}.svg`;
   };
+
+  useEffect(() => {
+    if (!user) {
+      toast.error('You must be logged in before');
+      navigate('/auth/login');
+    }
+  }, [user, navigate]);
 
   return (
     <div className="min-h-screen bg-gray-50 md:grid md:grid-rows-[auto_1fr]">

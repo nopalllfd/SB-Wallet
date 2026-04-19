@@ -7,6 +7,9 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  forgotPassword: {
+    email: null
+  }
 };
 
 export const loginUser = createAsyncThunk('user/loginUser', async (data) => {
@@ -31,7 +34,11 @@ export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
 export const userSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    setForgotEmail: (prevState, {payload}) => {
+      prevState.forgotPassword.email = payload
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addAsyncThunk(loginUser, {
@@ -95,5 +102,5 @@ export const userSlice = createSlice({
       });
   },
 });
-
+export const {setForgotEmail} = userSlice.actions
 export default userSlice.reducer;
