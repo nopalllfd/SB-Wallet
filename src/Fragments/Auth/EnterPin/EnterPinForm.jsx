@@ -48,10 +48,10 @@ function EnterPinForm({ length = 6 }) {
     console.log(data);
     try {
       await dispatch(updateUserPin(data)).unwrap();
-      toast.success('Pin has been saved');
+      toast.success('PIN berhasil disimpan');
       navigate('/dashboard');
     } catch (error) {
-      toast.error(error?.message || 'Failed to save PIN');
+      toast.error(error?.message || 'Gagal menyimpan PIN');
     }
   };
 

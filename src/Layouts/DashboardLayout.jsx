@@ -26,7 +26,7 @@ export const DashboardLayout = ({ children, locationDetail }) => {
 
   useEffect(() => {
     if (!user) {
-      toast.error('You must be logged in before');
+      toast.error('Kamu harus login terlebih dahulu');
       navigate('/auth/login');
     }
   }, [user, navigate]);

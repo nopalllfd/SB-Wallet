@@ -14,7 +14,7 @@ function ForgotPasswordForm() {
     formState: { errors },
   } = useForm({ mode: 'onChange' });
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   console.log(users);
   const onSubmit = (data) => {
     const email = data.email.trim();
@@ -26,8 +26,8 @@ function ForgotPasswordForm() {
       });
       return;
     }
-    dispatch(setForgotEmail(existingUser.email))
-    navigate('/auth/forgot/password/change')
+    dispatch(setForgotEmail(existingUser.email));
+    navigate('/auth/forgot/password/change');
   };
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>

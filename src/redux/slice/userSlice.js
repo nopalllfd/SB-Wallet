@@ -8,8 +8,8 @@ const initialState = {
   loading: false,
   error: null,
   forgotPassword: {
-    email: null
-  }
+    email: null,
+  },
 };
 
 export const loginUser = createAsyncThunk('user/loginUser', async (data) => {
@@ -35,10 +35,24 @@ export const userSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setForgotEmail: (prevState, {payload}) => {
-      prevState.forgotPassword.email = payload
-    }
+    setForgotEmail: (prevState, { payload }) => {
+      prevState.forgotPassword.email = payload;
+    },
+    updateBalance: (prevState, action) => {
+      const { amount, type } = action.payload;
+
+      if (!prevState.user) return;
+
+      if (type === 'TOP_UP') {
+        prevState.user.balance = Number(prevState.user.balance) + Number(amount);
+      }
+
+      if (type === 'TRANSFER_OUT') {
+        prevState.user.balance = Number(prevState.user.balance) - Number(amount);
+      }
+    },
   },
+
   extraReducers: (builder) => {
     builder
       .addAsyncThunk(loginUser, {
@@ -102,5 +116,5 @@ export const userSlice = createSlice({
       });
   },
 });
-export const {setForgotEmail} = userSlice.actions
+export const { setForgotEmail, updateBalance } = userSlice.actions;
 export default userSlice.reducer;

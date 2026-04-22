@@ -3,6 +3,7 @@ import { delay } from '../../utils/delay';
 
 const initialState = {
   users: [],
+  userMap: {},
   loading: false,
   error: null,
 };
@@ -18,6 +19,7 @@ export const registerUser = createAsyncThunk('register/registerUser', async (pay
       fullName: '',
       phone: '',
       pin: '',
+      balance: 0,
     };
   } catch (error) {
     throw new Error(error);
@@ -56,7 +58,21 @@ export const updateUser = createAsyncThunk('user/updateUser', async (data) => {
 export const registerSlice = createSlice({
   name: 'register',
   initialState,
-  reducers: {},
+  reducers: {
+    updateUserBalance: (prevState, action) => {
+      const { id, amount, type } = action.payload;
+      const user = prevState.users.find((user) => user.id == id);
+      console.log(action.payload);
+      if (!type) return;
+
+      if (type == 'TOP_UP') {
+        user.balance = Number(user.balance) + Number(amount);
+      }
+      if (type == 'TRANSFER_OUT') {
+        user.balance = Number(user.balance) - Number(amount);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addAsyncThunk(registerUser, {
@@ -67,6 +83,7 @@ export const registerSlice = createSlice({
         fulfilled: (prevState, { payload }) => {
           prevState.loading = false;
           prevState.users.push(payload);
+          prevState.userMap[payload.id] = payload;
         },
         rejected: (prevState, { error }) => {
           prevState.loading = false;
@@ -120,6 +137,9 @@ export const registerSlice = createSlice({
           const user = prevState.users.find((u) => u.id === targetId);
           if (user) {
             Object.assign(user, newData);
+            if (prevState.userMap[targetId]) {
+              Object.assign(prevState.userMap[targetId], newData);
+            }
           }
         },
         rejected: (prevState, { error }) => {
@@ -130,4 +150,5 @@ export const registerSlice = createSlice({
   },
 });
 
+export const { updateUserBalance } = registerSlice.actions;
 export default registerSlice.reducer;

@@ -43,7 +43,7 @@ function LoginForm() {
         toast.success('Login berhasil');
         navigate('/dashboard');
       } else {
-        toast.error('Enter your pin first');
+        toast.error('Masukkan PIN dulu');
         navigate('/auth/pin');
       }
     } catch (err) {

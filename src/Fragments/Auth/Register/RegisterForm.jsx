@@ -39,10 +39,10 @@ function RegisterForm() {
     };
     try {
       await dispatch(registerUser(userRegister)).unwrap();
-      toast.success('Register berhasil');
+      toast.success('Registrasi berhasil');
       navigate('/auth/login');
     } catch (error) {
-      toast.error(error?.message || 'Register gagal');
+      toast.error(error?.message || 'Registrasi gagal');
     }
   };
   return (

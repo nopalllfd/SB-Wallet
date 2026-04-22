@@ -9,7 +9,7 @@ function EnterPinPage() {
   // const { user } = useSelector((state) => state.user);
   // useEffect(() => {
   //   if (user.pin == '' || user.pin.length < 5) {
-  //     toast.error('Enter your pin first');
+  //     toast.error('Masukkan PIN dulu');
   //   }
   // }, []);
   return (

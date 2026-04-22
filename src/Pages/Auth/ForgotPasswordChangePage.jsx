@@ -7,6 +7,8 @@ import { Button } from '../../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { updateUserPassword } from '../../redux/slice/registerSlice';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 function ForgotPasswordChangePage() {
   const { email } = useSelector((state) => state.user.forgotPassword);
@@ -16,12 +18,14 @@ function ForgotPasswordChangePage() {
     getValues,
     formState: { errors },
   } = useForm({ mode: 'onChange' });
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmitForm = (data) => {
-    console.log(data);
-    const {email, newPassword} = data
-    dispatch(updateUserPassword({email, newPassword}))
+    const { email, newPassword } = data;
+    dispatch(updateUserPassword({ email, newPassword }));
+    toast.success('Password berhasil diubah');
+    navigate('/auth/login');
   };
 
   return (

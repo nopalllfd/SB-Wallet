@@ -1,44 +1,11 @@
 import React from 'react';
-
-const balanceData = [
-  {
-    id: 1,
-    title: 'Balance',
-    amount: '500.000',
-    percentage: '+2%',
-    percentageColor: 'text-green-400',
-    iconSrc: 'assets/dashboard/balance.svg',
-    chartIconSrc: 'assets/dashboard/up-chart.svg',
-  },
-  {
-    id: 2,
-    title: 'Income',
-    amount: '500.000',
-    percentage: '+11.01%',
-    percentageColor: 'text-green-400',
-    iconSrc: 'assets/dashboard/income.svg',
-    chartIconSrc: 'assets/dashboard/up-chart.svg',
-  },
-  {
-    id: 3,
-    title: 'Expense',
-    amount: '500.000',
-    percentage: '-5.06%',
-    percentageColor: 'text-red-500',
-    iconSrc: 'assets/dashboard/expense.svg',
-    chartIconSrc: 'assets/dashboard/down-chart.svg',
-  },
-];
+import { useSelector } from 'react-redux';
 
 function StatCard({ title, iconSrc, amount, chartIconSrc, percentage, percentageColor }) {
   return (
     <div className="flex flex-col gap-2 items-start md:flex-1 md:border md:border-gray-200 md:rounded-md md:bg-white md:py-3 md:px-4 md:justify-center">
       <div className="flex gap-2 items-center">
-        <img
-          src={iconSrc}
-          alt={`${title} icon`}
-          className="hidden md:block"
-        />
+        <img src={iconSrc} alt={`${title} icon`} className="hidden md:block" />
         <h2 className="md:text-base  md:font-medium">{title}</h2>
       </div>
       <p className="value flex md:text-xl md:mt-1">
@@ -47,10 +14,7 @@ function StatCard({ title, iconSrc, amount, chartIconSrc, percentage, percentage
       {percentage && (
         <div className="flex gap-2">
           <p className={`${percentageColor} text-xs md:text-sm md:font-medium`}>{percentage}</p>
-          <img
-            src={chartIconSrc}
-            alt={`${{ chartIconSrc }} icon`}
-          />
+          <img src={chartIconSrc} alt={`${{ chartIconSrc }} icon`} />
         </div>
       )}
     </div>
@@ -58,6 +22,36 @@ function StatCard({ title, iconSrc, amount, chartIconSrc, percentage, percentage
 }
 
 function BalanceSection() {
+  const { user } = useSelector((state) => state.user);
+  const balanceData = [
+    {
+      id: 1,
+      title: 'Balance',
+      amount: user?.balance ?? 0,
+      percentage: '+2%',
+      percentageColor: 'text-green-400',
+      iconSrc: 'assets/dashboard/balance.svg',
+      chartIconSrc: 'assets/dashboard/up-chart.svg',
+    },
+    {
+      id: 2,
+      title: 'Income',
+      amount: '500.000',
+      percentage: '+11.01%',
+      percentageColor: 'text-green-400',
+      iconSrc: 'assets/dashboard/income.svg',
+      chartIconSrc: 'assets/dashboard/up-chart.svg',
+    },
+    {
+      id: 3,
+      title: 'Expense',
+      amount: '500.000',
+      percentage: '-5.06%',
+      percentageColor: 'text-red-500',
+      iconSrc: 'assets/dashboard/expense.svg',
+      chartIconSrc: 'assets/dashboard/down-chart.svg',
+    },
+  ];
   return (
     <section className="relative flex">
       <div className="absolute top-0 left-0 right-0 h-30 bg-blue-700 md:bg-gray-50 border-t md:border-none border-gray-200 z-0"></div>
@@ -77,11 +71,7 @@ function BalanceSection() {
           ))}
         </div>
 
-        <img
-          className="absolute -bottom-10 rounded-b-2xl w-5/6 md:hidden"
-          src="/assets/wave.svg"
-          alt="wave icon"
-        />
+        <img className="absolute -bottom-10 rounded-b-2xl w-5/6 md:hidden" src="/assets/wave.svg" alt="wave icon" />
       </div>
     </section>
   );

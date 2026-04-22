@@ -28,10 +28,10 @@ function ProfileForm() {
       console.log(newData);
 
       await dispatch(updateUser(newData)).unwrap();
-      toast.success('Profile berhasil diperbarui');
+      toast.success('Profil berhasil diperbarui');
       setIsEdit(false);
     } catch (err) {
-      toast.error(err?.message || 'Gagal memperbarui profile');
+      toast.error(err?.message || 'Gagal memperbarui profil');
     }
   };
   return (
@@ -67,7 +67,7 @@ function ProfileForm() {
             {...register('fullName')}
             isDisabled={!isEdit}
             disabled={!isEdit}
-            defaultValue={user.fullName}
+            defaultValue={user?.fullName}
             id="fullName"
             placeholder="Enter Your Fullname"
             iconSrc="/assets/utils/user.svg"
@@ -79,7 +79,7 @@ function ProfileForm() {
             type="tel"
             isDisabled={!isEdit}
             disabled={!isEdit}
-            defaultValue={user.phone}
+            defaultValue={user?.phone}
             {...register('phone', {
               pattern: {
                 value: /^[0-9]+$/,
