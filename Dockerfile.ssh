@@ -1,0 +1,23 @@
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get install openssh-server -y && apt-get clean
+
+RUN useradd -m -s /bin/bash nopal
+
+RUN mkdir -p /home/nopal/.ssh
+COPY id_ewallet.pub /home/nopal/.ssh/authorized_keys
+
+RUN chown -R nopal:nopal /home/nopal/.ssh
+RUN chmod 700 /home/nopal/.ssh
+RUN chmod 600 /home/nopal/.ssh/authorized_keys
+
+RUN sed -i 's/#PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+RUN sed -i 's/#PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
+RUN sed -i 's/#PubkeyAuthentication.*/PubkeyAuthentication yes/' /etc/ssh/sshd_config
+
+RUN ssh-keygen -A
+RUN mkdir -p /var/run/sshd
+
+EXPOSE 22 
+
+CMD ["/usr/sbin/sshd", "-D"]
