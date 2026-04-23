@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { updateUser } from '../../redux/slice/registerSlice';
 import { useState } from 'react';
-import { LoadingIndicator } from '../../components/application/loading-indicator/loading-indicator';
 import { toast } from 'react-hot-toast';
 
 function ProfileForm() {
@@ -134,7 +133,7 @@ function ProfileForm() {
         </div>
         {isEdit ? (
           <Button buttonColor="bg-blue-700" buttonTextColor="text-white" className="rounded-md">
-            {loading ? <LoadingIndicator /> : 'Submit'}
+            Submit
           </Button>
         ) : (
           ''

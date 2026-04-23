@@ -13,7 +13,6 @@ export const DashboardLayout = ({ children, locationDetail }) => {
     { name: 'Transaction', path: '/transaction' },
     { name: 'Top up', path: '/topup' },
     { name: 'Profile', path: '/profile' },
-    { name: 'Logout', path: '/auth/logout', isLogout: true },
   ];
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -51,9 +50,7 @@ export const DashboardLayout = ({ children, locationDetail }) => {
                 to={item.path}
                 className={({ isActive }) => {
                   const base = 'flex items-center gap-3 px-5 py-2.5 justify-start w-4/5 rounded-md transition-all';
-                  if (item.isLogout) {
-                    return `${base} text-red-500 hover:bg-red-500 hover:text-white`;
-                  }
+
                   return `${base} hover:bg-blue-100 hover:text-blue-700 ${isActive ? 'bg-blue-700 text-white' : ''}`;
                 }}
               >

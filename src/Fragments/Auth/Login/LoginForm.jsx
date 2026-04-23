@@ -35,7 +35,7 @@ function LoginForm() {
       }
       const hasPin = existingValue.pin !== '';
       console.log('DISPATCHHHHHHHHHh');
-      const { password: _password, pin: _pin, ...userData } = existingValue;
+      const { password: userPassword, pin, ...userData } = existingValue;
 
       await dispatch(loginUser({ ...userData, hasPin })).unwrap();
 
@@ -43,7 +43,7 @@ function LoginForm() {
         toast.success('Login berhasil');
         navigate('/dashboard');
       } else {
-        toast.error('Masukkan PIN dulu');
+        toast.error('Enter your pin first');
         navigate('/auth/pin');
       }
     } catch (err) {
@@ -100,7 +100,7 @@ function LoginForm() {
           <ForgotPasswordLink />
           <section className="submit-button">
             <Button buttonColor={'bg-blue-600'} buttonTextColor={'text-white'} className={'rounded-xl'}>
-              {loading ? <LoadingIndicator /> : 'Login'}
+              Login
             </Button>
           </section>
         </form>
