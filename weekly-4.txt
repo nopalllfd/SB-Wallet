@@ -1,0 +1,50 @@
+Perbedaan Linux kernel dan Distro
+Linux Kernel : adalah sebuah inti atau core dimana yang berinteraksi langsung dengan Hardware dan merupakan jembatan antara Software dan Hardware
+Linux Distro : adalah sebuah sistem operasi, dimana dibangun diatas Linux Kernel, Distro menggabungkan Kernel dengan tambahan seperti GUI
+
+Linux FHS (Filesystem Hierarcy Standart)
+Adalah standar yang mengatur tata letak direktori pada OS Linux
+/home → berisikan file milik user
+/root → berisikan file milik root
+/etc → berisikan file konfig
+/bin → berisikan program esensial
+/usr → berisikan program non esensial
+/var → berisikan file tambahan atau pendukung
+/mnt → storage yang dipasang secara sementara ataupun manual
+/media → removable media, (eksternal HDD, USB)
+
+Sistem Permission dan Owner pada Linux
+Owner : Terbagi menjadi 3, yaitu,
+User (u): Pemilik file tsb.
+Group (g): Kelompok user yang memiliki akses
+Others (o): Pengguna lain di luar dari pemilik dan grup.
+Permission: Terbagi menjadi 3 jenis,
+Read (r) : Hak untuk membaca
+Write (w): Hak untuk mengedit/menghapus/menambah
+Execute (x): Hak untuk menjalankan file executable / masuk ke dalam directory
+
+Prinsip Enkripsi pada SSH
+Asimetris (Public/Private Key): Digunakan di awal sesi (handshake) untuk autentikasi dan negosiasi kunci secara aman tanpa mengirimkan password dalam teks terang (plaintext). 
+Perbedaan HTTP dan HTTPs
+HTTP (Hypertext Transfer Protocol): Protokol dasar untuk mentransfer data di web. Data dikirim dalam format plaintext (teks biasa), sehingga rentan disadap oleh pihak ketiga. Berjalan di port 80. 
+HTTPS (HTTP Secure): Versi HTTP yang jauh lebih aman karena menggunakan protokol enkripsi SSL/TLS. Semua data (seperti password atau informasi API) yang dikirim antara klien dan server dienkripsi menjadi teks acak. Berjalan di port 443. 
+
+Docker OCI Compliance Standard 
+Adalah sebuah standarisasi dalam memformat container, dan jika mematuhi standar tsb, maka Image yang tsb dapat dijalankan oleh software/engine yang lain (podman dsb)
+
+Perbedaan antara Container dan VM (Virtual Machine) 
+Virtual Machine (VM) memvirtualisasi hardware untuk menjalankan sistem operasi (OS) lengkap secara terpisah, menjadikannya berat tetapi terisolasi tinggi. 
+Sementara container, memvirtualisasi pada level Sistem Operasi (OS). Container berbagi Linux Kernel yang sama dengan Host-nya dan hanya membawa aplikasi beserta dependencies-nya. Ukurannya sangat ringan (Megabytes), efisien menggunakan memori, dan booting hampir instan (detik). 
+Definisi dan manfaat dari image layer pada Docker
+merupakan tumpukan file sistem yang tersusun secara bertingkat, membentuk satu image Docker utuh yang berisi instruksi dari perintah Dockerfile 
+yang bermanfaat untuk Meningkatkan efisiensi penyimpanan dan mempercepat proses build. Jika Anda mengubah satu baris kode di aplikasi, Docker tidak perlu mem-build ulang instalasi OS atau dependencies; ia hanya membuat ulang layer terakhir yang berubah. Layer dasar yang tidak berubah akan diambil dari cache lokal 
+
+Kegunaan docker volume dan network
+Kegunaan: Menyimpan data secara persisten (permanen). Container pada dasarnya bersifat ephemeral (sementara), jika container dihapus, datanya hilang. Volume mengatasi ini dengan menyimpan data di lokasi khusus pada host.
+Contoh: Menyimpan Data Database: MySQL, PostgreSQL, MongoDB, dll 
+Kegunaan: Mengizinkan container-container untuk saling berkomunikasi secara aman dalam jaringan yang terisolasi dari dunia luar.
+Contoh: Docker Network digunakan untuk menghubungkan kontainer agar bisa saling berkomunikasi, mengakses internet, atau terisolasi satu sama lain 
+
+Web Server & Reverse Proxy
+Web Server: Sebuah program/software yang menyediakan akses ke resource dengan protokol http dan https, dan juga Web Server adalah sebuah service pada sebuah server
+Reverse Proxy: Adalah server perantara yang ditempatkan di depan web server (backend) untuk menerima, menyaring, dan meneruskan permintaan klien (pengguna) ke server yang tepat 
