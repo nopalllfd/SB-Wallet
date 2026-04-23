@@ -5,7 +5,7 @@ function TransactionHistory() {
   const { userMap } = useSelector((state) => state.register);
   const { user } = useSelector((state) => state.user);
   console.log(userMap);
-  const transferOutData = data.filter((transaction) => transaction.toUserId !== null && transaction.userId == user.id);
+  const transferOutData = data.filter((transaction) => transaction.toUserId !== null && transaction.userId == user?.id);
   console.log(transferOutData);
 
   const result = transferOutData.map((trx) => ({

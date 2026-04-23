@@ -24,7 +24,7 @@ RUN mkdir -p /home/nopal/.ssh
 
 COPY id_ewallet.pub /home/nopal/.ssh/authorized_keys
 
-RUN chown -R nopal:nopal /home/nopal.ssh
+RUN chown -R nopal:nopal /home/nopal/.ssh
 RUN chmod 700 /home/nopal/.ssh
 RUN chmod 600 /home/nopal/.ssh/authorized_keys
 
