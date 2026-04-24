@@ -6,15 +6,13 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/slice/userSlice';
 import { LoadingIndicator } from '../../../components/application/loading-indicator/loading-indicator';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 function LoginForm() {
-  const { user, loading, error } = useSelector((state) => state.user);
-  console.log(user, loading);
+  const { error } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.register);
-  console.log(users);
   const {
     register,
     handleSubmit,
@@ -34,8 +32,7 @@ function LoginForm() {
         throw new Error('Email atau password salah');
       }
       const hasPin = existingValue.pin !== '';
-      console.log('DISPATCHHHHHHHHHh');
-      const { password: userPassword, pin, ...userData } = existingValue;
+      const { password: _password, pin: _pin, ...userData } = existingValue;
 
       await dispatch(loginUser({ ...userData, hasPin })).unwrap();
 
@@ -43,7 +40,7 @@ function LoginForm() {
         toast.success('Login berhasil');
         navigate('/dashboard');
       } else {
-        toast.error('Enter your pin first');
+        toast.error('Masukkan PIN dulu');
         navigate('/auth/pin');
       }
     } catch (err) {

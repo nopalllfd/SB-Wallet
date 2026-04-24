@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { currencyFormatter } from '../../utils/currency';
 
 function StatCard({ title, iconSrc, amount, chartIconSrc, percentage, percentageColor }) {
   return (
@@ -9,7 +10,7 @@ function StatCard({ title, iconSrc, amount, chartIconSrc, percentage, percentage
         <h2 className="md:text-base  md:font-medium">{title}</h2>
       </div>
       <p className="value flex md:text-xl md:mt-1">
-        Rp. <span className="font-bold md:ml-1 md:font-normal">{amount}</span>
+        <span className="font-bold md:ml-1 md:font-normal">{currencyFormatter.format(amount)}</span>
       </p>
       {percentage && (
         <div className="flex gap-2">

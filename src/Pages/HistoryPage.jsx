@@ -1,11 +1,11 @@
-import HeaderSection from '../Fragments/Transaction/HeaderSection';
-import ListSection from '../Fragments/Transaction/ListSection';
+import HeaderSection from '../Fragments/History/HeaderSection';
+import ListSection from '../Fragments/History/ListSection';
 import { DashboardLayout } from '../Layouts/DashboardLayout';
-import HeaderSectionDesktopOnly from '../Fragments/Transaction/HeaderSectionDesktopOnly';
+import HeaderSectionDesktopOnly from '../Fragments/History/HeaderSectionDesktopOnly';
 
-function TransactionPage() {
+function HistoryPage() {
   return (
-    <DashboardLayout locationDetail="transaction">
+    <DashboardLayout locationDetail="history">
       <section className="max-md:py-6 px-6 flex flex-col gap-8">
         <HeaderSectionDesktopOnly />
         <div className="bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
@@ -17,4 +17,4 @@ function TransactionPage() {
   );
 }
 
-export default TransactionPage;
+export default HistoryPage;

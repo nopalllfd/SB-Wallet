@@ -19,9 +19,9 @@ function ProfileHeader({ textColor = 'text-white' }) {
       <>
         <button type="button" className="fixed inset-0 z-40 cursor-default bg-black/40" aria-label="Close confirm dialog" onClick={onCancel} />
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-          <div className="w-full max-w-sm rounded-lg bg-white p-5 shadow-lg">
+          <div className="w-full max-w-sm rounded-lg border border-blue-100 bg-white p-5 shadow-lg">
             <div className="flex flex-col gap-2">
-              <div className="text-base font-semibold text-gray-900">Logout</div>
+              <div className="text-base font-semibold text-blue-700">Logout</div>
               <div className="text-sm text-gray-600">Yakin ingin logout?</div>
             </div>
 
@@ -32,7 +32,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
                 </Button>
               </div>
               <div className="flex-1">
-                <Button onClick={onConfirm} buttonColor="bg-red-500" buttonTextColor="text-white" className="rounded-md">
+                <Button onClick={onConfirm} buttonColor="bg-blue-700" buttonTextColor="text-white" className="rounded-md">
                   {isLoading ? 'Logout...' : 'Logout'}
                 </Button>
               </div>

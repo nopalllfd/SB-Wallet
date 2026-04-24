@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { updateUser } from '../../redux/slice/registerSlice';
 import { useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 function ProfileForm() {
   const [isEdit, setIsEdit] = useState(false);
@@ -14,7 +14,7 @@ function ProfileForm() {
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onChange' });
-  const { user, loading } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const onSubmitForm = async (data) => {
@@ -98,7 +98,7 @@ function ProfileForm() {
           </InputGroup>
           <p className={`text-red-500 ${errors.phone ? 'block' : 'hidden'}`}>{errors.phone && errors.phone.message}</p>
           <InputGroup
-            defaultValue={user.email}
+            defaultValue={user?.email}
             isDisabled={true}
             {...register('email', {
               required: 'Email tidak boleh kosong',

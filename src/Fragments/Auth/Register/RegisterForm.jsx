@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../../redux/slice/registerSlice';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 function RegisterForm() {
   const navigate = useNavigate();

@@ -4,7 +4,7 @@ function HeaderSection() {
   return (
     <div className="flex flex-col gap-5 md:flex-row md:justify-between">
       <div>
-        <h1 className="font-semibold text-xl text-gray-900">Find Transaction</h1>
+        <h1 className="font-semibold text-xl text-gray-900">Cari Riwayat</h1>
       </div>
       <div className="md:w-1/3">
         <Field
@@ -12,7 +12,7 @@ function HeaderSection() {
           iconSrc={'assets/utils/search.svg'}
           iconAlt={'search icon'}
           className={'text-sm font-normal flex-row-reverse'}
-          placeholder={'Enter Number or Full Name'}
+          placeholder={'Cari nomor atau nama lengkap'}
         />
       </div>
     </div>

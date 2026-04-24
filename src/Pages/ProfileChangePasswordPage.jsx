@@ -6,7 +6,7 @@ import { InputGroup } from '../components/Input';
 import HeaderSection from '../Fragments/Profile/HeaderSection';
 import { DashboardLayout } from '../Layouts/DashboardLayout';
 import { updateUserPassword } from '../redux/slice/registerSlice';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 function ProfileChangePasswordPage() {
   const dispatch = useDispatch();

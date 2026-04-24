@@ -30,7 +30,7 @@ function ForgotPasswordForm() {
     navigate('/auth/forgot/password/change');
   };
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex  flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
       <section className="input-group flex flex-col gap-4">
         <InputGroup
           {...register('email', {

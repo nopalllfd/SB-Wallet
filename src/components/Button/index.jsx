@@ -15,7 +15,7 @@ export const Button = (props) => {
   return (
     <button
       onClick={props.onClick}
-      className={`${className} ${buttonColor} ${buttonTextColor} ${border} py-3 md:py-2 px-2 w-full cursor-pointer`}
+      className={`${buttonColor} ${buttonTextColor} ${border} py-3 md:py-2 px-2 w-full cursor-pointer ${className}`}
     >
       {children ? children : buttonText}
     </button>

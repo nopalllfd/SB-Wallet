@@ -7,7 +7,7 @@ import { Button } from '../../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { updateUserPassword } from '../../redux/slice/registerSlice';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { useNavigate } from 'react-router';
 
 function ForgotPasswordChangePage() {
@@ -39,9 +39,9 @@ function ForgotPasswordChangePage() {
           <InputGroup
             type="email"
             id="email"
-            {...register('email')}
             value={email}
-            disabled={true}
+            readOnly={true}
+            className="select-none"
             placeholder="Enter Your Email"
             iconSrc="/assets/inputs/form/email.svg"
             iconAlt="email icon"

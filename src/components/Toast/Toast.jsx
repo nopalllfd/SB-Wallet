@@ -1,7 +1,7 @@
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner';
 
 function ToastSuccess() {
-  return <Toaster position="top-right" reverseOrder={false} />;
+  return <Toaster position="top-right" richColors closeButton />;
 }
 
 export default ToastSuccess;

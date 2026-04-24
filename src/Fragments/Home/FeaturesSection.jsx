@@ -1,9 +1,10 @@
 import { Button } from '../../components/Button';
+import { Link } from 'react-router';
 
 function FeaturesSection() {
   return (
-    <section className="relative px-5 pt-10 pb-36 lg:pb-48 mb-40 flex flex-col lg:flex-row justify-center items-center max-w-7xl mx-auto w-full gap-10">
-      <div className="absolute left-0 right-0 top-40 lg:top-0 bottom-0 -z-50 flex flex-col w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden px-5 pt-10 pb-36 lg:pb-48 mb-40 flex flex-col lg:flex-row justify-center items-center gap-10">
+      <div className="absolute left-1/2 -translate-x-1/2 top-40 lg:top-0 bottom-0 -z-50 flex flex-col w-screen overflow-hidden">
         <img
           src="/assets/home/features/Vector-1.svg"
           alt=""
@@ -72,7 +73,11 @@ function FeaturesSection() {
           </div>
         </div>
 
-        <Button className="text-blue-500 bg-white rounded-md font-semibold mt-4 px-10 py-3 w-full md:w-1/2 hover:bg-gray-100 transition-colors">Get Started</Button>
+        <Link to="/auth/register" className="w-full md:w-1/2">
+          <Button className="text-blue-500 bg-white rounded-md font-semibold mt-4 px-10 py-3 w-full hover:bg-gray-100 transition-colors">
+            Get Started
+          </Button>
+        </Link>
       </div>
     </section>
   );

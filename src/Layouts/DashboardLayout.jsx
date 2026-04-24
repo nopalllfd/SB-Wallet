@@ -4,13 +4,13 @@ import Header from '../Fragments/Header';
 import ProfileHeader from '../Fragments/ProfileHeader';
 import { NavLink, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 export const DashboardLayout = ({ children, locationDetail }) => {
   const navItems = [
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Transfer', path: '/transfer' },
-    { name: 'Transaction', path: '/transaction' },
+    { name: 'Riwayat', path: '/history' },
     { name: 'Top up', path: '/topup' },
     { name: 'Profile', path: '/profile' },
   ];
@@ -20,7 +20,8 @@ export const DashboardLayout = ({ children, locationDetail }) => {
   const getIconSrc = (item) => {
     if (item.isLogout) return '/assets/dashboard/nav-item/auth/logout.svg';
     const base = String(item.path || '').replace(/^\//, '');
-    return `/assets/dashboard/nav-item/${base}.svg`;
+    const mapped = base === 'history' ? 'transaction' : base;
+    return `/assets/dashboard/nav-item/${mapped}.svg`;
   };
 
   useEffect(() => {
@@ -73,7 +74,7 @@ export const DashboardLayout = ({ children, locationDetail }) => {
           <div className="md:hidden">
             <Header locationDetail={locationDetail} location={'dashboard'} />
           </div>
-          <main className="md:px-8 pt-18 lg:px-10 md:py-8 overflow-hidden">{children}</main>
+          <main className="md:px-8 pt-18 lg:px-10 md:py-8 overflow-x-hidden">{children}</main>
         </div>
       </div>
     </div>

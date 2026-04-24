@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '../../../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUserPin } from '../../../redux/slice/registerSlice';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 import { useNavigate } from 'react-router';
 
 function EnterPinForm({ length = 6 }) {
@@ -61,7 +61,7 @@ function EnterPinForm({ length = 6 }) {
         {pin.map((data, index) => (
           <input
             key={index}
-            type="text"
+            type="password"
             className="border-b w-1/6 text-4xl pb-6 outline-none text-center focus:border-blue-500"
             inputMode="numeric"
             pattern="[0-9]*"

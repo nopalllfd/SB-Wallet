@@ -27,8 +27,8 @@ function Header(props) {
       path: 'topup',
     },
     {
-      name: 'Transaction',
-      path: 'transaction',
+      name: 'Riwayat',
+      path: 'history',
     },
     {
       name: 'Profile',
@@ -42,14 +42,14 @@ function Header(props) {
       {isDashboard && (props.locationDetail ? <ProfileHeader /> : <ProfileHeader />)}
       {!isDashboard && (
         <nav className="hidden md:flex items-center gap-3">
-          <Button buttonColor="bg-white" buttonTextColor="text-blue-500 font-semibold" className="rounded-xl   w-auto! px-6!">
+          <Button buttonColor="bg-white" buttonTextColor="text-blue-500 font-semibold" className="rounded-xl !w-auto !px-6">
             <Link to="/auth/login">Sign In</Link>
           </Button>
           <Button
             buttonColor="bg-transparent"
             buttonTextColor="text-white font-semibold"
             border="border border-white"
-            className="rounded-xl w-auto! px-6!"
+            className="rounded-xl !w-auto !px-6"
           >
             <Link to="/auth/register">Sign Up</Link>
           </Button>

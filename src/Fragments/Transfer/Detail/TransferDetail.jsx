@@ -11,7 +11,7 @@ import PinInput from './PinInput';
 import { updateBalance } from '../../../redux/slice/userSlice';
 import { updateUserBalance } from '../../../redux/slice/registerSlice';
 import { addTransaction } from '../../../redux/slice/transactionSlice';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 function TransferDetail(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);

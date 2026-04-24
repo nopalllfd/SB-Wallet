@@ -49,7 +49,7 @@ function PinInput({ onSubmit }) {
         {pin.map((digit, index) => (
           <input
             key={index}
-            type="text"
+            type="password"
             inputMode="numeric"
             pattern="[0-9]*"
             name={`pin-${index}`}

@@ -2,17 +2,22 @@ import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Button } from '../components/Button';
+import { InputGroup } from '../components/Input';
 import HeaderSection from '../Fragments/Profile/HeaderSection';
 import { DashboardLayout } from '../Layouts/DashboardLayout';
 import { updateUserPin } from '../redux/slice/registerSlice';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 function ProfileChangePinPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
+  const { users } = useSelector((state) => state.register);
   const email = user?.email || '';
+  const currentUser = users.find((item) => item.email === email);
+  const currentPin = currentUser?.pin || '';
 
+  const [oldPin, setOldPin] = useState('');
   const [digits, setDigits] = useState(['', '', '', '', '', '']);
   const inputRefs = useRef([]);
 
@@ -24,7 +29,9 @@ function ProfileChangePinPage() {
   };
 
   const handleChange = (index, rawValue) => {
-    const value = String(rawValue || '').replace(/\D/g, '').slice(-1);
+    const value = String(rawValue || '')
+      .replace(/\D/g, '')
+      .slice(-1);
     setDigits((prev) => {
       const next = [...prev];
       next[index] = value;
@@ -48,8 +55,20 @@ function ProfileChangePinPage() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    if (!/^\d{6}$/.test(oldPin)) {
+      toast.error('PIN lama harus 6 digit angka');
+      return;
+    }
+    if (currentPin && oldPin !== currentPin) {
+      toast.error('PIN lama tidak sesuai');
+      return;
+    }
     if (pinValue.length !== 6) {
-      toast.error('PIN harus 6 digit');
+      toast.error('PIN baru harus 6 digit');
+      return;
+    }
+    if (oldPin === pinValue) {
+      toast.error('PIN baru harus berbeda dari PIN lama');
       return;
     }
     if (!email) {
@@ -76,6 +95,28 @@ function ProfileChangePinPage() {
               <p className="text-gray-500 text-sm">Please save your pin because this so important.</p>
             </div>
 
+            <div className="w-full max-w-md">
+              <InputGroup
+                id="oldPin"
+                type="password"
+                value={oldPin}
+                onChange={(e) => {
+                  setOldPin(e.target.value.replace(/\D/g, '').slice(0, 6));
+                }}
+                placeholder="Masukkan PIN lama (6 digit)"
+                iconSrc="/assets/inputs/form/password.svg"
+                iconAlt="old pin icon"
+                isPassword={true}
+                eyelashIconOpenSrc="/assets/inputs/form/eyelash-open.svg"
+                eyelashIconCloseSrc="/assets/inputs/form/eyelash.svg"
+                eyelashIconAlt="toggle password icon"
+                inputMode="numeric"
+                maxLength={6}
+              >
+                PIN Lama
+              </InputGroup>
+            </div>
+
             <div className="w-full flex justify-center gap-3 md:gap-6">
               {digits.map((digit, index) => (
                 <input
@@ -86,7 +127,7 @@ function ProfileChangePinPage() {
                   value={digit}
                   onChange={(e) => handleChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
-                  type="text"
+                  type="password"
                   inputMode="numeric"
                   pattern="[0-9]*"
                   maxLength={1}
