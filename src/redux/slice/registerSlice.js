@@ -62,14 +62,18 @@ export const registerSlice = createSlice({
     updateUserBalance: (prevState, action) => {
       const { id, amount, type } = action.payload;
       const user = prevState.users.find((user) => user.id == id);
-      console.log(action.payload);
-      if (!type) return;
+      if (!user || !type) return;
 
-      if (type == 'TOP_UP') {
-        user.balance = Number(user.balance) + Number(amount);
-      }
-      if (type == 'TRANSFER_OUT') {
-        user.balance = Number(user.balance) - Number(amount);
+      const prevBalanceRaw = Number(user.balance);
+      const prevBalance = Number.isFinite(prevBalanceRaw) ? prevBalanceRaw : 0;
+      const deltaRaw = Number(amount);
+      const delta = Number.isFinite(deltaRaw) ? deltaRaw : 0;
+
+      if (type == 'TOP_UP') user.balance = prevBalance + delta;
+      if (type == 'TRANSFER_OUT') user.balance = prevBalance - delta;
+
+      if (prevState.userMap?.[id]) {
+        prevState.userMap[id].balance = user.balance;
       }
     },
   },

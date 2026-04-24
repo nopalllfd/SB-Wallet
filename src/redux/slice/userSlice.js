@@ -43,13 +43,13 @@ export const userSlice = createSlice({
 
       if (!prevState.user) return;
 
-      if (type === 'TOP_UP') {
-        prevState.user.balance = Number(prevState.user.balance) + Number(amount);
-      }
+      const prevBalanceRaw = Number(prevState.user.balance);
+      const prevBalance = Number.isFinite(prevBalanceRaw) ? prevBalanceRaw : 0;
+      const deltaRaw = Number(amount);
+      const delta = Number.isFinite(deltaRaw) ? deltaRaw : 0;
 
-      if (type === 'TRANSFER_OUT') {
-        prevState.user.balance = Number(prevState.user.balance) - Number(amount);
-      }
+      if (type === 'TOP_UP') prevState.user.balance = prevBalance + delta;
+      if (type === 'TRANSFER_OUT') prevState.user.balance = prevBalance - delta;
     },
   },
 

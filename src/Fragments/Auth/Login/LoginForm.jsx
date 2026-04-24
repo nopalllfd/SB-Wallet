@@ -33,8 +33,10 @@ function LoginForm() {
       }
       const hasPin = existingValue.pin !== '';
       const { password: _password, pin: _pin, ...userData } = existingValue;
+      const balanceRaw = Number(userData.balance);
+      const balance = Number.isFinite(balanceRaw) ? balanceRaw : 0;
 
-      await dispatch(loginUser({ ...userData, hasPin })).unwrap();
+      await dispatch(loginUser({ ...userData, balance, hasPin })).unwrap();
 
       if (hasPin) {
         toast.success('Login berhasil');
