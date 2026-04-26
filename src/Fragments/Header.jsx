@@ -1,17 +1,32 @@
 import { useState } from 'react';
 import BrandHeader from './BrandHeader';
 import { Button } from '../components/Button';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { NavMenuItem } from '../components/NavMenuItems';
 import ProfileHeader from './ProfileHeader';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../redux/slice/userSlice';
+import { toast } from 'sonner';
 
 function Header(props) {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleClick = () => {
     setIsBurgerOpen(!isBurgerOpen);
   };
   const isDashboard = props.location === 'dashboard';
-  console.log(props.locationDetail);
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap();
+      toast.success('Logout berhasil');
+      setIsBurgerOpen(false);
+      navigate('/auth/login');
+    } catch {
+      toast.error('Logout gagal');
+    }
+  };
 
   const navItems = [
     {
@@ -74,6 +89,11 @@ function Header(props) {
                 {item.name}
               </NavMenuItem>
             ))}
+            <div className="px-3 pt-2">
+              <Button onClick={handleLogout} buttonTextColor="text-red-600 pb-5 text-md">
+                Logout
+              </Button>
+            </div>
           </nav>
         )
       ) : (
