@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { updateUser } from '../../redux/slice/registerSlice';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
 
 function ProfileForm() {
   const [isEdit, setIsEdit] = useState(false);
@@ -18,13 +19,11 @@ function ProfileForm() {
   const dispatch = useDispatch();
 
   const onSubmitForm = async (data) => {
-    console.log('first');
     try {
       const newData = {
         targetId: user.id,
         newData: { ...data },
       };
-      console.log(newData);
 
       await dispatch(updateUser(newData)).unwrap();
       toast.success('Profil berhasil diperbarui');
@@ -36,7 +35,14 @@ function ProfileForm() {
   return (
     <section className="flex flex-col gap-4">
       <div className="profile-picture flex justify-between md:justify-start md:gap-3 items-center">
-        <img className="rounded-md" src="https://i.postimg.cc/K8wXZyh5/Rectangle-651.jpg" alt="" />
+        <img
+          className="rounded-md"
+          src={getProfileImageSrc(user)}
+          onError={(e) => {
+            e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
+          }}
+          alt="profile"
+        />
         <div className="buttons flex flex-col gap-3">
           <Button
             onClick={() => {

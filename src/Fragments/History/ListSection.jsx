@@ -1,20 +1,31 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '../../components/Button';
 import { useSelector } from 'react-redux';
 import { currencyFormatter } from '../../utils/currency';
+import Pagination from '../../components/Pagination';
+import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
 
 function ListSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userDetail, setUserDetail] = useState([]);
+  const [page, setPage] = useState(1);
+  const pageSize = 8;
   const { transactions: data } = useSelector((state) => state.transaction);
   const { userMap } = useSelector((state) => state.register);
   const { user } = useSelector((state) => state.user);
 
-  const transferOutData = data.filter((item) => item.toUserId !== null && item.userId == user.id);
-  const result = transferOutData.map((item) => ({
-    ...item,
-    user: userMap[item.toUserId],
-  }));
+  const result = useMemo(() => {
+    const transferOutData = data.filter((item) => item.toUserId !== null && item.userId == user.id);
+    return transferOutData.map((item) => ({
+      ...item,
+      user: userMap[item.toUserId],
+    }));
+  }, [data, user.id, userMap]);
+
+  const pageCount = Math.max(1, Math.ceil(result.length / pageSize));
+  const safePage = Math.min(page, pageCount);
+  const pageStart = (safePage - 1) * pageSize;
+  const pagedResult = result.slice(pageStart, pageStart + pageSize);
 
   const handleClick = (item) => {
     if (!isModalOpen) {
@@ -25,7 +36,7 @@ function ListSection() {
 
   return (
     <section className="flex flex-col">
-      {result.map((d, idx) => (
+      {pagedResult.map((d, idx) => (
         <div
           key={idx}
           onClick={() => {
@@ -33,7 +44,14 @@ function ListSection() {
           }}
           className={`grid grid-cols-[1fr_auto] md:grid-cols-[auto_auto_auto_auto] items-center gap-3 border-b cursor-pointer border-gray-300 px-4 py-3 rounded-md ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-100'}`}
         >
-          <img src="/assets/users/Ghaluh.svg" alt={`${d.user?.fullName} icon`} className="w-13 hidden md:block" />
+          <img
+            src={getProfileImageSrc(d.user)}
+            onError={(e) => {
+              e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
+            }}
+            alt={`${d.user?.fullName} icon`}
+            className="w-13 hidden md:block"
+          />
           <div className="min-w-0 flex flex-col gap-1 md:grid md:grid-cols-[18rem_1fr] md:items-center">
             <p className="text-base md:text-lg md:text-left md:ps-20  text-gray-700 truncate">{d.user?.fullName}</p>
           </div>
@@ -47,6 +65,7 @@ function ListSection() {
           </button>
         </div>
       ))}
+      <Pagination page={safePage} pageCount={pageCount} onPageChange={setPage} />
       {isModalOpen && (
         <div className="fixed inset-0 z-50">
           <button type="button" className="absolute inset-0 bg-black/50" onClick={handleClick} aria-label="Close modal" />
@@ -56,7 +75,14 @@ function ListSection() {
                 <div className="header text-xs">DETAIL TRANSAKSI {d.user.fullName}</div>
 
                 <hr />
-                <img src="/assets/users/Ghaluh.svg" alt={`${d.user.name} photo`} className="w-20" />
+                <img
+                  src={getProfileImageSrc(d.user)}
+                  onError={(e) => {
+                    e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
+                  }}
+                  alt={`${d.user.fullName} photo`}
+                  className="w-20"
+                />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h1 className="font-semibold text-sm">Nama:</h1>

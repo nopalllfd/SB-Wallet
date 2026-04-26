@@ -1,12 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
 
 function AccountCard() {
   const { user } = useSelector((state) => state.user);
   return (
     <section>
       <article className="flex gap-8 bg-gray-200 px-4 py-4 rounded-md">
-        <img className="row-span-3 w-20" src="assets/users/Ghaluh.svg" alt="user image" />
+        <img
+          className="row-span-3 w-20"
+          src={getProfileImageSrc(user)}
+          onError={(e) => {
+            e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
+          }}
+          alt="user image"
+        />
         <div className="flex flex-col gap-1">
           <p className="font-semibold text-black">{user.fullName}</p>
           <p className="text-gray-500 font-normal">{user.phone}</p>

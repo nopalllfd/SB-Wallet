@@ -9,6 +9,7 @@ import { useSearchParams } from 'react-router';
 function TransferPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState('');
+  const [page, setPage] = useState(1);
 
   const debouncedSearch = useDebounce(inputValue, 700);
   useEffect(() => {
@@ -21,6 +22,7 @@ function TransferPage() {
 
   const handleChange = (val) => {
     setInputValue(val);
+    setPage(1);
   };
 
   const searchQuery = searchParams.get('search') || '';
@@ -31,7 +33,7 @@ function TransferPage() {
           <HeaderSectionDesktopOnly step={1} />
           <div className="bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
             <HeaderSection searchQuery={inputValue} onSearchChange={handleChange} />
-            <ListSection searchQuery={searchQuery} />
+            <ListSection searchQuery={searchQuery} page={page} onPageChange={setPage} />
           </div>
         </>
       </main>

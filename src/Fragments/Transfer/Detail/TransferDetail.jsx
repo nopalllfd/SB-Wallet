@@ -12,6 +12,7 @@ import { updateBalance } from '../../../redux/slice/userSlice';
 import { updateUserBalance } from '../../../redux/slice/registerSlice';
 import { addTransaction } from '../../../redux/slice/transactionSlice';
 import { toast } from 'sonner';
+import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../../utils/profileImage';
 
 function TransferDetail(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +28,6 @@ function TransferDetail(props) {
   const currentUser = users.find((u) => u.id == user.id);
   if (props.userId) {
     const selectedUser = users.find((d) => d.id == props.userId);
-    console.log(selectedUser);
 
     if (!selectedUser) {
       return <div className="py-6 text-center text-red-500">User tidak ditemukan!</div>;
@@ -35,7 +35,6 @@ function TransferDetail(props) {
 
     const handlePinSubmit = (finalPin) => {
       let status = true;
-      console.log(currentUser.pin, finalPin);
       if (currentUser.pin !== finalPin) {
         toast.error('PIN salah!');
         return;
@@ -83,7 +82,6 @@ function TransferDetail(props) {
         amount: data.amount,
         description: data.desc,
       };
-      console.log(finalData);
       dispatch(setTransferDraft(finalData));
       setIsModalOpen(true);
     };
@@ -91,7 +89,14 @@ function TransferDetail(props) {
     return (
       <div className="">
         <div className="flex items-center gap-4 bg-gray-100 p-4 rounded-md">
-          <img src={`/assets/users/Ghaluh.svg`} alt={`${selectedUser.fullName} icon`} className="w-16" />
+          <img
+            src={getProfileImageSrc(selectedUser)}
+            onError={(e) => {
+              e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
+            }}
+            alt={`${selectedUser.fullName} icon`}
+            className="w-16"
+          />
           <div>
             <p className="text-xl font-bold">{selectedUser.fullName}</p>
             <p className="text-gray-600">{selectedUser.phone || '0000'}</p>

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router';
 import { logoutUser } from '../redux/slice/userSlice';
 import { Button } from '../components/Button';
+import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../utils/profileImage';
 
 function ProfileHeader({ textColor = 'text-white' }) {
   const { user } = useSelector((state) => state.user);
-  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -126,7 +126,14 @@ function ProfileHeader({ textColor = 'text-white' }) {
         isLoading={isLogoutLoading}
       />
 
-      <img src="/assets/profile.svg" alt="profile icon" className="w-10" />
+      <img
+        src={getProfileImageSrc(user)}
+        onError={(e) => {
+          e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
+        }}
+        alt="profile icon"
+        className="w-10 rounded-full"
+      />
       <div>
         <div className="greetings text-ultralight text-sm md:hidden">Hello,</div>
         <div className="greetings text-normal text-md">{user?.fullName || user?.email}</div>
