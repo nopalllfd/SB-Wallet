@@ -2,9 +2,9 @@ import { Button } from '../../../components/Button';
 import { InputGroup } from '../../../components/Input';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../../redux/slice/registerSlice';
+import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
+import { registerUser } from '../../../redux/slice/authSlice';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -15,34 +15,27 @@ function RegisterForm() {
     getValues,
     formState: { errors },
   } = useForm({ mode: 'onChange' });
-  const { users } = useSelector((state) => state.register);
   const dispatch = useDispatch();
 
-  console.log(users);
   const handleFormSubmit = async (data) => {
-    console.log(users);
     const trimmedEmail = data.email.trim();
-    const existingValue = users?.some((obj) => obj.email == trimmedEmail);
-    console.log(existingValue);
-    if (existingValue) {
-      toast.error('Email ini sudah digunakan');
-      setError('email', {
-        type: 'manual',
-        message: 'Email ini sudah digunakan',
-      });
-      return;
-    }
-
-    const userRegister = {
+    const userData = {
       email: trimmedEmail,
       password: data.password,
     };
     try {
-      await dispatch(registerUser(userRegister)).unwrap();
+      await dispatch(registerUser(userData)).unwrap();
       toast.success('Registrasi berhasil');
       navigate('/auth/login');
     } catch (error) {
-      toast.error(error?.message || 'Registrasi gagal');
+      const message = error?.message || error || 'Registrasi gagal';
+
+      toast.error(message);
+
+      setError('email', {
+        type: 'manual',
+        message,
+      });
     }
   };
   return (

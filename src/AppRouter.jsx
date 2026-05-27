@@ -1,6 +1,6 @@
 import './App.css';
 import { useSelector } from 'react-redux';
-import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router';
+import { Navigate, Outlet, Route, Routes } from 'react-router';
 import EnterPinPage from './Pages/Auth/EnterPinPage';
 import ForgotPasswordPage from './Pages/Auth/ForgotPasswordPage';
 import ForgotPasswordChangePage from './Pages/Auth/ForgotPasswordChangePage';
@@ -23,15 +23,15 @@ function PrivateRouteGuard() {
   return <Outlet />;
 }
 
-function AuthRouteGuard() {
-  const { user } = useSelector((state) => state.user);
-  const location = useLocation();
-  const isPinRoute = location.pathname === '/auth/pin';
-  const canAccessPinSetup = Boolean(user && user.hasPin === false && isPinRoute);
-  if (canAccessPinSetup) return <Outlet />;
-  if (user) return <Navigate to="/dashboard" replace />;
-  return <Outlet />;
-}
+// function AuthRouteGuard() {
+//   const { user } = useSelector((state) => state.user);
+//   const location = useLocation();
+//   const isPinRoute = location.pathname === '/auth/pin';
+//   const canAccessPinSetup = Boolean(user && user.hasPin === false && isPinRoute);
+//   if (canAccessPinSetup) return <Outlet />;
+//   if (user) return <Navigate to="/dashboard" replace />;
+//   return <Outlet />;
+// }
 
 function AppRouter() {
   const isLoading = useSelector((state) => Boolean(state?.user?.loading || state?.register?.loading));
@@ -47,7 +47,7 @@ function AppRouter() {
       ) : null}
 
       <Routes>
-        <Route path="auth" element={<AuthRouteGuard />}>
+        <Route path="auth">
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="pin" element={<EnterPinPage />} />
@@ -55,7 +55,7 @@ function AppRouter() {
           <Route path="forgot/password/change" element={<ForgotPasswordChangePage />} />
         </Route>
         <Route path="/" element={<HomePage />} />
-        <Route element={<PrivateRouteGuard />}>
+        <Route>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/transfer" element={<TransferPage />} />
           <Route path="/transaction" element={<Navigate to="/history" replace />} />

@@ -3,16 +3,13 @@ import { InputGroup } from '../../../components/Input';
 import ForgotPasswordLink from './ForgotPasswordLink';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../../redux/slice/userSlice';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../../redux/slice/authSlice';
 import { LoadingIndicator } from '../../../components/application/loading-indicator/loading-indicator';
 import { toast } from 'sonner';
 
 function LoginForm() {
-  const { error } = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
-  const { users } = useSelector((state) => state.register);
   const {
     register,
     handleSubmit,
@@ -24,40 +21,39 @@ function LoginForm() {
   const onSubmit = async (data) => {
     try {
       const { email, password } = data;
-      const existingValue = users.find((obj) => obj.email == email);
-      if (!existingValue) {
-        throw new Error('Email belum terdaftar');
-      }
-      if (password !== existingValue.password) {
-        throw new Error('Email atau password salah');
-      }
-      const hasPin = existingValue.pin !== '';
-      const { password: _password, pin: _pin, ...userData } = existingValue;
-      const balanceRaw = Number(userData.balance);
-      const balance = Number.isFinite(balanceRaw) ? balanceRaw : 0;
 
-      await dispatch(loginUser({ ...userData, balance, hasPin })).unwrap();
+      const res = await dispatch(loginUser({ email, password })).unwrap();
 
-      if (hasPin) {
-        toast.success('Login berhasil');
+      if (!res?.data) {
+        throw new Error(res?.error || 'Login gagal');
+      }
+
+      const user = res.data;
+
+      toast.success('Login berhasil');
+
+      if (user.isPinExists) {
         navigate('/dashboard');
       } else {
         toast.error('Masukkan PIN dulu');
         navigate('/auth/pin');
       }
     } catch (err) {
-      toast.error(err?.message || 'Login gagal');
+      console.error(err);
+
+      const message = err?.error || err || 'Login gagal';
+
+      toast.error(message);
+
       setError('email', {
         type: 'manual',
-        message: err.message,
+        message,
       });
     }
   };
-
   return (
     <>
       <section className="input-group flex flex-col items-center">
-        {error ? <p className={'text-red-500'}>{error}</p> : <p></p>}
         <form action="" className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(onSubmit)}>
           <InputGroup
             id="email"
