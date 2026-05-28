@@ -47,12 +47,12 @@ export const EnterPinForm = ({ length = 6 }) => {
 
     const finalPin = pin.join('');
 
-    const data = {
-      pin: finalPin,
-    };
+    // const data = {
+    //   pin: finalPin,
+    // };
 
     try {
-      await dispatch(setUserPin(data)).unwrap();
+      await dispatch(setUserPin(finalPin)).unwrap();
 
       toast.success('PIN berhasil disimpan');
       navigate('/dashboard');
