@@ -1,38 +1,32 @@
-import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+// import { useNavigate } from 'react-router';
 import Pagination from '../../components/Pagination';
 import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
+import { useEffect } from 'react';
+import { getReceivers } from '../../redux/slice/transactionSlice';
+import { useNavigate } from 'react-router';
 
-function ListSection(props) {
+function ListSection() {
   const navigate = useNavigate();
-  const { users } = useSelector((state) => state.register);
-  const { user: currentUser } = useSelector((state) => state.user);
-  const pageSize = 6;
+  const { receivers: users } = useSelector((state) => state.transaction);
   const handleClick = (id) => {
     navigate(`/transfer/${id}`);
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getReceivers());
+    console.log('masuk get receiver');
+  }, [dispatch]);
 
-  const data = useMemo(() => users.filter((user) => user?.id != currentUser?.id), [users, currentUser?.id]);
-
-  const filteredData = useMemo(() => {
-    const q = String(props.searchQuery || '').toLowerCase();
-    return data.filter((item) => String(item.fullName || '').toLowerCase().includes(q));
-  }, [data, props.searchQuery]);
-
-  const pageCount = Math.max(1, Math.ceil(filteredData.length / pageSize));
-  const safePage = Math.min(props.page || 1, pageCount);
-  const pageStart = (safePage - 1) * pageSize;
-  const pagedData = filteredData.slice(pageStart, pageStart + pageSize);
-
+  console.log(users.length);
   return (
     <section className="flex flex-col gap-3 py-6 z-0 relative">
-      {pagedData.length > 0 ? (
-        pagedData.map((d, idx) => (
+      {users.length > 0 ? (
+        users.map((d, idx) => (
           <div
-            key={idx}
+            key={d.Id}
             onClick={() => {
-              handleClick(d.id);
+              handleClick(d.Id);
             }}
             className={`flex justify-between bg-gray-100 p-3 cursor-pointer hover:bg-white rounded-md ${idx % 2 == 0 ? 'bg-white hover:bg-gray-100' : ''}`}
           >
@@ -45,8 +39,8 @@ function ListSection(props) {
               className="w-13"
             />
             <div className="flex-2 ms-10 md:ms-30 md:me-30 md:flex md:gap-4 md:items-center md:justify-between">
-              <p className="text-lg">{d.fullName}</p>
-              <p>{d.phone || '0000000000'}</p>
+              <p className="text-lg">{d.FullName}</p>
+              <p>{d.Phone || '0000000000'}</p>
             </div>
 
             <img src={`/assets/utils/star.svg`} alt={`star icon`} />
@@ -55,7 +49,7 @@ function ListSection(props) {
       ) : (
         <p className="text-center">{`Tidak ada data`}</p>
       )}
-      <Pagination page={safePage} pageCount={pageCount} onPageChange={props.onPageChange} />
+      {/* <p>p</p> */}
     </section>
   );
 }

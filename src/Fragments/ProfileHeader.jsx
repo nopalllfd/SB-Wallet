@@ -1,18 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router';
-import { logoutUser } from '../redux/slice/userSlice';
 import { Button } from '../components/Button';
 import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../utils/profileImage';
+import { logout, logoutUser } from '../redux/slice/authSlice';
+import { toast } from 'sonner';
 
 function ProfileHeader({ textColor = 'text-white' }) {
-  const { user } = useSelector((state) => state.user);
+  // const auth = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth/login');
+    }
+  }, [user, navigate]);
   const ConfirmLogoutModal = ({ open, onCancel, onConfirm, isLoading }) => {
     if (!open) return null;
     return (
@@ -60,10 +69,16 @@ function ProfileHeader({ textColor = 'text-white' }) {
 
   const handleConfirmLogout = async () => {
     if (isLogoutLoading) return;
+
     setIsLogoutLoading(true);
+
     try {
       await dispatch(logoutUser()).unwrap();
+      dispatch(logout());
+
       navigate('/auth/login');
+    } catch (error) {
+      toast.error(error);
     } finally {
       setIsLogoutLoading(false);
       setIsLogoutConfirmOpen(false);
@@ -136,7 +151,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
       />
       <div>
         <div className="greetings text-ultralight text-sm md:hidden">Hello,</div>
-        <div className="greetings text-normal text-md">{user?.fullName || user?.email}</div>
+        <div className="greetings text-normal text-md">{user.display_name}</div>
       </div>
     </div>
   );

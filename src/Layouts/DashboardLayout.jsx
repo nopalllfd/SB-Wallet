@@ -14,7 +14,8 @@ export const DashboardLayout = ({ children, locationDetail }) => {
     { name: 'Top up', path: '/topup' },
     { name: 'Profile', path: '/profile' },
   ];
-  const { user } = useSelector((state) => state.user);
+
+  const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const getIconSrc = (item) => {
@@ -25,11 +26,11 @@ export const DashboardLayout = ({ children, locationDetail }) => {
   };
 
   useEffect(() => {
-    if (!user) {
+    if (!auth.isAuthenticated) {
       toast.error('Kamu harus login terlebih dahulu');
       navigate('/auth/login');
     }
-  }, [user, navigate]);
+  }, [auth.isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen bg-gray-50 md:grid md:grid-rows-[auto_1fr]">

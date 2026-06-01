@@ -8,6 +8,18 @@ import { loginUser } from '../../../redux/slice/authSlice';
 import { LoadingIndicator } from '../../../components/application/loading-indicator/loading-indicator';
 import { toast } from 'sonner';
 
+const getErrorMessage = (err) => {
+  if (!err) return 'Login gagal';
+
+  if (typeof err === 'string') return err;
+
+  if (err?.error && typeof err.error === 'string') return err.error;
+
+  if (err?.message && typeof err.message === 'string') return err.message;
+
+  return 'Login gagal';
+};
+
 function LoginForm() {
   const dispatch = useDispatch();
   const {
@@ -41,7 +53,7 @@ function LoginForm() {
     } catch (err) {
       console.error(err);
 
-      const message = err?.error || err || 'Login gagal';
+      const message = getErrorMessage(err);
 
       toast.error(message);
 
@@ -76,8 +88,8 @@ function LoginForm() {
             {...register('password', {
               required: 'password tidak boleh kosong',
               minLength: {
-                value: 7,
-                message: 'Minimal 7 karakter',
+                value: 8,
+                message: 'Minimal 8 karakter',
               },
             })}
             placeholder="Enter Your Password"
@@ -90,6 +102,7 @@ function LoginForm() {
           >
             Password
           </InputGroup>
+          {errors.password && <p className="text-red-500">{errors.password.message}</p>}
           {errors.email ? <p className={'text-red-500'}>{errors.email.message}</p> : <p></p>}
           <ForgotPasswordLink />
           <section className="submit-button">

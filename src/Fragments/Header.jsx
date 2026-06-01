@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router';
 import { NavMenuItem } from '../components/NavMenuItems';
 import ProfileHeader from './ProfileHeader';
 import { useDispatch } from 'react-redux';
-import { logoutUser } from '../redux/slice/userSlice';
 import { toast } from 'sonner';
+import { logout, logoutUser } from '../redux/slice/authSlice';
 
 function Header(props) {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
@@ -20,6 +20,7 @@ function Header(props) {
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
+      dispatch(logout);
       toast.success('Logout berhasil');
       setIsBurgerOpen(false);
       navigate('/auth/login');
@@ -57,17 +58,22 @@ function Header(props) {
       {isDashboard && (props.locationDetail ? <ProfileHeader /> : <ProfileHeader />)}
       {!isDashboard && (
         <nav className="hidden md:flex items-center gap-3">
-          <Button buttonColor="bg-white" buttonTextColor="text-blue-500 font-semibold" className="rounded-xl !w-auto !px-6">
-            <Link to="/auth/login">Sign In</Link>
-          </Button>
-          <Button
-            buttonColor="bg-transparent"
-            buttonTextColor="text-white font-semibold"
-            border="border border-white"
-            className="rounded-xl !w-auto !px-6"
-          >
-            <Link to="/auth/register">Sign Up</Link>
-          </Button>
+          <Link to="/auth/login">
+            <Button buttonColor="bg-white" buttonTextColor="text-blue-500 font-semibold" className="rounded-xl !w-auto !px-6">
+              Sign In
+            </Button>
+          </Link>
+
+          <Link to="/auth/register">
+            <Button
+              buttonColor="bg-transparent"
+              buttonTextColor="text-white font-semibold"
+              border="border border-white"
+              className="rounded-xl !w-auto !px-6"
+            >
+              Sign Up
+            </Button>
+          </Link>
         </nav>
       )}
 

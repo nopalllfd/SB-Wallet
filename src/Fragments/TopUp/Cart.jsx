@@ -1,52 +1,52 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUserBalance } from '../../redux/slice/registerSlice';
-import { updateBalance } from '../../redux/slice/userSlice';
-import { addTransaction } from '../../redux/slice/transactionSlice';
-import { toast } from 'sonner';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { updateUserBalance } from '../../redux/slice/registerSlice';
+// import { updateBalance } from '../../redux/slice/userSlice';
+// import { addTransaction } from '../../redux/slice/transactionSlice';
+// import { toast } from 'sonner';
 import { currencyFormatter } from '../../utils/currency';
 
-function Cart({ amount, setAmount, paymentMethod, onSubmitAttempt, onAfterSubmit }) {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+function Cart({ amount }) {
+  // const dispatch = useDispatch();
+  // const user = useSelector((state) => state.user.user);
   const tax = amount * 0.12;
   const delivery = 2000;
   const total = Number(tax) + Number(amount) + delivery;
   const onSubmit = (e) => {
     e.preventDefault();
-    onSubmitAttempt?.();
-    if (!Number(amount) || Number(amount) <= 0) {
-      toast.error('Nominal top up harus lebih dari Rp0');
-      return;
-    }
-    if (!paymentMethod) {
-      toast.error('Pilih metode pembayaran terlebih dahulu');
-      return;
-    }
-    dispatch(
-      updateUserBalance({
-        id: user.id,
-        amount,
-        type: 'TOP_UP',
-      }),
-    );
-    dispatch(
-      updateBalance({
-        amount: amount,
-        type: 'TOP_UP',
-      }),
-    );
-    dispatch(
-      addTransaction({
-        userId: user.id,
-        type: 'TOP_UP',
-        amount: total,
-        paymentMethod,
-      }),
-    );
-    toast.success('Top up berhasil');
-    setAmount(0);
-    onAfterSubmit?.();
+    // onSubmitAttempt?.();
+    // if (!Number(amount) || Number(amount) <= 0) {
+    //   toast.error('Nominal top up harus lebih dari Rp0');
+    //   return;
+    // }
+    // if (!paymentMethod) {
+    //   toast.error('Pilih metode pembayaran terlebih dahulu');
+    //   return;
+    // }
+    // dispatch(
+    //   updateUserBalance({
+    //     id: user.id,
+    //     amount,
+    //     type: 'TOP_UP',
+    //   }),
+    // );
+    // dispatch(
+    //   updateBalance({
+    //     amount: amount,
+    //     type: 'TOP_UP',
+    //   }),
+    // );
+    // dispatch(
+    //   addTransaction({
+    //     userId: user.id,
+    //     type: 'TOP_UP',
+    //     amount: total,
+    //     paymentMethod,
+    //   }),
+    // );
+    // toast.success('Top up berhasil');
+    // setAmount(0);
+    // onAfterSubmit?.();
   };
   return (
     <form onSubmit={onSubmit} className="max-w-md bg-gray-100 px-4 h-full py-5 max-md:mt-5 rounded-xl font-sans text-gray-800">
