@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchWithAuth } from '../../utils/fetchWithAuth';
+import { apiUrl } from '../../utils/env';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -14,7 +15,7 @@ const initialState = {
 export const registerUser = createAsyncThunk('auth/register', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      'http://localhost:5000/auth/register',
+      `${apiUrl}/auth/register`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -38,7 +39,7 @@ export const registerUser = createAsyncThunk('auth/register', async (payload, th
 export const loginUser = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      'http://localhost:5000/auth/login',
+      `${apiUrl}/auth/login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,7 +65,7 @@ export const setUserPin = createAsyncThunk('auth/pin', async (pin, thunkAPI) => 
     const token = localStorage.getItem('token');
 
     const res = await fetchWithAuth(
-      'http://localhost:5000/auth/pin',
+      `${apiUrl}/auth/pin`,
       {
         method: 'POST',
         headers: {
@@ -93,7 +94,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
     const token = localStorage.getItem('token');
 
     const response = await fetchWithAuth(
-      'http://localhost:5000/auth/logout',
+      `${apiUrl}/auth/logout`,
       {
         method: 'DELETE',
         headers: {
@@ -116,7 +117,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
 
 export const getUserDetail = createAsyncThunk('auth/user-detail', async (userId, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`http://localhost:5000/auth/user/${userId}`, {}, thunkAPI.dispatch);
+    const response = await fetchWithAuth(`${apiUrl}/auth/user/${userId}`, {}, thunkAPI.dispatch);
 
     const data = await response.json();
 
@@ -149,61 +150,75 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state) => {
-        state.loading = true;
+      .addAsyncThunk(registerUser, {
+        pending: (state) => {
+          state.loading = true;
+        },
+        fulfilled: (state) => {
+          state.loading = false;
+          state.success = true;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        },
       })
-      .addCase(registerUser.fulfilled, (state) => {
-        state.loading = false;
-        state.success = true;
-      })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
 
-        const user = action.payload.data;
+      .addAsyncThunk(loginUser, {
+        pending: (state) => {
+          state.loading = true;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.success = true;
 
-        const userData = {
-          display_name: user.display_name,
-          photo: user.photo,
-          isPinExists: user.isPinExists,
-        };
+          const user = action.payload.data;
 
-        state.user = userData;
-        state.token = user.token;
-        state.isAuthenticated = true;
+          const userData = {
+            display_name: user.display_name,
+            photo: user.photo,
+            isPinExists: user.isPinExists,
+          };
 
-        localStorage.setItem('token', user.token);
-        localStorage.setItem('user', JSON.stringify(userData));
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(setUserPin.fulfilled, (state) => {
-        state.loading = false;
-        state.success = true;
+          state.user = userData;
+          state.token = user.token;
+          state.isAuthenticated = true;
 
-        if (state.user) {
-          state.user.isPinExists = true;
-        }
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('user', JSON.stringify(userData));
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        },
       })
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.loading = false;
-        state.success = true;
-        state.user = null;
-        state.token = null;
-        state.isAuthenticated = false;
+
+      .addAsyncThunk(setUserPin, {
+        fulfilled: (state) => {
+          state.loading = false;
+          state.success = true;
+
+          if (state.user) {
+            state.user.isPinExists = true;
+          }
+        },
       })
-      .addCase(getUserDetail.fulfilled, (state, action) => {
-        state.loading = false;
-        state.selectedUser = action.payload.data;
+
+      .addAsyncThunk(logoutUser, {
+        fulfilled: (state) => {
+          state.loading = false;
+          state.success = true;
+          state.user = null;
+          state.token = null;
+          state.isAuthenticated = false;
+        },
+      })
+
+      .addAsyncThunk(getUserDetail, {
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.selectedUser = action.payload.data;
+        },
       });
   },
 });

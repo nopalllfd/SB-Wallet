@@ -1,33 +1,61 @@
-function Pagination({ page, pageCount, onPageChange }) {
+function Pagination({ page = 1, pageCount = 1, onPageChange }) {
   if (!pageCount || pageCount <= 1) return null;
 
   const safePage = Math.min(Math.max(1, page), pageCount);
 
-  const goPrev = () => onPageChange(Math.max(1, safePage - 1));
-  const goNext = () => onPageChange(Math.min(pageCount, safePage + 1));
+  const goToPage = (p) => {
+    if (p >= 1 && p <= pageCount && p !== safePage) {
+      onPageChange(p);
+    }
+  };
+
+  const goPrev = () => goToPage(safePage - 1);
+  const goNext = () => goToPage(safePage + 1);
+
+  // generate array page number
+  const getPages = () => {
+    const pages = [];
+
+    for (let i = 1; i <= pageCount; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  };
 
   return (
-    <div className="mt-5 flex items-center justify-center gap-3">
+    <div className="mt-6 flex items-center justify-center gap-2 flex-wrap">
+      {/* Prev */}
       <button
-        type="button"
         onClick={goPrev}
         disabled={safePage === 1}
-        className={`rounded-md border px-3 py-2 text-sm font-semibold ${
-          safePage === 1 ? 'cursor-not-allowed border-gray-200 text-gray-400' : 'border-blue-200 text-blue-700 hover:bg-blue-50'
-        }`}
+        className={`px-3 py-2 rounded border text-sm font-medium
+          ${safePage === 1 ? 'text-gray-400 border-gray-200 cursor-not-allowed' : 'text-blue-600 border-blue-300 hover:bg-blue-50'}
+        `}
       >
         Prev
       </button>
-      <div className="text-sm text-gray-700">
-        Halaman <span className="font-semibold">{safePage}</span> dari <span className="font-semibold">{pageCount}</span>
-      </div>
+
+      {/* Number Pages */}
+      {getPages().map((p) => (
+        <button
+          key={p}
+          onClick={() => goToPage(p)}
+          className={`px-3 py-2 rounded border text-sm font-medium
+            ${p === safePage ? 'bg-blue-600 text-white border-blue-600' : 'text-gray-700 border-gray-300 hover:bg-gray-100'}
+          `}
+        >
+          {p}
+        </button>
+      ))}
+
+      {/* Next */}
       <button
-        type="button"
         onClick={goNext}
         disabled={safePage === pageCount}
-        className={`rounded-md border px-3 py-2 text-sm font-semibold ${
-          safePage === pageCount ? 'cursor-not-allowed border-gray-200 text-gray-400' : 'border-blue-200 text-blue-700 hover:bg-blue-50'
-        }`}
+        className={`px-3 py-2 rounded border text-sm font-medium
+          ${safePage === pageCount ? 'text-gray-400 border-gray-200 cursor-not-allowed' : 'text-blue-600 border-blue-300 hover:bg-blue-50'}
+        `}
       >
         Next
       </button>

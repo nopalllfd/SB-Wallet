@@ -82,6 +82,8 @@ function LoginForm() {
           >
             Email
           </InputGroup>
+          {errors.email ? <p className={'text-red-500'}>{errors.email.message}</p> : <p></p>}
+
           <InputGroup
             type="password"
             id="password"
@@ -103,7 +105,6 @@ function LoginForm() {
             Password
           </InputGroup>
           {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-          {errors.email ? <p className={'text-red-500'}>{errors.email.message}</p> : <p></p>}
           <ForgotPasswordLink />
           <section className="submit-button">
             <Button buttonColor={'bg-blue-600'} buttonTextColor={'text-white'} className={'rounded-xl'}>

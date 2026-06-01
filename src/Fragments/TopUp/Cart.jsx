@@ -1,52 +1,37 @@
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { updateUserBalance } from '../../redux/slice/registerSlice';
-// import { updateBalance } from '../../redux/slice/userSlice';
-// import { addTransaction } from '../../redux/slice/transactionSlice';
-// import { toast } from 'sonner';
+import { useDispatch } from 'react-redux';
+import { toast } from 'sonner';
 import { currencyFormatter } from '../../utils/currency';
+import { topup } from '../../redux/slice/transactionSlice';
 
-function Cart({ amount }) {
-  // const dispatch = useDispatch();
-  // const user = useSelector((state) => state.user.user);
-  const tax = amount * 0.12;
-  const delivery = 2000;
+function Cart({ amount, paymentMethod, resetForm }) {
+  const dispatch = useDispatch();
+  console.log(amount, paymentMethod);
+  // const user = useSelector((state) => state.user);
+  const delivery = 2500;
+  const tax = delivery * 0.12;
   const total = Number(tax) + Number(amount) + delivery;
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // onSubmitAttempt?.();
-    // if (!Number(amount) || Number(amount) <= 0) {
-    //   toast.error('Nominal top up harus lebih dari Rp0');
-    //   return;
-    // }
-    // if (!paymentMethod) {
-    //   toast.error('Pilih metode pembayaran terlebih dahulu');
-    //   return;
-    // }
-    // dispatch(
-    //   updateUserBalance({
-    //     id: user.id,
-    //     amount,
-    //     type: 'TOP_UP',
-    //   }),
-    // );
-    // dispatch(
-    //   updateBalance({
-    //     amount: amount,
-    //     type: 'TOP_UP',
-    //   }),
-    // );
-    // dispatch(
-    //   addTransaction({
-    //     userId: user.id,
-    //     type: 'TOP_UP',
-    //     amount: total,
-    //     paymentMethod,
-    //   }),
-    // );
-    // toast.success('Top up berhasil');
-    // setAmount(0);
-    // onAfterSubmit?.();
+    try {
+      if (!Number(amount) || Number(amount) <= 0) {
+        toast.error('Nominal top up harus lebih dari Rp0');
+        return;
+      }
+      if (!paymentMethod) {
+        toast.error('Pilih metode pembayaran terlebih dahulu');
+        return;
+      }
+      const payload = {
+        amount,
+        method_id: paymentMethod,
+      };
+      await dispatch(topup(payload)).unwrap();
+      toast.success('Top up berhasil');
+      resetForm();
+    } catch (error) {
+      toast.error(error.message || 'failed topup');
+    }
   };
   return (
     <form onSubmit={onSubmit} className="max-w-md bg-gray-100 px-4 h-full py-5 max-md:mt-5 rounded-xl font-sans text-gray-800">
@@ -58,7 +43,7 @@ function Cart({ amount }) {
           <span className="font-semibold text-gray-900">{currencyFormatter.format(amount) || 0}</span>
         </div>
         <div className="flex justify-between">
-          <span className="font-medium text-gray-600">Delivery</span>
+          <span className="font-medium text-gray-600">Admin Fee</span>
           <span className="font-semibold text-gray-900">{currencyFormatter.format(delivery) || 0}</span>
         </div>
         <div className="flex justify-between">

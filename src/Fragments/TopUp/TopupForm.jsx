@@ -1,31 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { InputGroup } from '../../components/Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMethods } from '../../redux/slice/transactionSlice';
 
 function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
   const [selected, setSelected] = useState(null);
-
-  const paymentsMethod = [
-    {
-      name: 'Bank Rakyat Indonesia',
-      slug: 'bri',
-    },
-    {
-      name: 'Dana',
-      slug: 'dana',
-    },
-    {
-      name: 'Bank Central Asia',
-      slug: 'bca',
-    },
-    {
-      name: 'Gopay',
-      slug: 'gopay',
-    },
-    {
-      name: 'Ovo',
-      slug: 'ovo',
-    },
-  ];
+  const dispatch = useDispatch();
+  const { methods } = useSelector((state) => state.transaction);
 
   const handleAmountChange = (e) => {
     const rawValue = e.target.value;
@@ -47,12 +28,17 @@ function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
     }).format(value);
   };
 
-  const handlePaymentChange = (slug) => {
-    setSelected(slug);
+  const handlePaymentChange = (id) => {
+    setSelected(id);
     if (onPaymentSelect) {
-      onPaymentSelect(slug);
+      onPaymentSelect(id);
     }
   };
+
+  useEffect(() => {
+    dispatch(getMethods());
+  }, [dispatch]);
+  console.log(methods);
 
   return (
     <section className="flex flex-col gap-4">
@@ -66,23 +52,23 @@ function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
 
       {isSubmitted && !selected && <p className="text-red-500 text-sm font-medium">Please select a payment method to continue.</p>}
 
-      {paymentsMethod.map((payment) => (
+      {methods.map((payment) => (
         <label
-          key={payment.slug}
+          key={payment.id}
           className={`cursor-pointer select-none rounded-md px-8 py-4 justify-start flex gap-10 items-center border-2 transition-all ${
-            selected === payment.slug ? 'bg-blue-100 border-blue-500' : 'bg-gray-50 border-transparent hover:bg-gray-200'
+            selected === payment.id ? 'bg-blue-100 border-blue-500' : 'bg-gray-50 border-transparent hover:bg-gray-200'
           }`}
         >
           <input
             type="radio"
             name="paymentMethod"
-            value={payment.slug}
-            checked={selected === payment.slug}
-            onChange={() => handlePaymentChange(payment.slug)}
+            value={payment.id}
+            checked={selected === payment.id}
+            onChange={() => handlePaymentChange(payment.id)}
             className="hidden"
           />
           <img width={32} height={32} src={`assets/payment/${payment.slug}.svg`} alt={`${payment.name} icon`} />
-          <p className={selected === payment.slug ? 'font-semibold text-blue-700' : 'text-gray-700'}>{payment.name}</p>
+          <p className={selected === payment.id ? 'font-semibold text-blue-700' : 'text-gray-700'}>{payment.name}</p>
         </label>
       ))}
     </section>

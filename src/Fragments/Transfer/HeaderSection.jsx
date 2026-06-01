@@ -6,20 +6,19 @@ function HeaderSection(props) {
       <div>
         <h1 className="font-semibold text-xl text-gray-900">{!props.userId ? 'Find People' : 'People Informations'}</h1>
       </div>
-      {!props.userId ? (
+
+      {!props.userId && (
         <div className="md:w-1/3">
           <Field
-            name={'search'}
+            name="search"
             value={props.searchQuery}
-            iconSrc={'/assets/utils/search.svg'}
-            iconAlt={'search icon'}
-            className={'text-sm font-normal flex-row-reverse'}
-            placeholder={'Enter Number or Full Name'}
+            iconSrc="/assets/utils/search.svg"
+            iconAlt="search icon"
+            className="text-sm font-normal flex-row-reverse"
+            placeholder="Enter Number or Full Name"
             onChange={(e) => props.onSearchChange(e.target.value)}
           />
         </div>
-      ) : (
-        ''
       )}
     </div>
   );

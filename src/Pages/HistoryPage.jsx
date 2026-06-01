@@ -10,7 +10,7 @@ function HistoryPage() {
         <HeaderSectionDesktopOnly />
         <div className="bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
           <HeaderSection />
-          <ListSection />
+          <ListSection pageLimit={10} />
         </div>
       </section>
     </DashboardLayout>

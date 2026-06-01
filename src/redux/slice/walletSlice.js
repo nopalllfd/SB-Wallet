@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchWithAuth } from '../../utils/fetchWithAuth';
+import { apiUrl } from '../../utils/env';
 
 const initialState = {
   dashboard: null,
@@ -12,7 +13,7 @@ const initialState = {
 export const getDashboard = createAsyncThunk('wallet/dashboard', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      'http://localhost:5000/wallet/dashboard',
+      `${apiUrl}/wallet/dashboard`,
       {
         method: 'GET',
       },
@@ -36,13 +37,13 @@ const walletSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(getDashboard.pending, (state) => {
+    builder.addAsyncThunk(getDashboard, {
+      pending: (state) => {
         state.loading = true;
         state.error = null;
         state.success = false;
-      })
-      .addCase(getDashboard.fulfilled, (state, action) => {
+      },
+      fulfilled: (state, action) => {
         state.loading = false;
         state.success = true;
 
@@ -53,11 +54,12 @@ const walletSlice = createSlice({
           income: dashboard.income,
           expense: dashboard.expense,
         };
-      })
-      .addCase(getDashboard.rejected, (state, action) => {
+      },
+      rejected: (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      },
+    });
   },
 });
 

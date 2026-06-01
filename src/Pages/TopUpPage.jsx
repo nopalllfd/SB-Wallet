@@ -7,7 +7,7 @@ import Cart from '../Fragments/TopUp/Cart';
 
 function TopUpPage() {
   const [amount, setAmount] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formKey, setFormKey] = useState(0);
 
@@ -24,6 +24,12 @@ function TopUpPage() {
     setPaymentMethod('');
     setFormKey((k) => k + 1);
   };
+  const resetForm = () => {
+    setAmount(0);
+    setPaymentMethod(0);
+    setIsSubmitted(false);
+    setFormKey((k) => k + 1);
+  };
 
   return (
     <DashboardLayout>
@@ -33,7 +39,14 @@ function TopUpPage() {
           <section className="flex flex-col gap-6 md:flex-row md:items-start md:gap-6">
             <div className="flex flex-col gap-6 md:flex-1">
               <AccountCard />
-              <TopupForm key={formKey} amount={amount} onChange={onAmountSet} onPaymentSelect={handlePaymentSelect} isSubmitted={isSubmitted} />
+              <TopupForm
+                key={formKey}
+                amount={amount}
+                paymentMethod={paymentMethod}
+                onChange={onAmountSet}
+                onPaymentSelect={handlePaymentSelect}
+                isSubmitted={isSubmitted}
+              />
             </div>
             <div className="md:w-[26rem]">
               <Cart
@@ -42,6 +55,7 @@ function TopUpPage() {
                 paymentMethod={paymentMethod}
                 onSubmitAttempt={() => setIsSubmitted(true)}
                 onAfterSubmit={handleAfterSubmit}
+                resetForm={resetForm}
               />
             </div>
           </section>
