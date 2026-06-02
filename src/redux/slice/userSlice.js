@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { delay } from '../../utils/delay';
 import { updateUser, updateUserPin } from './registerSlice';
-import { apiUrl } from '../../utils/env';
 import { fetchWithAuth } from '../../utils/fetchWithAuth';
 
 const initialState = {
@@ -17,7 +16,7 @@ const initialState = {
 
 export const getProfile = createAsyncThunk('user/profile', async (_, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`${apiUrl}/user/profile`);
+    const response = await fetchWithAuth(`/user/profile`);
     const data = await response.json();
     if (!response.ok) {
       return thunkAPI.rejectWithValue(data?.message || 'failed to get profile');

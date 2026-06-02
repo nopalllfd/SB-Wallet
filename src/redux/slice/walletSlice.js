@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchWithAuth } from '../../utils/fetchWithAuth';
-import { apiUrl } from '../../utils/env';
 
 const initialState = {
   dashboard: null,
@@ -13,7 +12,7 @@ const initialState = {
 export const getDashboard = createAsyncThunk('wallet/dashboard', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `${apiUrl}/wallet/dashboard`,
+      `/wallet/dashboard`,
       {
         method: 'GET',
       },

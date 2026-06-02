@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchWithAuth } from '../../utils/fetchWithAuth';
-import { apiUrl } from '../../utils/env';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -15,7 +14,7 @@ const initialState = {
 export const registerUser = createAsyncThunk('auth/register', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `${apiUrl}/auth/register`,
+      `/auth/register`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -39,7 +38,7 @@ export const registerUser = createAsyncThunk('auth/register', async (payload, th
 export const loginUser = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `${apiUrl}/auth/login`,
+      `/auth/login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -65,7 +64,7 @@ export const setUserPin = createAsyncThunk('auth/pin', async (pin, thunkAPI) => 
     const token = localStorage.getItem('token');
 
     const res = await fetchWithAuth(
-      `${apiUrl}/auth/pin`,
+      `/auth/pin`,
       {
         method: 'POST',
         headers: {
@@ -94,7 +93,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
     const token = localStorage.getItem('token');
 
     const response = await fetchWithAuth(
-      `${apiUrl}/auth/logout`,
+      `/auth/logout`,
       {
         method: 'DELETE',
         headers: {
@@ -117,7 +116,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
 
 export const getUserDetail = createAsyncThunk('auth/user-detail', async (userId, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`${apiUrl}/auth/user/${userId}`, {}, thunkAPI.dispatch);
+    const response = await fetchWithAuth(`/auth/user/${userId}`, {}, thunkAPI.dispatch);
 
     const data = await response.json();
 
