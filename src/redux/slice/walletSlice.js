@@ -12,7 +12,7 @@ const initialState = {
 export const getDashboard = createAsyncThunk('wallet/dashboard', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `/wallet/dashboard`,
+      `/api/wallet/dashboard`,
       {
         method: 'GET',
       },

@@ -14,7 +14,7 @@ const initialState = {
 export const registerUser = createAsyncThunk('auth/register', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `/auth/register`,
+      `/api/auth/register`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -38,7 +38,7 @@ export const registerUser = createAsyncThunk('auth/register', async (payload, th
 export const loginUser = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `/auth/login`,
+      `/api/auth/login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,7 +64,7 @@ export const setUserPin = createAsyncThunk('auth/pin', async (pin, thunkAPI) => 
     const token = localStorage.getItem('token');
 
     const res = await fetchWithAuth(
-      `/auth/pin`,
+      `/api/auth/pin`,
       {
         method: 'POST',
         headers: {
@@ -93,7 +93,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
     const token = localStorage.getItem('token');
 
     const response = await fetchWithAuth(
-      `/auth/logout`,
+      `/api/auth/logout`,
       {
         method: 'DELETE',
         headers: {
@@ -116,7 +116,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
 
 export const getUserDetail = createAsyncThunk('auth/user-detail', async (userId, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`/auth/user/${userId}`, {}, thunkAPI.dispatch);
+    const response = await fetchWithAuth(`/api/auth/user/${userId}`, {}, thunkAPI.dispatch);
 
     const data = await response.json();
 

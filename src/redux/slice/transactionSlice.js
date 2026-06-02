@@ -16,7 +16,7 @@ const initialState = {
 export const getTransactions = createAsyncThunk('transaction/all', async (payload = {}, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `/transactions?limit=${payload.limit || '10'}&page=${payload.page || '1'}&search=${payload.search || ''}`,
+      `/api/transactions?limit=${payload.limit || '10'}&page=${payload.page || '1'}&search=${payload.search || ''}`,
       {},
       thunkAPI.dispatch,
     );
@@ -35,7 +35,7 @@ export const getTransactions = createAsyncThunk('transaction/all', async (payloa
 
 export const getTrxChart = createAsyncThunk('transaction/chart', async (payload, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`/transactions/chart?type=${payload.type}&period=${payload.period}`, {}, thunkAPI.dispatch);
+    const response = await fetchWithAuth(`/api/transactions/chart?type=${payload.type}&period=${payload.period}`, {}, thunkAPI.dispatch);
 
     const data = await response.json();
 
@@ -52,7 +52,7 @@ export const getTrxChart = createAsyncThunk('transaction/chart', async (payload,
 export const getReceivers = createAsyncThunk('transaction/receiver', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `/transactions/transfer/receivers?page=${payload.page || 1}&limit=${payload.limit || 10}&search=${payload.search || ''}`,
+      `/api/transactions/transfer/receivers?page=${payload.page || 1}&limit=${payload.limit || 10}&search=${payload.search || ''}`,
       {},
       thunkAPI.dispatch,
     );
@@ -72,7 +72,7 @@ export const getReceivers = createAsyncThunk('transaction/receiver', async (payl
 export const transfer = createAsyncThunk('transaction/transfer', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(
-      `/transactions/transfer`,
+      `/api/transactions/transfer`,
       {
         method: 'POST',
         body: JSON.stringify(payload),
@@ -94,7 +94,7 @@ export const transfer = createAsyncThunk('transaction/transfer', async (payload,
 
 export const getMethods = createAsyncThunk('transcation/methods', async (_, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`/transactions/payments`);
+    const response = await fetchWithAuth(`/api/transactions/payments`);
     const data = await response.json();
     if (!response.ok) {
       return thunkAPI.rejectWithValue(response.message || 'failed to get payment methods');
@@ -107,7 +107,7 @@ export const getMethods = createAsyncThunk('transcation/methods', async (_, thun
 
 export const topup = createAsyncThunk('transaction/topup', async (payload, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`/transactions/topup`, {
+    const response = await fetchWithAuth(`/api/transactions/topup`, {
       body: JSON.stringify(payload),
       method: 'POST',
     });

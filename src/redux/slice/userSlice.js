@@ -16,7 +16,7 @@ const initialState = {
 
 export const getProfile = createAsyncThunk('user/profile', async (_, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`/user/profile`);
+    const response = await fetchWithAuth(`/api/user/profile`);
     const data = await response.json();
     if (!response.ok) {
       return thunkAPI.rejectWithValue(data?.message || 'failed to get profile');
