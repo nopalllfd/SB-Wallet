@@ -130,7 +130,7 @@ export const getUserDetail = createAsyncThunk('auth/user-detail', async (userId,
   }
 });
 
-export const changePin = createAsyncThunk('auth/change-pin', async (pin, thunkAPI) => {
+export const changePin = createAsyncThunk('auth/change-pin', async ({ pin }, thunkAPI) => {
   try {
     const token = localStorage.getItem('token');
 
