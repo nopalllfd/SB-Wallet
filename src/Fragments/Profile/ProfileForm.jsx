@@ -8,7 +8,7 @@ import { Button } from '../../components/Button';
 import { InputGroup } from '../../components/Input';
 
 import { editProfile, getProfile } from '../../redux/slice/userSlice';
-import { updateUserProfile } from '../../redux/slice/authSlice';
+import { updatePhoto } from '../../redux/slice/authSlice';
 
 import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
 
@@ -49,6 +49,21 @@ function ProfileForm() {
     setPreview(URL.createObjectURL(file));
   };
 
+  // CANCEL EDIT (NEW)
+  const handleCancelEdit = () => {
+    setIsEdit(false);
+    setSelectedPhoto(null);
+    setPreview(null);
+
+    if (user) {
+      reset({
+        fullName: user.fullName || user.fullname || '',
+        phone: user.phone || '',
+        email: user.email || '',
+      });
+    }
+  };
+
   // submit
   const onSubmitForm = async (data) => {
     try {
@@ -60,11 +75,12 @@ function ProfileForm() {
         }),
       ).unwrap();
 
-      // 🔥 FIX: response kamu ada di res.data.data
       const updated = res?.data;
 
-      // update auth state sekaligus (name + photo)
-      dispatch(updateUserProfile(updated));
+      // update redux auth state (khusus photo)
+      if (updated?.photo) {
+        dispatch(updatePhoto(updated.photo));
+      }
 
       toast.success('Profil berhasil diperbarui');
 
@@ -116,6 +132,19 @@ function ProfileForm() {
             <img src="assets/utils/edit.svg" alt="edit icon" />
             Change Profile
           </Button>
+
+          {/* CANCEL BUTTON */}
+          {isEdit && (
+            <Button
+              type="button"
+              onClick={handleCancelEdit}
+              buttonColor="bg-gray-200"
+              buttonTextColor="text-gray-700"
+              className="rounded-md flex gap-3"
+            >
+              Cancel
+            </Button>
+          )}
         </div>
       </div>
 
