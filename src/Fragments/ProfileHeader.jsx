@@ -7,12 +7,11 @@ import { logout, logoutUser } from '../redux/slice/authSlice';
 import { toast } from 'sonner';
 
 function ProfileHeader({ textColor = 'text-white' }) {
-  // const auth = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false);
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
@@ -22,17 +21,18 @@ function ProfileHeader({ textColor = 'text-white' }) {
       navigate('/auth/login');
     }
   }, [user, navigate]);
+
   const ConfirmLogoutModal = ({ open, onCancel, onConfirm, isLoading }) => {
     if (!open) return null;
+
     return (
       <>
-        <button type="button" className="fixed inset-0 z-40 cursor-default bg-black/40" aria-label="Close confirm dialog" onClick={onCancel} />
+        <button type="button" className="fixed inset-0 z-40 bg-black/40" onClick={onCancel} />
+
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-          <div className="w-full max-w-sm rounded-lg border border-blue-100 bg-white p-5 shadow-lg">
-            <div className="flex flex-col gap-2">
-              <div className="text-base font-semibold text-blue-700">Logout</div>
-              <div className="text-sm text-gray-600">Yakin ingin logout?</div>
-            </div>
+          <div className="w-full max-w-sm rounded-lg bg-white p-5 shadow-lg">
+            <div className="text-base font-semibold text-blue-700">Logout</div>
+            <div className="text-sm text-gray-600 mt-1">Yakin ingin logout?</div>
 
             <div className="mt-5 flex gap-3">
               <div className="flex-1">
@@ -40,6 +40,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
                   Batal
                 </Button>
               </div>
+
               <div className="flex-1">
                 <Button onClick={onConfirm} buttonColor="bg-blue-700" buttonTextColor="text-white" className="rounded-md">
                   {isLoading ? 'Logout...' : 'Logout'}
@@ -53,18 +54,12 @@ function ProfileHeader({ textColor = 'text-white' }) {
   };
 
   const modalItem = [
-    {
-      name: 'Profile',
-      path: 'profile',
-    },
-    {
-      name: 'Logout',
-      path: 'auth/logout',
-      isLogout: true,
-    },
+    { name: 'Profile', path: 'profile' },
+    { name: 'Logout', path: 'auth/logout', isLogout: true },
   ];
+
   const handleClick = () => {
-    return setIsModalOpen(!isModalOpen);
+    setIsModalOpen(!isModalOpen);
   };
 
   const handleConfirmLogout = async () => {
@@ -85,36 +80,38 @@ function ProfileHeader({ textColor = 'text-white' }) {
     }
   };
 
-  const handleClickList = async (event, item) => {
+  const handleClickList = (event, item) => {
     setIsModalOpen(false);
+
     if (!item?.isLogout) return;
+
     event.preventDefault();
     setIsLogoutConfirmOpen(true);
   };
+
   return (
     <div className={`flex ${textColor} gap-2 md:gap-4 items-center md:flex-row-reverse relative justify-center`}>
-      <div onClick={handleClick} className="hidden md:block relative cursor-pointer">
+      <div onClick={handleClick} className="hidden md:block cursor-pointer">
         <img src="/assets/utils/arrow-down.svg" alt="arrow down icon" />
       </div>
+
       {isModalOpen && (
         <>
-          <button
-            type="button"
-            className="fixed inset-0 z-40 cursor-default bg-transparent"
-            aria-label="Close menu"
-            onClick={() => setIsModalOpen(false)}
-          />
-          <div className="absolute -bottom-30 right-5 px-3 z-50 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
+          <button className="fixed inset-0 z-40 bg-transparent" onClick={() => setIsModalOpen(false)} />
+
+          <div className="absolute -bottom-30 right-5 z-50 bg-white flex flex-col gap-2 py-2 rounded-md drop-shadow-md">
             {modalItem.map((item) => (
               <NavLink
-                onClick={(event) => handleClickList(event, item)}
                 key={item.path}
                 to={`/${item.path}`}
+                onClick={(event) => handleClickList(event, item)}
                 className={({ isActive }) => {
-                  const base = 'rounded-xl flex gap-6 items-center w-auto px-8 py-2 text-left transition-all font-semibold';
+                  const base = 'flex gap-6 items-center px-8 py-2 font-semibold transition-all';
+
                   if (item.isLogout) {
                     return `${base} text-red-500 hover:bg-red-500 hover:text-white`;
                   }
+
                   return `${base} text-blue-700 hover:bg-blue-700 hover:text-white ${isActive ? 'bg-blue-700 text-white' : ''}`;
                 }}
               >
@@ -122,7 +119,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
                   <>
                     <img
                       src={`/assets/dashboard/nav-item/${item.path}.svg`}
-                      alt={`${item.name} icon`}
+                      alt={item.name}
                       className={`${!item.isLogout && isActive ? 'brightness-0 invert' : ''}`}
                     />
                     <span>{item.name}</span>
@@ -141,17 +138,19 @@ function ProfileHeader({ textColor = 'text-white' }) {
         isLoading={isLogoutLoading}
       />
 
+      {/* 🔥 INI BAGIAN PENTING */}
       <img
-        src={getProfileImageSrc(user)}
+        src={getProfileImageSrc(user)} // <-- ini sudah pakai user.photo dari Redux
         onError={(e) => {
           e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
         }}
-        alt="profile icon"
-        className="w-10 rounded-full"
+        alt="profile"
+        className="w-10 h-10 rounded-full object-cover"
       />
+
       <div>
-        <div className="greetings text-ultralight text-sm md:hidden">Hello,</div>
-        <div className="greetings text-normal text-md">{user.display_name}</div>
+        <div className="text-sm md:hidden">Hello,</div>
+        <div className="text-md font-medium">{user?.display_name}</div>
       </div>
     </div>
   );

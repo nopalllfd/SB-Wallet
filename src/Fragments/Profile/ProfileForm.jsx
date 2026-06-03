@@ -10,7 +10,9 @@ import { InputGroup } from '../../components/Input';
 import { editProfile, getProfile } from '../../redux/slice/userSlice';
 
 import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
-import { updateDisplayName } from '../../redux/slice/authSlice';
+
+// 👇 tambah ini
+import { updatePhoto, updateDisplayName } from '../../redux/slice/authSlice';
 
 function ProfileForm() {
   const [isEdit, setIsEdit] = useState(false);
@@ -20,7 +22,6 @@ function ProfileForm() {
   const dispatch = useDispatch();
 
   const { profile, loading } = useSelector((state) => state.user);
-
   const user = profile;
 
   const {
@@ -32,10 +33,12 @@ function ProfileForm() {
     mode: 'onChange',
   });
 
+  // fetch profile
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
 
+  // fill form
   useEffect(() => {
     if (user) {
       reset({
@@ -46,18 +49,19 @@ function ProfileForm() {
     }
   }, [user, reset]);
 
+  // handle file
   const handlePhotoChange = (e) => {
     const file = e.target.files?.[0];
-
     if (!file) return;
 
     setSelectedPhoto(file);
     setPreview(URL.createObjectURL(file));
   };
 
+  // submit
   const onSubmitForm = async (data) => {
     try {
-      await dispatch(
+      const res = await dispatch(
         editProfile({
           fullname: data.fullName,
           phone: data.phone,
@@ -65,7 +69,11 @@ function ProfileForm() {
         }),
       ).unwrap();
 
-      await dispatch(getProfile()).unwrap();
+      // update auth state (NO getProfile lagi)
+      if (res?.data?.photo) {
+        dispatch(updatePhoto(res.data.photo));
+      }
+
       dispatch(updateDisplayName(data.fullName));
 
       toast.success('Profil berhasil diperbarui');
@@ -80,6 +88,7 @@ function ProfileForm() {
 
   return (
     <section className="flex flex-col gap-4">
+      {/* PROFILE IMAGE */}
       <div className="profile-picture flex justify-between md:justify-start md:gap-3 items-center">
         <div className="relative group w-fit">
           <img
@@ -95,19 +104,9 @@ function ProfileForm() {
             <>
               <label
                 htmlFor="profile-photo"
-                className="
-                  absolute inset-0
-                  flex flex-col items-center justify-center
-                  bg-black/50
-                  rounded-md
-                  opacity-0
-                  group-hover:opacity-100
-                  transition-all duration-200
-                  cursor-pointer
-                "
+                className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 rounded-md opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
               >
                 <img src="/assets/utils/edit.svg" alt="edit" className="w-5 h-5 mb-2 brightness-0 invert" />
-
                 <span className="text-white text-sm font-medium">Upload Photo</span>
               </label>
 
@@ -143,6 +142,7 @@ function ProfileForm() {
 
       <p className="text-gray-600 text-xs font-normal">The profile picture must be 512 x 512 pixels or less</p>
 
+      {/* FORM */}
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <div className="input-group flex flex-col gap-6">
           <InputGroup
@@ -198,10 +198,10 @@ function ProfileForm() {
           </InputGroup>
         </div>
 
+        {/* LINKS */}
         <div className="mt-6 mb-6 flex flex-col gap-3">
           <div className="password flex justify-between">
             <h1>Password</h1>
-
             <h1 className="text-blue-700">
               <Link to="/profile/change/password">Change Password</Link>
             </h1>
@@ -209,7 +209,6 @@ function ProfileForm() {
 
           <div className="pin flex justify-between">
             <h1>Pin</h1>
-
             <h1 className="text-blue-700">
               <Link to="/profile/change/pin">Change Pin</Link>
             </h1>
