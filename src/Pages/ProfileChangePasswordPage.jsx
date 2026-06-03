@@ -1,17 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
 import { Button } from '../components/Button';
 import { InputGroup } from '../components/Input';
 import HeaderSection from '../Fragments/Profile/HeaderSection';
 import { DashboardLayout } from '../Layouts/DashboardLayout';
-import { changePassword } from '../redux/slice/authSlice';
+import { changePassword, logoutUser } from '../redux/slice/authSlice';
 
 function ProfileChangePasswordPage() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -37,7 +35,7 @@ function ProfileChangePasswordPage() {
       ).unwrap();
 
       toast.success('Password berhasil diubah');
-      navigate('/profile');
+      await dispatch(logoutUser()).unwrap();
     } catch (error) {
       toast.error(error || 'Password gagal diubah');
     }
