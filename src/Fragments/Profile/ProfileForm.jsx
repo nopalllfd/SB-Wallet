@@ -61,7 +61,7 @@ function ProfileForm() {
       ).unwrap();
 
       // 🔥 FIX: response kamu ada di res.data.data
-      const updated = res?.data?.data;
+      const updated = res?.data;
 
       // update auth state sekaligus (name + photo)
       dispatch(updateUserProfile(updated));
