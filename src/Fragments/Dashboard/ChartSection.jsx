@@ -72,7 +72,7 @@ function ChartSection() {
 
     chartData = {
       labels: dates.map((date) =>
-        new Date(date).toLocaleDateString('id-ID', {
+        new Date(date).toLocaleDateString('en-US', {
           weekday: 'short',
         }),
       ),
