@@ -45,6 +45,7 @@ function AppRouter() {
 
       <Routes>
         {/* PUBLIC ROUTES */}
+        <Route path="" element={<HomePage />} />
         <Route path="/" element={<HomePage />} />
 
         <Route path="/auth">

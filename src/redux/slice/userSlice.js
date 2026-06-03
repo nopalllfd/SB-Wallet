@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { delay } from '../../utils/delay';
 import { updateUser, updateUserPin } from './registerSlice';
 import { fetchWithAuth } from '../../utils/fetchWithAuth';
 
@@ -27,22 +26,28 @@ export const getProfile = createAsyncThunk('user/profile', async (_, thunkAPI) =
   }
 });
 
-export const loginUser = createAsyncThunk('user/loginUser', async (data) => {
+export const editProfile = createAsyncThunk('user/editProfile', async ({ fullname, phone, photo }, thunkAPI) => {
   try {
-    await delay(2000);
-  } catch (error) {
-    throw new Error(error);
-  }
+    const formData = new FormData();
 
-  return data;
-});
+    if (fullname) formData.append('fullname', fullname);
+    if (phone) formData.append('phone', phone);
+    if (photo) formData.append('photo', photo);
 
-export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
-  try {
-    await delay(1000);
-    return true;
+    const response = await fetchWithAuth(`/api/user/profile`, {
+      method: 'PATCH',
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data?.message || 'Failed to update profile');
+    }
+
+    return data;
   } catch (error) {
-    throw new Error(error);
+    return thunkAPI.rejectWithValue(error?.message || 'Failed to update profile');
   }
 });
 
@@ -70,37 +75,6 @@ export const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addAsyncThunk(loginUser, {
-        pending: (prevState) => {
-          prevState.loading = true;
-          prevState.error = null;
-          prevState.isLogin = false;
-        },
-        fulfilled: (prevState, { payload }) => {
-          prevState.loading = false;
-          prevState.user = payload;
-          prevState.isLogin = true;
-        },
-        rejected: (prevState, { error }) => {
-          prevState.loading = false;
-          prevState.error = error.message;
-        },
-      })
-      .addAsyncThunk(logoutUser, {
-        pending: (prevState) => {
-          prevState.loading = true;
-          prevState.error = null;
-        },
-        fulfilled: (prevState) => {
-          prevState.loading = false;
-          prevState.user = null;
-          prevState.isLogin = false;
-        },
-        rejected: (prevState, { error }) => {
-          prevState.loading = false;
-          prevState.error = error.message;
-        },
-      })
       .addAsyncThunk(updateUser, {
         pending: (prevState) => {
           prevState.loading = true;
@@ -141,6 +115,36 @@ export const userSlice = createSlice({
         rejected: (prevState, { error }) => {
           prevState.loading = false;
           prevState.error = error.message;
+        },
+      })
+      .addAsyncThunk(editProfile, {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
+        fulfilled: (state, { payload }) => {
+          state.loading = false;
+
+          if (payload?.data) {
+            const profileData = {
+              fullName: payload.data.fullname,
+              phone: payload.data.phone,
+              photo: payload.data.photo,
+            };
+
+            state.profile = profileData;
+
+            if (state.user) {
+              state.user = {
+                ...state.user,
+                ...profileData,
+              };
+            }
+          }
+        },
+        rejected: (state, { payload, error }) => {
+          state.loading = false;
+          state.error = payload || error.message;
         },
       });
   },

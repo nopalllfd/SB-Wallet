@@ -24,9 +24,9 @@ export const registerUser = createAsyncThunk('auth/register', async (payload, th
     );
 
     const data = await response.json();
-
+    console.log(data);
     if (!response.ok) {
-      return thunkAPI.rejectWithValue(data?.message || 'Register failed');
+      return thunkAPI.rejectWithValue(data?.error || 'Register failed');
     }
 
     return data;
@@ -137,6 +137,9 @@ const authSlice = createSlice({
     setAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
     },
+    updateDisplayName: (state, action) => {
+      state.user.display_name = action.payload;
+    },
     logout: (state) => {
       state.user = null;
       state.token = null;
@@ -152,13 +155,17 @@ const authSlice = createSlice({
       .addAsyncThunk(registerUser, {
         pending: (state) => {
           state.loading = true;
+          state.error = null;
+          state.success = false;
         },
         fulfilled: (state) => {
           state.loading = false;
           state.success = true;
+          state.error = null;
         },
         rejected: (state, action) => {
           state.loading = false;
+          state.success = false;
           state.error = action.payload;
         },
       })
@@ -166,10 +173,13 @@ const authSlice = createSlice({
       .addAsyncThunk(loginUser, {
         pending: (state) => {
           state.loading = true;
+          state.error = null;
+          state.success = false;
         },
         fulfilled: (state, action) => {
           state.loading = false;
           state.success = true;
+          state.error = null;
 
           const user = action.payload.data;
 
@@ -188,39 +198,75 @@ const authSlice = createSlice({
         },
         rejected: (state, action) => {
           state.loading = false;
+          state.success = false;
           state.error = action.payload;
         },
       })
 
       .addAsyncThunk(setUserPin, {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+          state.success = false;
+        },
         fulfilled: (state) => {
           state.loading = false;
           state.success = true;
+          state.error = null;
 
           if (state.user) {
             state.user.isPinExists = true;
           }
         },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.success = false;
+          state.error = action.payload;
+        },
       })
 
       .addAsyncThunk(logoutUser, {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
         fulfilled: (state) => {
           state.loading = false;
           state.success = true;
+          state.error = null;
+
           state.user = null;
           state.token = null;
           state.isAuthenticated = false;
+          state.selectedUser = null;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.success = false;
+          state.error = action.payload;
         },
       })
 
       .addAsyncThunk(getUserDetail, {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+        },
         fulfilled: (state, action) => {
           state.loading = false;
+          state.success = true;
+          state.error = null;
+
           state.selectedUser = action.payload.data;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.success = false;
+          state.error = action.payload;
         },
       });
   },
 });
 
-export const { setAuthenticated, logout } = authSlice.actions;
+export const { setAuthenticated, logout, updateDisplayName } = authSlice.actions;
 export default authSlice.reducer;

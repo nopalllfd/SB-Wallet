@@ -34,42 +34,49 @@ function ListSection() {
   return (
     <section className="flex flex-col">
       {/* LIST */}
-      {data.map((d, idx) => (
-        <div
-          key={idx}
-          onClick={() => handleClick(d)}
-          className={`grid grid-cols-3 md:grid-cols-5 items-center gap-4 border-b border-gray-300 px-4 py-3 cursor-pointer ${
-            idx % 2 === 0 ? 'bg-white' : 'bg-gray-100'
-          }`}
-        >
-          {/* avatar */}
-          <img
-            src={getProfileImageSrc(d.user)}
-            onError={(e) => {
-              e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
-            }}
-            alt="avatar"
-            className="w-10 h-10 rounded-full hidden md:block"
-          />
-
-          {/* name */}
-          <p className="text-sm md:text-base text-gray-700 truncate">{d.counterparty_name}</p>
-
-          {/* phone */}
-          <p className="text-sm md:text-base text-gray-500 truncate">{d.counterparty_phone}</p>
-
-          {/* amount */}
-          <p className={`text-sm md:text-base font-semibold whitespace-nowrap ${d.flow_type !== 'out' ? 'text-green-500' : 'text-red-500'}`}>
-            {d.flow_type === 'out' ? '-' : '+'}
-            {currencyFormatter.format(d.amount)}
-          </p>
-
-          {/* delete */}
-          <button className="justify-self-end hidden md:block">
-            <img src="/assets/utils/trash-red.svg" alt="trash icon" />
-          </button>
+      {console.log(data)}
+      {data?.length === 0 || !data ? (
+        <div className="flex justify-center items-center py-10">
+          <p className="text-gray-500">Belum ada transaksi</p>
         </div>
-      ))}
+      ) : (
+        data.map((d, idx) => (
+          <div
+            key={idx}
+            onClick={() => handleClick(d)}
+            className={`grid grid-cols-3 md:grid-cols-5 items-center gap-4 border-b border-gray-300 px-4 py-3 cursor-pointer ${
+              idx % 2 === 0 ? 'bg-white' : 'bg-gray-100'
+            }`}
+          >
+            {/* avatar */}
+            <img
+              src={getProfileImageSrc(d.user)}
+              onError={(e) => {
+                e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
+              }}
+              alt="avatar"
+              className="w-10 h-10 rounded-full hidden md:block"
+            />
+
+            {/* name */}
+            <p className="text-sm md:text-base text-gray-700 truncate">{d.counterparty_name}</p>
+
+            {/* phone */}
+            <p className="text-sm md:text-base text-gray-500 truncate">{d.counterparty_phone}</p>
+
+            {/* amount */}
+            <p className={`text-sm md:text-base font-semibold whitespace-nowrap ${d.flow_type !== 'out' ? 'text-green-500' : 'text-red-500'}`}>
+              {d.flow_type === 'out' ? '-' : '+'}
+              {currencyFormatter.format(d.amount)}
+            </p>
+
+            {/* delete */}
+            <button className="justify-self-end hidden md:block">
+              <img src="/assets/utils/trash-red.svg" alt="trash icon" />
+            </button>
+          </div>
+        ))
+      )}
 
       {/* ✅ PAGINATION */}
       {meta?.total_pages > 1 && <Pagination page={page} pageCount={meta.total_pages} onPageChange={setPage} />}

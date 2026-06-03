@@ -29,7 +29,7 @@ function RegisterForm() {
       navigate('/auth/login');
     } catch (error) {
       const message = error?.message || error || 'Registrasi gagal';
-
+      console.log(error);
       toast.error(message);
 
       setError('email', {
@@ -68,8 +68,8 @@ function RegisterForm() {
             {...register('password', {
               required: 'password tidak boleh kosong',
               minLength: {
-                value: 7,
-                message: 'Minimal 7 karakter',
+                value: 8,
+                message: 'Minimal 8 karakter',
               },
             })}
             eyelashIconOpenSrc="/assets/inputs/form/eyelash-open.svg"

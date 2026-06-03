@@ -52,7 +52,7 @@ function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
 
       {isSubmitted && !selected && <p className="text-red-500 text-sm font-medium">Please select a payment method to continue.</p>}
 
-      {methods.map((payment) => (
+      {methods?.map((payment) => (
         <label
           key={payment.id}
           className={`cursor-pointer select-none rounded-md px-8 py-4 justify-start flex gap-10 items-center border-2 transition-all ${
