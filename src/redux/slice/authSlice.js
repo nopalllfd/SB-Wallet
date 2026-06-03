@@ -159,6 +159,35 @@ export const changePin = createAsyncThunk('auth/change-pin', async (pin, thunkAP
   }
 });
 
+export const changePassword = createAsyncThunk('auth/change-password', async (payload, thunkAPI) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetchWithAuth(
+      '/api/auth/password',
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      },
+      thunkAPI.dispatch,
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data?.message || 'Change password failed');
+    }
+
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -299,6 +328,23 @@ const authSlice = createSlice({
         },
       })
       .addAsyncThunk(changePin, {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+          state.success = false;
+        },
+        fulfilled: (state) => {
+          state.loading = false;
+          state.success = true;
+          state.error = null;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.success = false;
+          state.error = action.payload;
+        },
+      })
+      .addAsyncThunk(changePassword, {
         pending: (state) => {
           state.loading = true;
           state.error = null;
