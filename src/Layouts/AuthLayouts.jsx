@@ -7,7 +7,7 @@ export const AuthLayouts = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (auth.isAuthenticated && !auth.user.isPinExists) {
+    if (auth.isAuthenticated && auth.user.isPinExists) {
       navigate('/dashboard');
     }
   }, [auth.isAuthenticated, navigate]);
