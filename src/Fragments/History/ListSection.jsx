@@ -59,15 +59,15 @@ function ListSection() {
             />
 
             {/* name */}
-            <p className="text-sm md:text-base text-gray-700 truncate">{d.counterparty_name}</p>
+            <p className="text-sm md:text-base text-gray-700 truncate">{d.CounterpartyName}</p>
 
             {/* phone */}
-            <p className="text-sm md:text-base text-gray-500 truncate">{d.counterparty_phone}</p>
+            <p className="text-sm md:text-base text-gray-500 truncate">{d.CounterpartyPhone}</p>
 
             {/* amount */}
-            <p className={`text-sm md:text-base font-semibold whitespace-nowrap ${d.flow_type !== 'out' ? 'text-green-500' : 'text-red-500'}`}>
-              {d.flow_type === 'out' ? '-' : '+'}
-              {currencyFormatter.format(d.amount)}
+            <p className={`text-sm md:text-base font-semibold whitespace-nowrap ${d.FlowType !== 'out' ? 'text-green-500' : 'text-red-500'}`}>
+              {d.FlowType === 'out' ? '-' : '+'}
+              {currencyFormatter.format(d.Amount)}
             </p>
 
             {/* delete */}

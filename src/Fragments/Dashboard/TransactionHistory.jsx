@@ -32,13 +32,13 @@ function TransactionHistory() {
               <img src="/assets/transaction-profile.svg" alt="" />
 
               <div className="flex-2 ms-5 flex flex-col gap-1">
-                <p className="font-semibold">{d?.counterparty_name ?? '-'}</p>
-                <p>{d?.flow_type === 'in' ? 'Masuk' : 'Keluar'}</p>
+                <p className="font-semibold">{d?.CounterpartyName ?? '-'}</p>
+                <p>{d?.FlowType === 'in' ? 'Masuk' : 'Keluar'}</p>
               </div>
 
-              <h2 className={`${d?.flow_type === 'out' ? 'text-red-500' : 'text-green-500'} font-bold`}>
-                {d?.flow_type === 'out' ? '-' : '+'}
-                {currencyFormatter.format(d?.amount ?? 0)}
+              <h2 className={`${d?.FlowType === 'out' ? 'text-red-500' : 'text-green-500'} font-bold`}>
+                {d?.FlowType === 'out' ? '-' : '+'}
+                {currencyFormatter.format(d?.Amount ?? 0)}
               </h2>
             </div>
           ))
