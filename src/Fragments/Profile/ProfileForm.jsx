@@ -8,9 +8,9 @@ import { Button } from '../../components/Button';
 import { InputGroup } from '../../components/Input';
 
 import { editProfile, getProfile } from '../../redux/slice/userSlice';
+import { updateUserProfile } from '../../redux/slice/authSlice';
 
 import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
-import { updatePhoto, updateDisplayName } from '../../redux/slice/authSlice';
 
 function ProfileForm() {
   const [isEdit, setIsEdit] = useState(false);
@@ -22,14 +22,7 @@ function ProfileForm() {
   const { profile, loading } = useSelector((state) => state.user);
   const user = profile;
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    mode: 'onChange',
-  });
+  const { register, handleSubmit, reset } = useForm({ mode: 'onChange' });
 
   // fetch profile
   useEffect(() => {
@@ -67,12 +60,11 @@ function ProfileForm() {
         }),
       ).unwrap();
 
-      // update auth state (NO getProfile lagi)
-      if (res?.data?.photo) {
-        dispatch(updatePhoto(res.data.photo));
-      }
+      // 🔥 FIX: response kamu ada di res.data.data
+      const updated = res?.data?.data;
 
-      dispatch(updateDisplayName(data.fullName));
+      // update auth state sekaligus (name + photo)
+      dispatch(updateUserProfile(updated));
 
       toast.success('Profil berhasil diperbarui');
 
@@ -124,17 +116,6 @@ function ProfileForm() {
             <img src="assets/utils/edit.svg" alt="edit icon" />
             Change Profile
           </Button>
-
-          <Button
-            type="button"
-            border="border-2 border-red-500"
-            buttonTextColor="text-red-500"
-            className="rounded-md flex gap-2"
-            buttonColor="bg-white"
-          >
-            <img src="assets/utils/trash-red-profile.svg" alt="delete photo profile icon" />
-            Delete Profile
-          </Button>
         </div>
       </div>
 
@@ -152,64 +133,40 @@ function ProfileForm() {
             id="fullName"
             placeholder="Enter Your Fullname"
             iconSrc="/assets/utils/user.svg"
-            iconAlt="user icon"
           >
             Full Name
           </InputGroup>
-
-          {errors.fullName && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
 
           <InputGroup
             type="tel"
             isDisabled={!isEdit}
             disabled={!isEdit}
-            {...register('phone', {
-              pattern: {
-                value: /^[0-9]+$/,
-                message: 'Hanya boleh angka',
-              },
-              minLength: {
-                value: 10,
-                message: 'Minimal 10 digit',
-              },
-            })}
+            {...register('phone')}
             id="phone"
             placeholder="Enter Your Number Phone"
             iconSrc="/assets/utils/phone.svg"
-            iconAlt="phone icon"
           >
             Phone
           </InputGroup>
 
-          {errors.phone && <p className="text-red-500 text-sm">{errors.phone.message}</p>}
-
-          <InputGroup
-            disabled
-            isDisabled
-            {...register('email')}
-            id="email"
-            placeholder="Enter Your Email"
-            iconSrc="/assets/inputs/form/email.svg"
-            iconAlt="email icon"
-          >
+          <InputGroup disabled isDisabled {...register('email')} id="email" placeholder="Enter Your Email" iconSrc="/assets/inputs/form/email.svg">
             Email
           </InputGroup>
         </div>
 
-        {/* LINKS */}
         <div className="mt-6 mb-6 flex flex-col gap-3">
           <div className="password flex justify-between">
             <h1>Password</h1>
-            <h1 className="text-blue-700">
-              <Link to="/profile/change/password">Change Password</Link>
-            </h1>
+            <Link className="text-blue-700" to="/profile/change/password">
+              Change Password
+            </Link>
           </div>
 
           <div className="pin flex justify-between">
             <h1>Pin</h1>
-            <h1 className="text-blue-700">
-              <Link to="/profile/change/pin">Change Pin</Link>
-            </h1>
+            <Link className="text-blue-700" to="/profile/change/pin">
+              Change Pin
+            </Link>
           </div>
         </div>
 
