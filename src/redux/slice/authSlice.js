@@ -130,6 +130,35 @@ export const getUserDetail = createAsyncThunk('auth/user-detail', async (userId,
   }
 });
 
+export const changePin = createAsyncThunk('auth/change-pin', async (pin, thunkAPI) => {
+  try {
+    const token = localStorage.getItem('token');
+
+    const response = await fetchWithAuth(
+      '/api/auth/pin',
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ pin }),
+      },
+      thunkAPI.dispatch,
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data?.message || 'Change PIN failed');
+    }
+
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -262,6 +291,23 @@ const authSlice = createSlice({
           state.error = null;
 
           state.selectedUser = action.payload.data;
+        },
+        rejected: (state, action) => {
+          state.loading = false;
+          state.success = false;
+          state.error = action.payload;
+        },
+      })
+      .addAsyncThunk(changePin, {
+        pending: (state) => {
+          state.loading = true;
+          state.error = null;
+          state.success = false;
+        },
+        fulfilled: (state) => {
+          state.loading = false;
+          state.success = true;
+          state.error = null;
         },
         rejected: (state, action) => {
           state.loading = false;
