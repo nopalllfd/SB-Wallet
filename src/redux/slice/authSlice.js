@@ -138,7 +138,11 @@ const authSlice = createSlice({
       state.isAuthenticated = action.payload;
     },
     updateDisplayName: (state, action) => {
+      if (!state.user) return;
+
       state.user.display_name = action.payload;
+
+      localStorage.setItem('user', JSON.stringify(state.user));
     },
     logout: (state) => {
       state.user = null;
