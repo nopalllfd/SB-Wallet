@@ -33,7 +33,7 @@ function TransactionHistory() {
 
               <div className="flex-2 ms-5 flex flex-col gap-1">
                 <p className="font-semibold">{d?.CounterpartyName ?? '-'}</p>
-                <p>{d?.FlowType === 'in' ? 'Masuk' : 'Keluar'}</p>
+                <p>{d?.FlowType === 'in' ? 'In' : 'Send'}</p>
               </div>
 
               <h2 className={`${d?.FlowType === 'out' ? 'text-red-500' : 'text-green-500'} font-bold`}>
