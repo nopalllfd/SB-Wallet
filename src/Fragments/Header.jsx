@@ -20,7 +20,7 @@ function Header(props) {
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
-      dispatch(logout);
+      dispatch(logout());
       toast.success('Logout berhasil');
       setIsBurgerOpen(false);
       navigate('/auth/login');
