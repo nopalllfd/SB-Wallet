@@ -371,5 +371,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setAuthenticated, logout, updateDisplayName } = authSlice.actions;
+export const { setAuthenticated, logout, updateDisplayName, updatePhoto } = authSlice.actions;
 export default authSlice.reducer;

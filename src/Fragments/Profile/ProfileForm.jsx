@@ -10,8 +10,6 @@ import { InputGroup } from '../../components/Input';
 import { editProfile, getProfile } from '../../redux/slice/userSlice';
 
 import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profileImage';
-
-// 👇 tambah ini
 import { updatePhoto, updateDisplayName } from '../../redux/slice/authSlice';
 
 function ProfileForm() {

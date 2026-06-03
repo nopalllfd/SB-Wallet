@@ -27,7 +27,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
 
     return (
       <>
-        <button type="button" className="fixed inset-0 z-40 bg-black/40" onClick={onCancel} />
+        <button className="fixed inset-0 z-40 bg-black/40" onClick={onCancel} />
 
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
           <div className="w-full max-w-sm rounded-lg bg-white p-5 shadow-lg">
@@ -59,7 +59,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
   ];
 
   const handleClick = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen((prev) => !prev);
   };
 
   const handleConfirmLogout = async () => {
@@ -91,10 +91,12 @@ function ProfileHeader({ textColor = 'text-white' }) {
 
   return (
     <div className={`flex ${textColor} gap-2 md:gap-4 items-center md:flex-row-reverse relative justify-center`}>
+      {/* dropdown toggle */}
       <div onClick={handleClick} className="hidden md:block cursor-pointer">
         <img src="/assets/utils/arrow-down.svg" alt="arrow down icon" />
       </div>
 
+      {/* dropdown menu */}
       {isModalOpen && (
         <>
           <button className="fixed inset-0 z-40 bg-transparent" onClick={() => setIsModalOpen(false)} />
@@ -131,6 +133,7 @@ function ProfileHeader({ textColor = 'text-white' }) {
         </>
       )}
 
+      {/* logout modal */}
       <ConfirmLogoutModal
         open={isLogoutConfirmOpen}
         onCancel={() => setIsLogoutConfirmOpen(false)}
@@ -138,9 +141,9 @@ function ProfileHeader({ textColor = 'text-white' }) {
         isLoading={isLogoutLoading}
       />
 
-      {/* 🔥 INI BAGIAN PENTING */}
+      {/* 🔥 PROFILE IMAGE (FIXED + SAFE) */}
       <img
-        src={getProfileImageSrc(user)} // <-- ini sudah pakai user.photo dari Redux
+        src={getProfileImageSrc(user)} // <-- AUTO pakai user.photo dari auth
         onError={(e) => {
           e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
         }}
@@ -148,9 +151,10 @@ function ProfileHeader({ textColor = 'text-white' }) {
         className="w-10 h-10 rounded-full object-cover"
       />
 
+      {/* USER NAME */}
       <div>
         <div className="text-sm md:hidden">Hello,</div>
-        <div className="text-md font-medium">{user?.display_name}</div>
+        <div className="text-md font-medium">{user?.display_name || 'User'}</div>
       </div>
     </div>
   );
