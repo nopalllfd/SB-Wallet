@@ -3,7 +3,7 @@ function HeaderSectionDesktopOnly() {
     <header className="hidden md:block">
       <div className="flex gap-4 mb-6">
         <img src="/assets/utils/history-blue.svg" alt="history icon" />
-        <h2 className="font-semibold text-gray-900">Riwayat Transaksi</h2>
+        <h2 className="font-semibold text-gray-900">Transactions History</h2>
       </div>
     </header>
   );
