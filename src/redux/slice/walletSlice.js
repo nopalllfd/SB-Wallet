@@ -37,26 +37,26 @@ const walletSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addAsyncThunk(getDashboard, {
-      pending: (state) => {
-        state.loading = true;
-        state.error = null;
-        state.success = false;
+      pending: (prevState) => {
+        prevState.loading = true;
+        prevState.error = null;
+        prevState.success = false;
       },
-      fulfilled: (state, action) => {
-        state.loading = false;
-        state.success = true;
+      fulfilled: (prevState, action) => {
+        prevState.loading = false;
+        prevState.success = true;
 
         const dashboard = action.payload.data;
 
-        state.dashboard = {
+        prevState.dashboard = {
           balance: dashboard.balance,
           income: dashboard.income,
           expense: dashboard.expense,
         };
       },
-      rejected: (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
+      rejected: (prevState, action) => {
+        prevState.loading = false;
+        prevState.error = action.payload;
       },
     });
   },

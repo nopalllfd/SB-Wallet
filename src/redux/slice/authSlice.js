@@ -24,7 +24,6 @@ export const registerUser = createAsyncThunk('auth/register', async (payload, th
     );
 
     const data = await response.json();
-    console.log(data);
     if (!response.ok) {
       return thunkAPI.rejectWithValue(data?.error || 'Register failed');
     }
@@ -192,63 +191,63 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAuthenticated: (state, action) => {
-      state.isAuthenticated = action.payload;
+    setAuthenticated: (prevState, action) => {
+      prevState.isAuthenticated = action.payload;
     },
-    updateDisplayName: (state, action) => {
-      if (!state.user) return;
+    updateDisplayName: (prevState, action) => {
+      if (!prevState.user) return;
 
-      state.user.display_name = action.payload;
+      prevState.user.display_name = action.payload;
 
-      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('user', JSON.stringify(prevState.user));
     },
-    updatePhoto: (state, action) => {
-      if (!state.user) return;
+    updatePhoto: (prevState, action) => {
+      if (!prevState.user) return;
 
-      state.user.photo = action.payload;
+      prevState.user.photo = action.payload;
 
-      localStorage.setItem('user', JSON.stringify(state.user));
+      localStorage.setItem('user', JSON.stringify(prevState.user));
     },
-    logout: (state) => {
-      state.user = null;
-      state.token = null;
-      state.isAuthenticated = false;
-      state.selectedUser = null;
-      state.loading = false;
-      state.error = null;
-      state.success = false;
+    logout: (prevState) => {
+      prevState.user = null;
+      prevState.token = null;
+      prevState.isAuthenticated = false;
+      prevState.selectedUser = null;
+      prevState.loading = false;
+      prevState.error = null;
+      prevState.success = false;
     },
   },
   extraReducers: (builder) => {
     builder
       .addAsyncThunk(registerUser, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state) => {
-          state.loading = false;
-          state.success = true;
-          state.error = null;
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.error = null;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.success = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = false;
+          prevState.error = action.payload;
         },
       })
 
       .addAsyncThunk(loginUser, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state, action) => {
-          state.loading = false;
-          state.success = true;
-          state.error = null;
+        fulfilled: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.error = null;
 
           const user = action.payload.data;
 
@@ -258,114 +257,114 @@ const authSlice = createSlice({
             isPinExists: user.isPinExists,
           };
 
-          state.user = userData;
-          state.token = user.token;
-          state.isAuthenticated = true;
+          prevState.user = userData;
+          prevState.token = user.token;
+          prevState.isAuthenticated = true;
 
           localStorage.setItem('token', user.token);
           localStorage.setItem('user', JSON.stringify(userData));
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.success = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = false;
+          prevState.error = action.payload;
         },
       })
 
       .addAsyncThunk(setUserPin, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state) => {
-          state.loading = false;
-          state.success = true;
-          state.error = null;
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.error = null;
 
-          if (state.user) {
-            state.user.isPinExists = true;
+          if (prevState.user) {
+            prevState.user.isPinExists = true;
           }
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.success = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = false;
+          prevState.error = action.payload;
         },
       })
 
       .addAsyncThunk(logoutUser, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
         },
-        fulfilled: (state) => {
-          state.loading = false;
-          state.success = true;
-          state.error = null;
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.error = null;
 
-          state.user = null;
-          state.token = null;
-          state.isAuthenticated = false;
-          state.selectedUser = null;
+          prevState.user = null;
+          prevState.token = null;
+          prevState.isAuthenticated = false;
+          prevState.selectedUser = null;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.success = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = false;
+          prevState.error = action.payload;
         },
       })
 
       .addAsyncThunk(getUserDetail, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
         },
-        fulfilled: (state, action) => {
-          state.loading = false;
-          state.success = true;
-          state.error = null;
+        fulfilled: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.error = null;
 
-          state.selectedUser = action.payload.data;
+          prevState.selectedUser = action.payload.data;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.success = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = false;
+          prevState.error = action.payload;
         },
       })
       .addAsyncThunk(changePin, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state) => {
-          state.loading = false;
-          state.success = true;
-          state.error = null;
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.error = null;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.success = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = false;
+          prevState.error = action.payload;
         },
       })
       .addAsyncThunk(changePassword, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state) => {
-          state.loading = false;
-          state.success = true;
-          state.error = null;
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.error = null;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.success = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = false;
+          prevState.error = action.payload;
         },
       });
   },

@@ -15,7 +15,7 @@ const initialState = {
 
 export const getProfile = createAsyncThunk('user/profile', async (_, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`/api/user/profile`);
+    const response = await fetchWithAuth(`/api/user/profile`, {}, thunkAPI.dispatch);
     const data = await response.json();
     if (!response.ok) {
       return thunkAPI.rejectWithValue(data?.message || 'failed to get profile');
@@ -37,7 +37,7 @@ export const editProfile = createAsyncThunk('user/editProfile', async ({ fullnam
     const response = await fetchWithAuth(`/api/user/profile`, {
       method: 'PATCH',
       body: formData,
-    });
+    }, thunkAPI.dispatch);
 
     const data = await response.json();
 
@@ -96,10 +96,10 @@ export const userSlice = createSlice({
         },
       })
       .addAsyncThunk(updateUserPin, {
-        fulfilled: (state, { payload }) => {
+        fulfilled: (prevState, { payload }) => {
           const { email, pin } = payload || {};
-          if (state.user && state.user.email == email) {
-            state.user.hasPin = pin !== '';
+          if (prevState.user && prevState.user.email == email) {
+            prevState.user.hasPin = pin !== '';
           }
         },
       })
@@ -118,12 +118,12 @@ export const userSlice = createSlice({
         },
       })
       .addAsyncThunk(editProfile, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
         },
-        fulfilled: (state, { payload }) => {
-          state.loading = false;
+        fulfilled: (prevState, { payload }) => {
+          prevState.loading = false;
 
           if (payload?.data) {
             const profileData = {
@@ -132,19 +132,19 @@ export const userSlice = createSlice({
               photo: payload.data.photo,
             };
 
-            state.profile = profileData;
+            prevState.profile = profileData;
 
-            if (state.user) {
-              state.user = {
-                ...state.user,
+            if (prevState.user) {
+              prevState.user = {
+                ...prevState.user,
                 ...profileData,
               };
             }
           }
         },
-        rejected: (state, { payload, error }) => {
-          state.loading = false;
-          state.error = payload || error.message;
+        rejected: (prevState, { payload, error }) => {
+          prevState.loading = false;
+          prevState.error = payload || error.message;
         },
       });
   },

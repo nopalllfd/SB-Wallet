@@ -75,6 +75,7 @@ export const transfer = createAsyncThunk('transaction/transfer', async (payload,
       `/api/transactions/transfer`,
       {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       },
       thunkAPI.dispatch,
@@ -92,9 +93,9 @@ export const transfer = createAsyncThunk('transaction/transfer', async (payload,
   }
 });
 
-export const getMethods = createAsyncThunk('transcation/methods', async (_, thunkAPI) => {
+export const getMethods = createAsyncThunk('transaction/methods', async (_, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`/api/transactions/payments`);
+    const response = await fetchWithAuth(`/api/transactions/payments`, {}, thunkAPI.dispatch);
     const data = await response.json();
     if (!response.ok) {
       return thunkAPI.rejectWithValue(response.message || 'failed to get payment methods');
@@ -108,13 +109,15 @@ export const getMethods = createAsyncThunk('transcation/methods', async (_, thun
 export const topup = createAsyncThunk('transaction/topup', async (payload, thunkAPI) => {
   try {
     const response = await fetchWithAuth(`/api/transactions/topup`, {
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       method: 'POST',
-    });
+    }, thunkAPI.dispatch);
     const data = await response.json();
     if (!response.ok) {
       return thunkAPI.rejectWithValue(data?.message || 'failed to topup');
     }
+    return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -128,109 +131,109 @@ const transactionSlice = createSlice({
     builder
       // ===================== TRANSACTIONS =====================
       .addAsyncThunk(getTransactions, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state, action) => {
-          state.loading = false;
-          state.success = true;
-          state.transactions = action.payload.data.data;
-          state.meta = action.payload.data.meta;
+        fulfilled: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.transactions = action.payload.data.data;
+          prevState.meta = action.payload.data.meta;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.error = action.payload;
         },
       })
 
       // ===================== CHART =====================
       .addAsyncThunk(getTrxChart, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state, action) => {
-          state.loading = false;
-          state.success = true;
-          state.chart = action.payload.data;
+        fulfilled: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.chart = action.payload.data;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.error = action.payload;
         },
       })
 
       // ===================== RECEIVERS =====================
       .addAsyncThunk(getReceivers, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state, action) => {
-          state.loading = false;
-          state.success = true;
-          state.receivers = action.payload.data.data;
-          state.meta = action.payload.data.meta;
+        fulfilled: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.receivers = action.payload.data.data;
+          prevState.meta = action.payload.data.meta;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.error = action.payload;
         },
       })
 
       // ===================== TRANSFER =====================
       .addAsyncThunk(transfer, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state) => {
-          state.loading = false;
-          state.success = true;
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.success = true;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.error = action.payload;
         },
       })
 
       // ===================== TOPUP =====================
       .addAsyncThunk(topup, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state) => {
-          state.loading = false;
-          state.success = true;
+        fulfilled: (prevState) => {
+          prevState.loading = false;
+          prevState.success = true;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.error = action.payload;
         },
       })
 
       // ===================== METHODS =====================
       .addAsyncThunk(getMethods, {
-        pending: (state) => {
-          state.loading = true;
-          state.error = null;
-          state.success = false;
+        pending: (prevState) => {
+          prevState.loading = true;
+          prevState.error = null;
+          prevState.success = false;
         },
-        fulfilled: (state, action) => {
-          state.loading = false;
-          state.success = true;
-          state.methods = action.payload.data;
+        fulfilled: (prevState, action) => {
+          prevState.loading = false;
+          prevState.success = true;
+          prevState.methods = action.payload.data;
         },
-        rejected: (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
+        rejected: (prevState, action) => {
+          prevState.loading = false;
+          prevState.error = action.payload;
         },
       });
   },
