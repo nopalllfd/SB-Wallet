@@ -7,7 +7,7 @@ function ProfilePage() {
     <DashboardLayout>
       <section className="max-md:py-6 px-6 flex flex-col gap-8">
         <HeaderSection />
-        <div className="bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
+        <div className="md:bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
           <ProfileForm />
         </div>
       </section>

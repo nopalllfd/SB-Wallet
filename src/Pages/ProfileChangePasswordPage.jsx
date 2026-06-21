@@ -46,7 +46,7 @@ function ProfileChangePasswordPage() {
       <section className="max-md:py-6 px-6 flex flex-col gap-8">
         <HeaderSection />
 
-        <section className="bg-white border border-gray-200 rounded-md p-6 md:p-10">
+        <section className="md:bg-white border border-gray-200 rounded-md p-6 md:p-10">
           <div className="mb-6">
             <h1 className="font-semibold text-gray-900">Change Password</h1>
           </div>

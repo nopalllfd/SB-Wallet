@@ -21,7 +21,7 @@ function TransferDetailPage() {
         {/* CONTENT CARD */}
         <div
           className="
-          bg-white
+          md:bg-white
           border border-gray-100
           rounded-xl
           shadow-sm

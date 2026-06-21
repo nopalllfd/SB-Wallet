@@ -35,7 +35,7 @@ function TransferPage() {
         <HeaderSectionDesktopOnly step={1} />
 
         {/* CONTENT WRAPPER */}
-        <div className="bg-white border border-gray-100 rounded-xl shadow-sm p-4 md:p-6">
+        <div className="md:bg-white border border-gray-100 rounded-xl shadow-sm p-4 md:p-6">
           <HeaderSection searchQuery={inputValue} onSearchChange={handleChange} />
 
           <div className="mt-4">

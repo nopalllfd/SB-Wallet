@@ -4,7 +4,7 @@ import { Button } from '../components/Button';
 import { Link, useNavigate, useLocation } from 'react-router';
 import { NavMenuItem } from '../components/NavMenuItems';
 import ProfileHeader from './ProfileHeader';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 import { logout, logoutUser } from '../redux/slice/authSlice';
 
@@ -21,6 +21,7 @@ function Header() {
   // =========================
   const cleanPath = location.pathname.split('?')[0].replace(/\/+$/, '');
 
+  const { isAuthenticated = false } = useSelector((state) => state.auth || {});
   // =========================
   // DASHBOARD AREA ROUTES
   // =========================
@@ -107,20 +108,28 @@ function Header() {
         )}
 
         {/* AUTH BUTTONS */}
+        {/* AUTH BUTTONS */}
         {!isDashboardArea && (
           <div className="hidden md:flex items-center gap-2 flex-shrink-0">
-            <Link to="/auth/login">
-              <Button className="rounded-xl !px-6 !py-2">Sign In</Button>
-            </Link>
+            {isAuthenticated ? (
+              <Link to="/dashboard">
+                <Button className="rounded-xl !px-6 !py-2">Dashboard</Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/auth/login">
+                  <Button className="rounded-xl !px-6 !py-2">Sign In</Button>
+                </Link>
 
-            <Link to="/auth/register">
-              <Button buttonColor="bg-transparent" buttonTextColor="text-white" border="border border-white" className="rounded-xl !px-6 !py-2">
-                Sign Up
-              </Button>
-            </Link>
+                <Link to="/auth/register">
+                  <Button buttonColor="bg-transparent" buttonTextColor="text-white" border="border border-white" className="rounded-xl !px-6 !py-2">
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         )}
-
         {/* BURGER */}
         <div className="md:hidden ml-2 flex-shrink-0">
           <button onClick={handleClick}>
@@ -129,10 +138,17 @@ function Header() {
         </div>
       </div>
       {/* MOBILE AUTH */}
+      {/* MOBILE AUTH */}
       {isBurgerOpen && !isDashboardArea && (
         <nav className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">
-          <NavMenuItem to="/auth/login">Sign In</NavMenuItem>
-          <NavMenuItem to="/auth/register">Sign Up</NavMenuItem>
+          {isAuthenticated ? (
+            <NavMenuItem to="/dashboard">Dashboard</NavMenuItem>
+          ) : (
+            <>
+              <NavMenuItem to="/auth/login">Sign In</NavMenuItem>
+              <NavMenuItem to="/auth/register">Sign Up</NavMenuItem>
+            </>
+          )}
         </nav>
       )}
       {/* MOBILE DASHBOARD */}

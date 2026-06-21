@@ -83,7 +83,7 @@ function ProfileChangePinPage() {
       <section className="max-md:py-6 px-6 flex flex-col gap-8">
         <HeaderSection />
 
-        <section className="bg-white border border-gray-200 rounded-md p-6 md:p-10">
+        <section className="md:bg-white border border-gray-200 rounded-md p-6 md:p-10">
           <form onSubmit={onSubmit} className="flex flex-col items-center gap-10">
             <div className="text-center">
               <h1 className="font-semibold text-gray-900">Change Pin</h1>

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchWithAuth } from '../../utils/fetchWithAuth';
-import { apiUrl } from '../../utils/env';
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
@@ -116,7 +115,7 @@ export const logoutUser = createAsyncThunk('auth/logout', async (_, thunkAPI) =>
 
 export const getUserDetail = createAsyncThunk('auth/user-detail', async (userId, thunkAPI) => {
   try {
-    const response = await fetchWithAuth(`${apiUrl}/api/auth/user/${userId}`, {}, thunkAPI.dispatch);
+    const response = await fetchWithAuth(`/api/auth/user/${userId}`, {}, thunkAPI.dispatch);
 
     const data = await response.json();
 
