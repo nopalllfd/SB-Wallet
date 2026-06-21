@@ -1,10 +1,19 @@
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
-function BrandHeader(props) {
+function BrandHeader() {
+  const location = useLocation();
+
+  const isAuthPage = location.pathname.startsWith('/auth');
+
   return (
-    <Link to="/" className={`icons flex justify-start items-center gap-3 ${props.location == 'dashboard' ? 'max-md:hidden' : ''}`}>
-      <img src="/assets/e-wallet.svg" alt="e-wallet icon" />
-      <h2 className={`text-blue-800 font-normal text-2xl ${props.textColor}`}>SB-Wallet</h2>
+    <Link to="/" className={`icons ${location.pathname === '/dashboard' ? 'max-md:hidden' : ''}`}>
+      {isAuthPage ? (
+        <div className={`p-2 rounded-xl backdrop-blur-sm  bg-gray-900`}>
+          <img src="/logo.svg" alt="e-wallet icon" className="w-36 md:w-40" />
+        </div>
+      ) : (
+        <img src="/logo.svg" alt="e-wallet icon" className="w-36 md:w-40" />
+      )}
     </Link>
   );
 }

@@ -13,7 +13,10 @@ function RegisterPage() {
         <AuthLayouts>
           <BrandHeader />
           <AuthTitle>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</AuthTitle>
-          <AuthSecondaryText>Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</AuthSecondaryText>
+          <AuthSecondaryText>
+            Transfering money is eassier than ever, you can access Zwallet wherever you are. Desktop, laptop, mobile phone? we cover all of that for
+            you!
+          </AuthSecondaryText>
           <SocialsLogin />
           <SeparatorOr />
           <RegisterForm />
@@ -23,7 +26,7 @@ function RegisterPage() {
         </AuthLayouts>
       </div>
       <div className="icon hidden md:flex md:w-1/2 bg-blue-500 items-center justify-center">
-        <img className="w-full h-full object-contain" src="/assets/auth/register-page.svg" alt="register page icon" />
+        <img className="w-[60%] md:w-[70%] max-w-[400px] h-auto object-contain" src="/assets/auth/register-page.svg" alt="register page icon" />{' '}
       </div>
     </div>
   );

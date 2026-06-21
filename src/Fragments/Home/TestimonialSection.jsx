@@ -1,114 +1,106 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 function TestimonialSection() {
-  const listRef = useRef(null);
-  const baseItem = {
-    img: '/assets/home/testimonials/sherina.svg',
-    name: 'Sherina Claw',
-    rate: 5,
-    msg: '“I use this app since 2 years ago and this is the best app that I’ve ever use in my entire life”',
-  };
-  const data = Array.from({ length: 6 }, () => baseItem);
+  const trackRef = useRef(null);
+  const indexRef = useRef(0);
 
-  const scrollByPage = (direction) => {
-    const el = listRef.current;
-    if (!el) return;
-    const amount = el.clientWidth * (direction === 'left' ? -1 : 1);
-    el.scrollBy({ left: amount, behavior: 'smooth' });
+  const data = [
+    {
+      img: '/assets/home/testimonials/sherina.svg',
+      name: 'Sherina Claw',
+      role: 'Freelance Designer',
+      rate: 5,
+      msg: 'Dompa makes my daily transactions so much easier. Everything feels fast and clean.',
+    },
+    {
+      img: '/assets/home/testimonials/user2.svg',
+      name: 'Andi Pratama',
+      role: 'Startup Founder',
+      rate: 5,
+      msg: 'Very secure and reliable. Perfect for business cash flow management.',
+    },
+    {
+      img: '/assets/home/testimonials/user3.svg',
+      name: 'Maya Salsabila',
+      role: 'Content Creator',
+      rate: 4,
+      msg: 'Super intuitive UI. I can track everything without confusion.',
+    },
+    {
+      img: '/assets/home/testimonials/user4.svg',
+      name: 'Rizky Hidayat',
+      role: 'Software Engineer',
+      rate: 5,
+      msg: 'Performance is insane. Everything loads instantly.',
+    },
+    {
+      img: '/assets/home/testimonials/user5.svg',
+      name: 'Dewi Lestari',
+      role: 'Online Seller',
+      rate: 5,
+      msg: 'Helps me manage income from multiple platforms easily.',
+    },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      indexRef.current += 1;
+
+      // reset kalau sudah lewat akhir (infinite loop)
+      if (indexRef.current >= data.length) {
+        indexRef.current = 0;
+      }
+
+      const cardWidth = track.children[0].offsetWidth + 24;
+
+      track.style.transform = `translateX(-${indexRef.current * cardWidth}px)`;
+      track.style.transition = 'transform 0.6s ease-in-out';
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const renderStars = (rate) => {
+    return Array.from({ length: 5 }).map((_, i) => (
+      <span key={i} className={i < rate ? 'text-yellow-400' : 'text-gray-300'}>
+        ★
+      </span>
+    ));
   };
 
   return (
-    <section className="flex flex-col items-center justify-center px-5 gap-8 mb-6">
-      <div className="w-full flex flex-col gap-3 md:items-center md:justify-center">
-        <div className="flex flex-col justify-center items-center gap-2 md:max-w-xl">
-          <h1 className="text-3xl text-center md:text-4xl">Here From Our Customer</h1>
-          <p className="text-center text-gray-500">We always do our best for our customers to stay comfortable using the applications we provide</p>
-        </div>
+    <section className="flex flex-col items-center justify-center px-5 py-20 gap-10 overflow-hidden">
+      {/* HEADER */}
+      <div className="max-w-2xl text-center">
+        <h1 className="text-3xl md:text-4xl font-semibold text-gray-900">What Our Customers Say</h1>
+        <p className="text-gray-500 mt-2">Real users feedback about Dompa experience.</p>
       </div>
 
-      <div className="relative w-full md:flex md:justify-center">
-        <div
-          ref={listRef}
-          className="w-full md:w-5/6 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden md:gap-12"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {data.map((d, idx) => (
+      {/* VIEWPORT */}
+      <div className="w-full md:w-5/6 overflow-hidden">
+        {/* TRACK */}
+        <div ref={trackRef} className="flex gap-6">
+          {data.concat(data).map((d, idx) => (
             <div
-              key={`${d.name}-${idx}`}
-              className="card bg-gray-100 px-6 w-full shrink-0 flex flex-col gap-3 items-center justify-center py-10 rounded-md snap-start md:w-[calc((100%-96px)/3)]"
+              key={idx}
+              className="min-w-full md:min-w-[320px] bg-white border border-gray-100 rounded-xl p-6 flex flex-col items-center text-center gap-4 shadow-sm"
             >
-              <img
-                src={d.img}
-                alt={`${d.name} photo`}
-              />
-              <h2 className="font-bold text-xl">{d.name}</h2>
-              <div className="star flex gap-3 items-center">
-                {Array.from({ length: d.rate }).map((_, starIdx) => (
-                  <img
-                    key={starIdx}
-                    src="/assets/home/testimonials/star.svg"
-                    alt="star"
-                  />
-                ))}
-                {d.rate}
+              <img src={d.img} alt={d.name} className="w-16 h-16 rounded-full object-cover" />
+
+              <div>
+                <h2 className="font-semibold text-lg text-gray-900">{d.name}</h2>
+                <p className="text-sm text-gray-400">{d.role}</p>
               </div>
-              <div className="separator text-4xl font-bold">"</div>
-              <p className="text-gray-500 text-center">{d.msg}</p>
+
+              <div className="flex gap-1 text-lg">{renderStars(d.rate)}</div>
+
+              <p className="text-gray-500 text-sm leading-relaxed">{d.msg}</p>
             </div>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => scrollByPage('left')}
-          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-blue-500 text-white items-center justify-center hover:bg-blue-600"
-        >
-          <span className="sr-only">Previous</span>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              d="M15 18L9 12L15 6"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollByPage('right')}
-          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-blue-500 text-white items-center justify-center hover:bg-blue-600"
-        >
-          <span className="sr-only">Next</span>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path
-              d="M9 6L15 12L9 18"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-      <div className="py-4">
-        <img
-          src="/assets/home/testimonials/scroll.svg"
-          alt="scroll icon"
-        />
       </div>
     </section>
   );

@@ -23,7 +23,7 @@ function LoginPage() {
         </AuthLayouts>
       </div>
       <div className="icon hidden md:flex md:w-1/2 bg-blue-500 items-center justify-center">
-        <img className="w-full h-full object-contain" src="/assets/auth/login-page.svg" alt="login page icon" />
+        <img className="w-[60%] md:w-[70%] max-w-[400px] h-auto object-contain" src="/assets/auth/login-page.svg" alt="login page icon" />{' '}
       </div>
     </div>
   );

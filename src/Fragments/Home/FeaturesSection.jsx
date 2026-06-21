@@ -5,16 +5,8 @@ function FeaturesSection() {
   return (
     <section className="relative w-full overflow-hidden px-5 pt-10 pb-36 lg:pb-48 mb-40 flex flex-col lg:flex-row justify-center items-center gap-10">
       <div className="absolute left-1/2 -translate-x-1/2 top-40 lg:top-0 bottom-0 -z-50 flex flex-col w-screen overflow-hidden">
-        <img
-          src="/assets/home/features/Vector-1.svg"
-          alt=""
-          className="w-full h-[55%] object-cover object-top"
-        />
-        <img
-          src="/assets/home/features/Vector.svg"
-          alt=""
-          className="w-full h-[55%] object-cover object-bottom -mt-2"
-        />
+        <img src="/assets/home/features/Vector-1.svg" alt="" className="w-full h-[55%] object-cover object-top" />
+        <img src="/assets/home/features/Vector.svg" alt="" className="w-full h-[55%] object-cover object-bottom -mt-2" />
       </div>
 
       <div className="w-full lg:w-1/2 flex justify-center lg:justify-end lg:pr-10 z-10">
@@ -27,16 +19,14 @@ function FeaturesSection() {
 
       <div className="flex flex-col w-full lg:w-1/2 gap-6 z-10 items-center lg:items-start text-center lg:text-left lg:pl-10">
         <div className="text-3xl md:text-4xl lg:text-4xl text-white font-bold leading-snug">All The Great Zwallet Features.</div>
-        <p className="text-gray-200 font-light text-base md:text-lg w-full max-w-lg">We have some great features from the application and it’s totally free to use by all users around the world.</p>
+        <p className="text-gray-200 font-light text-base md:text-lg w-full max-w-lg">
+          We have some great features from the application and it’s totally free to use by all users around the world.
+        </p>
 
         <div className="flex flex-col gap-6 w-full max-w-lg">
           <div className="flex w-full gap-4 items-center text-left">
             <div className="bg-white flex w-14 h-14 lg:w-16 lg:h-16 shrink-0 justify-center items-center rounded-full">
-              <img
-                src="/assets/home/features/fee.svg"
-                alt="small fee icon"
-                className="w-6 lg:w-8"
-              />
+              <img src="/assets/home/features/fee.svg" alt="small fee icon" className="w-6 lg:w-8" />
             </div>
             <div className="flex flex-col">
               <h1 className="font-bold text-lg lg:text-xl text-white">Small Fee</h1>
@@ -46,11 +36,7 @@ function FeaturesSection() {
 
           <div className="flex w-full gap-4 items-center text-left">
             <div className="bg-white flex w-14 h-14 lg:w-16 lg:h-16 shrink-0 justify-center items-center rounded-full">
-              <img
-                src="/assets/home/features/data.svg"
-                alt="data secured icon"
-                className="w-6 lg:w-8"
-              />
+              <img src="/assets/home/features/data.svg" alt="data secured icon" className="w-6 lg:w-8" />
             </div>
             <div className="flex flex-col">
               <h1 className="font-bold text-lg lg:text-xl text-white">Data Secured</h1>
@@ -60,11 +46,7 @@ function FeaturesSection() {
 
           <div className="flex w-full gap-4 items-center text-left">
             <div className="bg-white flex w-14 h-14 lg:w-16 lg:h-16 shrink-0 justify-center items-center rounded-full">
-              <img
-                src="/assets/home/features/user.svg"
-                alt="user friendly icon"
-                className="w-6 lg:w-8"
-              />
+              <img src="/assets/home/features/user.svg" alt="user friendly icon" className="w-6 lg:w-8" />
             </div>
             <div className="flex flex-col">
               <h1 className="font-bold text-lg lg:text-xl text-white">User Friendly</h1>

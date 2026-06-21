@@ -19,6 +19,9 @@ import ProfileChangePinPage from './Pages/ProfileChangePinPage';
 import ProfileChangePasswordPage from './Pages/ProfileChangePasswordPage';
 
 import { LoadingIndicator } from './components/application/loading-indicator/loading-indicator';
+import { useEffect } from 'react';
+import Aos from 'aos';
+import 'aos/dist/aos.css';
 
 function PrivateRouteGuard() {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -32,6 +35,14 @@ function PrivateRouteGuard() {
 
 function AppRouter() {
   const authLoading = useSelector((state) => state.auth.loading);
+
+  useEffect(() => {
+    Aos.init({
+      duration: 1200,
+      once: true,
+      offset: 100,
+    });
+  }, []);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button } from '../../../components/Button';
 import { InputGroup } from '../../../components/Input';
 import { useForm } from 'react-hook-form';
@@ -6,27 +6,16 @@ import { useNavigate } from 'react-router';
 import { setForgotEmail } from '../../../redux/slice/userSlice';
 
 function ForgotPasswordForm() {
-  const { users } = useSelector((state) => state.register);
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors },
   } = useForm({ mode: 'onChange' });
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log(users);
   const onSubmit = (data) => {
     const email = data.email.trim();
-    const existingUser = users.find((user) => user.email == email);
-    if (!existingUser) {
-      setError('email', {
-        type: 'manual',
-        message: 'email did not found',
-      });
-      return;
-    }
-    dispatch(setForgotEmail(existingUser.email));
+    dispatch(setForgotEmail(email));
     navigate('/auth/forgot/password/change');
   };
   return (
