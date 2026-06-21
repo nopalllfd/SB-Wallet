@@ -21,44 +21,27 @@ function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
     onChange(value ? Number(value) : '');
   };
 
-  const formatRupiah = (value) =>
-    value
-      ? new Intl.NumberFormat('id-ID').format(value)
-      : '';
+  const formatRupiah = (value) => (value ? new Intl.NumberFormat('id-ID').format(value) : '');
 
   return (
     <section className="flex flex-col gap-5 w-full">
-
       <div className="flex items-center gap-2">
         <LocalAtmIcon className="text-blue-700" />
         <h2 className="font-semibold">Amount</h2>
       </div>
 
-      <p className="text-sm text-gray-500">
-        Type the amount you want to top up.
-      </p>
+      <p className="text-sm text-gray-500">Type the amount you want to top up.</p>
 
-      <InputGroup
-        value={formatRupiah(amount)}
-        onChange={handleAmountChange}
-        iconSrc="/assets/transfer/money.svg"
-        placeholder="Rp 0"
-      />
+      <InputGroup value={formatRupiah(amount)} onChange={handleAmountChange} iconSrc="/assets/transfer/money.svg" placeholder="Rp 0" />
 
       <div className="flex items-center gap-2 mt-4">
         <PaymentsIcon className="text-blue-700" />
         <h2 className="font-semibold">Payment Method</h2>
       </div>
 
-      <p className="text-sm text-gray-500">
-        Choose your payment method.
-      </p>
+      <p className="text-sm text-gray-500">Choose your payment method.</p>
 
-      {isSubmitted && !selected && (
-        <p className="text-red-500 text-sm">
-          Please select a payment method
-        </p>
-      )}
+      {isSubmitted && !selected && <p className="text-red-500 text-sm">Please select a payment method</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {methods?.map((p) => (
@@ -77,14 +60,9 @@ function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
               }}
             />
 
-            <img
-              src={`/assets/payment/${p.slug}.svg`}
-              className="w-8 h-8"
-            />
+            <img src={`${p.logo}`} alt={`${p.name} icon`} className="w-8 h-8" />
 
-            <span className="text-sm font-medium">
-              {p.name}
-            </span>
+            <span className="text-sm font-medium">{p.name}</span>
           </label>
         ))}
       </div>
