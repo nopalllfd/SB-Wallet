@@ -66,14 +66,14 @@ function Header() {
   ];
 
   return (
-    <header className="fixed z-20 top-0 left-0 w-full">
+    <header className="fixed z-20 top-0 left-0 w-full flex justify-center">
+      {' '}
       {/* TOP BAR */}
       <div
         className={`
           flex items-center justify-between
           px-3 md:px-10 py-4 md:py-3
           transition-all duration-300 ease-out
-          mx-auto
 
           ${
             isScrolled
@@ -129,7 +129,6 @@ function Header() {
           </button>
         </div>
       </div>
-
       {/* MOBILE AUTH */}
       {isBurgerOpen && !isDashboardArea && (
         <nav className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">
@@ -137,7 +136,6 @@ function Header() {
           <NavMenuItem to="/auth/register">Sign Up</NavMenuItem>
         </nav>
       )}
-
       {/* MOBILE DASHBOARD */}
       {isBurgerOpen && isDashboardArea && (
         <nav className="fixed left-1/2 -translate-x-1/2 top-20 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">

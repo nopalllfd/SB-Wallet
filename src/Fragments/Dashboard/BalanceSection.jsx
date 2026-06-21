@@ -71,7 +71,7 @@ function BalanceSection() {
   ];
 
   return (
-    <section className="relative max-sm:pb-8 max-sm:rounded-b-2xl max-sm:w-78 pt-4 md:pt-6 bg-gradient-to-b from-blue-700 to-blue-600 md:from-transparent md:to-transparent">
+    <section className="relative max-sm:pb-8 max-sm:rounded-b-2xl max-sm:w-scren pt-4 md:pt-6 bg-gradient-to-b from-blue-700 to-blue-600 md:from-transparent md:to-transparent">
       <div className="container mx-auto px-4">
         <div className="w-full max-w-5xl mx-auto flex flex-col gap-3 md:grid md:grid-cols-3 md:gap-6">
           {data.map((item) => (
