@@ -8,7 +8,7 @@ import Footer from '../Fragments/Footer';
 
 function HomePage() {
   return (
-    <>
+    <div className="overflow-hidden">
       <Header location="home" />
       <HeroSection />
       <BrandsSection />
@@ -16,7 +16,7 @@ function HomePage() {
       <FeaturesSection />
       <TestimonialSection />
       <Footer />
-    </>
+    </div>
   );
 }
 

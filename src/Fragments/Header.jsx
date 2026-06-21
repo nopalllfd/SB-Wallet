@@ -67,14 +67,13 @@ function Header() {
 
   return (
     <header className="fixed z-20 top-0 left-0 w-full flex justify-center">
-      {' '}
       {/* TOP BAR */}
       <div
         className={`
           flex items-center justify-between
           px-3 md:px-10 py-4 md:py-3
           transition-all duration-300 ease-out
-
+          w-full
           ${
             isScrolled
               ? `
@@ -82,7 +81,7 @@ function Header() {
                 backdrop-blur-3xl
                 shadow-[0_20px_50px_rgba(0,0,0,0.35)]
                 border border-blue-400/30
-                w-[92%]
+                max-w-[92%]
                 mt-3
                 rounded-2xl
               `
