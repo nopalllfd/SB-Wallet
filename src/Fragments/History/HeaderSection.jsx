@@ -1,18 +1,22 @@
-import { Field } from '../../components/Input/field';
+import SearchIcon from '@mui/icons-material/Search';
 
 function HeaderSection() {
   return (
-    <div className="flex flex-col gap-5 md:flex-row md:justify-between">
-      <div>
-        <h1 className="font-semibold text-xl text-gray-900">Search History</h1>
-      </div>
-      <div className="md:w-1/3">
-        <Field
-          name={'search'}
-          iconSrc={'assets/utils/search.svg'}
-          iconAlt={'search icon'}
-          className={'text-sm font-normal flex-row-reverse'}
-          placeholder={'Cari nomor atau nama lengkap'}
+    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <h1 className="text-lg md:text-xl font-semibold text-gray-900 text-center md:text-left">Search History</h1>
+
+      <div className="w-full md:w-1/3 relative">
+        <SearchIcon fontSize="small" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+
+        <input
+          name="search"
+          placeholder="Cari nama atau nomor..."
+          className="
+            w-full pl-10 pr-3 py-2
+            border border-gray-200 rounded-lg
+            text-sm
+            focus:outline-none focus:ring-2 focus:ring-blue-500
+          "
         />
       </div>
     </div>

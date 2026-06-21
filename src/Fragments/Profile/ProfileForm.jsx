@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import EditIcon from '@mui/icons-material/Edit';
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+
 import { Button } from '../../components/Button';
 import { InputGroup } from '../../components/Input';
 
@@ -18,18 +23,15 @@ function ProfileForm() {
   const [preview, setPreview] = useState(null);
 
   const dispatch = useDispatch();
-
   const { profile, loading } = useSelector((state) => state.user);
   const user = profile;
 
   const { register, handleSubmit, reset } = useForm({ mode: 'onChange' });
 
-  // fetch profile
   useEffect(() => {
     dispatch(getProfile());
   }, [dispatch]);
 
-  // fill form
   useEffect(() => {
     if (user) {
       reset({
@@ -40,7 +42,6 @@ function ProfileForm() {
     }
   }, [user, reset]);
 
-  // handle file
   const handlePhotoChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -49,7 +50,6 @@ function ProfileForm() {
     setPreview(URL.createObjectURL(file));
   };
 
-  // CANCEL EDIT (NEW)
   const handleCancelEdit = () => {
     setIsEdit(false);
     setSelectedPhoto(null);
@@ -64,7 +64,6 @@ function ProfileForm() {
     }
   };
 
-  // submit
   const onSubmitForm = async (data) => {
     try {
       const res = await dispatch(
@@ -77,7 +76,6 @@ function ProfileForm() {
 
       const updated = res?.data;
 
-      // update redux auth state (khusus photo)
       if (updated?.photo) {
         dispatch(updatePhoto(updated.photo));
       }
@@ -93,16 +91,14 @@ function ProfileForm() {
   };
 
   return (
-    <section className="flex flex-col gap-4">
-      {/* PROFILE IMAGE */}
-      <div className="profile-picture flex justify-between md:justify-start md:gap-3 items-center">
+    <section className="flex flex-col gap-6">
+      {/* IMAGE */}
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
         <div className="relative group w-fit">
           <img
-            className="rounded-md w-32 h-32 object-cover"
+            className="rounded-xl w-28 h-28 md:w-32 md:h-32 object-cover"
             src={preview || getProfileImageSrc(user)}
-            onError={(e) => {
-              e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
-            }}
+            onError={(e) => (e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC)}
             alt="profile"
           />
 
@@ -110,10 +106,10 @@ function ProfileForm() {
             <>
               <label
                 htmlFor="profile-photo"
-                className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 rounded-md opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 rounded-xl opacity-0 group-hover:opacity-100 transition cursor-pointer"
               >
-                <img src="/assets/utils/edit.svg" alt="edit" className="w-5 h-5 mb-2 brightness-0 invert" />
-                <span className="text-white text-sm font-medium">Upload Photo</span>
+                <EditIcon className="text-white mb-1" />
+                <span className="text-white text-sm">Upload</span>
               </label>
 
               <input id="profile-photo" type="file" accept="image/*" onChange={handlePhotoChange} className="hidden" />
@@ -121,90 +117,74 @@ function ProfileForm() {
           )}
         </div>
 
-        <div className="buttons flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <Button
             type="button"
             onClick={() => setIsEdit(true)}
             buttonColor="bg-blue-700"
             buttonTextColor="text-white"
-            className="rounded-md flex gap-3"
+            className="rounded-lg flex items-center gap-2"
           >
-            <img src="assets/utils/edit.svg" alt="edit icon" />
-            Change Profile
+            <EditIcon fontSize="small" />
+            Edit Profile
           </Button>
 
-          {/* CANCEL BUTTON */}
           {isEdit && (
-            <Button
-              type="button"
-              onClick={handleCancelEdit}
-              buttonColor="bg-gray-200"
-              buttonTextColor="text-gray-700"
-              className="rounded-md flex gap-3"
-            >
+            <Button type="button" onClick={handleCancelEdit} buttonColor="bg-gray-200" buttonTextColor="text-gray-700" className="rounded-lg">
               Cancel
             </Button>
           )}
         </div>
       </div>
 
-      <p className="text-gray-600 text-xs font-normal">The profile picture must be 512 x 512 pixels or less</p>
+      <p className="text-xs text-gray-500">Recommended size 512x512 px</p>
 
       {/* FORM */}
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div className="input-group flex flex-col gap-6">
-          <InputGroup
-            {...register('fullName', {
-              required: 'Nama lengkap wajib diisi',
-            })}
-            isDisabled={!isEdit}
-            disabled={!isEdit}
-            id="fullName"
-            placeholder="Enter Your Fullname"
-            iconSrc="/assets/utils/user.svg"
-          >
+      <form onSubmit={handleSubmit(onSubmitForm)} className="flex flex-col gap-5">
+        <InputGroup {...register('fullName')} disabled={!isEdit} iconSrc={null} placeholder="Full Name">
+          <div className="flex items-center gap-2">
+            <PersonIcon fontSize="small" />
             Full Name
-          </InputGroup>
+          </div>
+        </InputGroup>
 
-          <InputGroup
-            type="tel"
-            isDisabled={!isEdit}
-            disabled={!isEdit}
-            {...register('phone')}
-            id="phone"
-            placeholder="Enter Your Number Phone"
-            iconSrc="/assets/utils/phone.svg"
-          >
+        <InputGroup {...register('phone')} disabled={!isEdit} iconSrc={null} placeholder="Phone">
+          <div className="flex items-center gap-2">
+            <PhoneIcon fontSize="small" />
             Phone
-          </InputGroup>
+          </div>
+        </InputGroup>
 
-          <InputGroup disabled isDisabled {...register('email')} id="email" placeholder="Enter Your Email" iconSrc="/assets/inputs/form/email.svg">
+        <InputGroup {...register('email')} disabled iconSrc={null} placeholder="Email">
+          <div className="flex items-center gap-2">
+            <EmailIcon fontSize="small" />
             Email
-          </InputGroup>
-        </div>
-
-        <div className="mt-6 mb-6 flex flex-col gap-3">
-          <div className="password flex justify-between">
-            <h1>Password</h1>
-            <Link className="text-blue-700" to="/profile/change/password">
-              Change Password
-            </Link>
           </div>
-
-          <div className="pin flex justify-between">
-            <h1>Pin</h1>
-            <Link className="text-blue-700" to="/profile/change/pin">
-              Change Pin
-            </Link>
-          </div>
-        </div>
+        </InputGroup>
 
         {isEdit && (
-          <Button type="submit" disabled={loading} buttonColor="bg-blue-700" buttonTextColor="text-white" className="rounded-md">
-            {loading ? 'Saving...' : 'Submit'}
+          <Button type="submit" disabled={loading} buttonColor="bg-blue-700" buttonTextColor="text-white" className="rounded-lg">
+            {loading ? 'Saving...' : 'Save Changes'}
           </Button>
         )}
       </form>
+
+      {/* LINKS */}
+      <div className="flex flex-col gap-3 text-sm">
+        <div className="flex justify-between">
+          <span>Password</span>
+          <Link className="text-blue-700" to="/profile/change/password">
+            Change
+          </Link>
+        </div>
+
+        <div className="flex justify-between">
+          <span>PIN</span>
+          <Link className="text-blue-700" to="/profile/change/pin">
+            Change
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

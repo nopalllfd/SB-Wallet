@@ -3,74 +3,91 @@ import { InputGroup } from '../../components/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMethods } from '../../redux/slice/transactionSlice';
 
+// MUI ICON
+import PaymentsIcon from '@mui/icons-material/Payments';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+
 function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
   const [selected, setSelected] = useState(null);
   const dispatch = useDispatch();
   const { methods } = useSelector((state) => state.transaction);
 
-  const handleAmountChange = (e) => {
-    const rawValue = e.target.value;
-    const cleanValue = rawValue.replace(/[^0-9]/g, '');
-
-    if (cleanValue === '') {
-      onChange('');
-      return;
-    }
-
-    onChange(Number(cleanValue));
-  };
-
-  const formatRupiah = (value) => {
-    if (!value) return '';
-    return new Intl.NumberFormat('id-ID', {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
-  const handlePaymentChange = (id) => {
-    setSelected(id);
-    if (onPaymentSelect) {
-      onPaymentSelect(id);
-    }
-  };
-
   useEffect(() => {
     dispatch(getMethods());
   }, [dispatch]);
-  console.log(methods);
+
+  const handleAmountChange = (e) => {
+    const value = e.target.value.replace(/[^0-9]/g, '');
+    onChange(value ? Number(value) : '');
+  };
+
+  const formatRupiah = (value) =>
+    value
+      ? new Intl.NumberFormat('id-ID').format(value)
+      : '';
 
   return (
-    <section className="flex flex-col gap-4">
-      <h2 className="font-semibold text-gray-900">Amount</h2>
-      <p className="text-gray-500 text-sm">Type the amount you want to top up and then press continue to the next steps.</p>
+    <section className="flex flex-col gap-5 w-full">
 
-      <InputGroup value={formatRupiah(amount)} onChange={handleAmountChange} iconSrc={'assets/transfer/money.svg'} placeholder={'Rp 0'} />
+      <div className="flex items-center gap-2">
+        <LocalAtmIcon className="text-blue-700" />
+        <h2 className="font-semibold">Amount</h2>
+      </div>
 
-      <h2 className="font-semibold text-gray-900 mt-4">Payment Method</h2>
-      <p className="text-gray-500 text-sm">Choose your payment method for top up account.</p>
+      <p className="text-sm text-gray-500">
+        Type the amount you want to top up.
+      </p>
 
-      {isSubmitted && !selected && <p className="text-red-500 text-sm font-medium">Please select a payment method to continue.</p>}
+      <InputGroup
+        value={formatRupiah(amount)}
+        onChange={handleAmountChange}
+        iconSrc="/assets/transfer/money.svg"
+        placeholder="Rp 0"
+      />
 
-      {methods?.map((payment) => (
-        <label
-          key={payment.id}
-          className={`cursor-pointer select-none rounded-md px-8 py-4 justify-start flex gap-10 items-center border-2 transition-all ${
-            selected === payment.id ? 'bg-blue-100 border-blue-500' : 'bg-gray-50 border-transparent hover:bg-gray-200'
-          }`}
-        >
-          <input
-            type="radio"
-            name="paymentMethod"
-            value={payment.id}
-            checked={selected === payment.id}
-            onChange={() => handlePaymentChange(payment.id)}
-            className="hidden"
-          />
-          <img width={32} height={32} src={`assets/payment/${payment.slug}.svg`} alt={`${payment.name} icon`} />
-          <p className={selected === payment.id ? 'font-semibold text-blue-700' : 'text-gray-700'}>{payment.name}</p>
-        </label>
-      ))}
+      <div className="flex items-center gap-2 mt-4">
+        <PaymentsIcon className="text-blue-700" />
+        <h2 className="font-semibold">Payment Method</h2>
+      </div>
+
+      <p className="text-sm text-gray-500">
+        Choose your payment method.
+      </p>
+
+      {isSubmitted && !selected && (
+        <p className="text-red-500 text-sm">
+          Please select a payment method
+        </p>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {methods?.map((p) => (
+          <label
+            key={p.id}
+            className={`flex items-center gap-3 border rounded-lg p-3 cursor-pointer transition
+            ${selected === p.id ? 'border-blue-500 bg-blue-50' : 'bg-white hover:bg-gray-50'}`}
+          >
+            <input
+              type="radio"
+              className="hidden"
+              checked={selected === p.id}
+              onChange={() => {
+                setSelected(p.id);
+                onPaymentSelect?.(p.id);
+              }}
+            />
+
+            <img
+              src={`/assets/payment/${p.slug}.svg`}
+              className="w-8 h-8"
+            />
+
+            <span className="text-sm font-medium">
+              {p.name}
+            </span>
+          </label>
+        ))}
+      </div>
     </section>
   );
 }

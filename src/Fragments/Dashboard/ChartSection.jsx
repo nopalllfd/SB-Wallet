@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { getTrxChart } from '../../redux/slice/transactionSlice';
+
+// MUI
+import { FormControl, Select, MenuItem, InputLabel } from '@mui/material';
+
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -11,16 +17,10 @@ function ChartSection() {
   const [period, setPeriod] = useState('7d');
 
   const dispatch = useDispatch();
-
   const data = useSelector((state) => state.transaction.chart || []);
 
   useEffect(() => {
-    dispatch(
-      getTrxChart({
-        type,
-        period,
-      }),
-    );
+    dispatch(getTrxChart({ type, period }));
   }, [dispatch, type, period]);
 
   const options = {
@@ -29,11 +29,23 @@ function ChartSection() {
     scales: {
       y: {
         beginAtZero: true,
+        grid: {
+          color: '#f1f5f9',
+        },
+      },
+      x: {
+        grid: {
+          display: false,
+        },
       },
     },
     plugins: {
       legend: {
-        display: true,
+        position: 'top',
+      },
+      tooltip: {
+        mode: 'index',
+        intersect: false,
       },
       title: {
         display: false,
@@ -51,19 +63,11 @@ function ChartSection() {
       const date = item.date.split('T')[0];
 
       if (!acc[date]) {
-        acc[date] = {
-          income: 0,
-          expense: 0,
-        };
+        acc[date] = { income: 0, expense: 0 };
       }
 
-      if (item.type === 'in') {
-        acc[date].income += item.amount;
-      }
-
-      if (item.type === 'out') {
-        acc[date].expense += item.amount;
-      }
+      if (item.type === 'in') acc[date].income += item.amount;
+      if (item.type === 'out') acc[date].expense += item.amount;
 
       return acc;
     }, {});
@@ -71,30 +75,26 @@ function ChartSection() {
     const dates = Object.keys(grouped).sort((a, b) => new Date(a) - new Date(b));
 
     chartData = {
-      labels: dates.map((date) =>
-        new Date(date).toLocaleDateString('en-US', {
-          weekday: 'short',
-        }),
-      ),
+      labels: dates.map((date) => new Date(date).toLocaleDateString('en-US', { weekday: 'short' })),
       datasets: [
         {
           label: 'Income',
           data: dates.map((date) => grouped[date].income),
           backgroundColor: '#2954FA',
-          borderRadius: 4,
+          borderRadius: 6,
         },
         {
           label: 'Expense',
           data: dates.map((date) => grouped[date].expense),
-          backgroundColor: '#FF0000',
-          borderRadius: 4,
+          backgroundColor: '#EF4444',
+          borderRadius: 6,
         },
       ],
     };
   } else {
     chartData = {
       labels: data.map((item) =>
-        new Date(item.date).toLocaleDateString('id-ID', {
+        new Date(item.date).toLocaleDateString('en-US', {
           weekday: 'short',
         }),
       ),
@@ -102,34 +102,49 @@ function ChartSection() {
         {
           label: type === 'in' ? 'Income' : 'Expense',
           data: data.map((item) => item.amount),
-          backgroundColor: type === 'in' ? '#2954FA' : '#FF0000',
-          borderRadius: 4,
+          backgroundColor: type === 'in' ? '#2954FA' : '#EF4444',
+          borderRadius: 6,
         },
       ],
     };
   }
 
   return (
-    <section className="px-8 mt-6 md:mt-0 flex flex-col gap-6 md:px-2 md:py-4 md:border md:border-gray-200 md:bg-white md:rounded-md">
-      <header className="flex justify-around md:justify-between gap-2">
-        <h2 className="font-semibold text-md">Transaction Chart</h2>
+    <section className="mt-6 md:mt-0 px-4">
+      <div className="mx-auto max-w-5xl bg-white border border-gray-100 shadow-sm rounded-xl p-3 md:p-6">
+        {/* HEADER */}
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
+          {/* TITLE */}
+          <div className="flex items-center gap-2 text-gray-700">
+            <BarChartIcon fontSize="small" />
+            <h2 className="font-semibold text-sm md:text-base">Transaction Chart</h2>
+          </div>
 
-        <div className="flex gap-2">
-          <select value={type} onChange={(e) => setType(e.target.value)} className="px-3 py-1 text-sm border border-gray-300 rounded-md bg-white">
-            <option value="all">All</option>
-            <option value="in">Income</option>
-            <option value="out">Expense</option>
-          </select>
+          {/* FILTERS */}
+          <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+            <FormControl size="small" className="w-full sm:w-auto">
+              <InputLabel>Type</InputLabel>
+              <Select value={type} label="Type" onChange={(e) => setType(e.target.value)}>
+                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="in">Income</MenuItem>
+                <MenuItem value="out">Expense</MenuItem>
+              </Select>
+            </FormControl>
 
-          <select value={period} onChange={(e) => setPeriod(e.target.value)} className="px-3 py-1 text-sm border border-gray-300 rounded-md bg-white">
-            <option value="7d">7 Days</option>
-            <option value="1m">1 Month</option>
-          </select>
+            <FormControl size="small" className="w-full sm:w-auto">
+              <InputLabel>Period</InputLabel>
+              <Select value={period} label="Period" onChange={(e) => setPeriod(e.target.value)}>
+                <MenuItem value="7d">7 Days</MenuItem>
+                <MenuItem value="1m">1 Month</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
         </div>
-      </header>
 
-      <div className="w-full h-50 md:h-80">
-        <Bar options={options} data={chartData} />
+        {/* CHART */}
+        <div className="w-full h-56 sm:h-64 md:h-96">
+          <Bar options={options} data={chartData} />
+        </div>
       </div>
     </section>
   );

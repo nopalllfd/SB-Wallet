@@ -4,7 +4,11 @@ import { DEFAULT_PROFILE_IMAGE_SRC, getProfileImageSrc } from '../../utils/profi
 import { useEffect } from 'react';
 import { getReceivers } from '../../redux/slice/transactionSlice';
 import { useNavigate } from 'react-router';
-import HeaderSection from './HeaderSection';
+
+// MUI ICON
+import StarIcon from '@mui/icons-material/Star';
+import PhoneIcon from '@mui/icons-material/Phone';
+import PersonIcon from '@mui/icons-material/Person';
 
 function ListSection({ searchQuery, page, onPageChange }) {
   const navigate = useNavigate();
@@ -15,59 +19,83 @@ function ListSection({ searchQuery, page, onPageChange }) {
   const handleClick = (id) => {
     navigate(`/transfer/${id}`);
   };
-  console.log(meta?.total_pages || 'page kosong');
 
   useEffect(() => {
-    const payloadParam = {
-      page,
-      limit: 10,
-      search: searchQuery,
-    };
-
-    dispatch(getReceivers(payloadParam));
+    dispatch(
+      getReceivers({
+        page,
+        limit: 10,
+        search: searchQuery,
+      }),
+    );
   }, [dispatch, page, searchQuery]);
 
   return (
-    <section className="flex flex-col gap-6 py-6 relative">
-      {loading ? (
-        <p className="text-center">Loading...</p>
-      ) : users?.length > 0 ? (
+    <section className="flex flex-col gap-4 py-6">
+      {/* LOADING */}
+      {loading && <div className="text-center text-gray-500 py-10">Loading...</div>}
+
+      {/* LIST */}
+      {!loading &&
+        users?.length > 0 &&
         users.map((d, idx) => (
           <div
             key={d.Id}
             onClick={() => handleClick(d.Id)}
-            className={`flex justify-between p-3 cursor-pointer rounded-md transition
-              ${idx % 2 === 0 ? 'bg-white hover:bg-gray-100' : 'bg-gray-100 hover:bg-white'}
+            className={`
+              flex items-center gap-4
+              p-3 md:p-4
+              rounded-xl
+              cursor-pointer
+              transition-all duration-200
+              border border-gray-100
+              hover:shadow-md hover:border-gray-200
+              ${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
             `}
           >
+            {/* AVATAR */}
             <img
               src={getProfileImageSrc(d)}
               onError={(e) => {
                 e.currentTarget.src = DEFAULT_PROFILE_IMAGE_SRC;
               }}
               alt={d.FullName}
-              className="w-12 h-12 rounded-full"
+              className="w-11 h-11 md:w-12 md:h-12 rounded-full object-cover"
             />
 
-            <div className="flex flex-1 ms-20 me-50 gap-10 md:ms-10 max-sm:justify-around max-sm:ms-0 max-sm:me-0 items-center justify-between">
+            {/* INFO */}
+            <div className="flex flex-1 flex-col md:flex-row md:items-center md:justify-between gap-2">
               {/* NAME */}
-              <div className="flex flex-col">
-                <p className="text-base  font-semibold text-gray-800 truncate max-w-[220px]">{d.FullName}</p>
+              <div className="flex items-center gap-2 min-w-0">
+                <PersonIcon className="text-gray-400" fontSize="small" />
+
+                <p className="text-sm md:text-base font-semibold text-gray-800 truncate max-w-[180px] md:max-w-[260px]">{d.FullName}</p>
               </div>
 
               {/* PHONE */}
-              <p className="text-sm font-medium text-start text-gray-700 max-sm:truncate whitespace-nowrap">{d.Phone || '0000000000'}</p>
+              <div className="flex items-center gap-2 text-gray-600">
+                <PhoneIcon className="text-gray-400" fontSize="small" />
+
+                <p className="text-xs md:text-sm font-medium whitespace-nowrap">{d.Phone || '0000000000'}</p>
+              </div>
             </div>
 
-            <img src="/assets/utils/star.svg" alt="star icon" />
+            {/* STAR */}
+            <div className="text-yellow-500">
+              <StarIcon fontSize="small" />
+            </div>
           </div>
-        ))
-      ) : (
-        <p className="text-center text-gray-500">Tidak ada data</p>
-      )}
+        ))}
+
+      {/* EMPTY STATE */}
+      {!loading && users?.length === 0 && <div className="text-center text-gray-500 py-10">Tidak ada data</div>}
 
       {/* PAGINATION */}
-      {meta && meta.total_pages > 1 && <Pagination page={meta.page} pageCount={meta.total_pages} onPageChange={onPageChange} />}
+      {meta && meta.total_pages > 1 && (
+        <div className="mt-4">
+          <Pagination page={meta.page} pageCount={meta.total_pages} onPageChange={onPageChange} />
+        </div>
+      )}
     </section>
   );
 }

@@ -3,9 +3,9 @@ import { ShieldCheck, Zap, Smartphone } from 'lucide-react';
 
 function HeroSection() {
   return (
-    <section className="relative flex flex-col pt-20 md:pt-28 gap-10 px-6 md:flex-row md:items-center md:justify-between md:gap-12 md:px-10 md:py-12 lg:px-16 max-w-7xl mx-auto">
+    <section className="mt-6 relative max-md:mb-10 flex flex-col pt-20 md:pt-28 gap-10 px-6 md:flex-row md:items-center md:justify-between md:gap-12 md:px-10 md:py-12 lg:px-16 max-w-7xl mx-auto">
       {/* Glow background biar hidup */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-[#1447E6]/10 blur-3xl rounded-full -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full md:w-[500px] h-[500px] bg-[#1447E6]/10 blur-3xl rounded-full -z-10" />
 
       {/* LEFT */}
       <div className="flex flex-col gap-6 md:w-1/2">
@@ -68,7 +68,7 @@ function HeroSection() {
       </div>
 
       {/* RIGHT */}
-      <div className="md:w-1/2 flex justify-center md:justify-end">
+      <div className="md:w-1/2 max-sm:hidden flex justify-center md:justify-end">
         <img src="/assets/home/hero.svg" alt="dompa hero illustration" className="w-full max-w-md md:max-w-lg drop-shadow-xl" />
       </div>
     </section>

@@ -12,6 +12,7 @@ function TransferPage() {
   const [page, setPage] = useState(1);
 
   const debouncedSearch = useDebounce(inputValue, 700);
+
   useEffect(() => {
     if (debouncedSearch) {
       setSearchParams({ search: debouncedSearch }, { replace: true });
@@ -26,16 +27,21 @@ function TransferPage() {
   };
 
   const searchQuery = searchParams.get('search') || '';
+
   return (
     <DashboardLayout locationDetail="transfer">
-      <main className="max-md:py-6 px-6 flex flex-col gap-8 relative">
-        <>
-          <HeaderSectionDesktopOnly step={1} />
-          <div className="bg-white md:border md:p-6 md:border-gray-300 md:rounded-md md:py-4">
-            <HeaderSection searchQuery={inputValue} onSearchChange={handleChange} />
+      <main className="px-4 md:px-6 py-6 flex flex-col gap-6 max-w-5xl mx-auto w-full">
+        {/* STEP HEADER */}
+        <HeaderSectionDesktopOnly step={1} />
+
+        {/* CONTENT WRAPPER */}
+        <div className="bg-white border border-gray-100 rounded-xl shadow-sm p-4 md:p-6">
+          <HeaderSection searchQuery={inputValue} onSearchChange={handleChange} />
+
+          <div className="mt-4">
             <ListSection searchQuery={searchQuery} page={page} onPageChange={setPage} />
           </div>
-        </>
+        </div>
       </main>
     </DashboardLayout>
   );

@@ -3,24 +3,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getDashboard } from '../../redux/slice/walletSlice';
 import { currencyFormatter } from '../../utils/currency';
 
-function StatCard({ title, iconSrc, amount, textColor }) {
+// MUI ICONS
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+
+function StatCard({ title, amount, icon: Icon, color }) {
   return (
-    <div className="flex flex-col gap-2 items-start md:flex-1 md:border md:border-gray-200 md:rounded-md md:bg-white md:py-3 md:px-4 md:justify-center">
-      <div className="flex gap-2 items-center">
-        <img src={iconSrc} alt={`${title} icon`} className="hidden md:block" />
-        <h2 className="md:text-base md:font-medium">{title}</h2>
+    <div
+      className="
+        flex items-center justify-between
+        bg-white
+        px-4 py-3
+        rounded-xl
+        border border-gray-100
+        shadow-sm
+        md:flex-col md:items-start
+        md:p-5 md:gap-2
+        hover:shadow-md transition-all duration-300
+      "
+    >
+      {/* LEFT SIDE */}
+      <div className="flex items-center gap-2">
+        <div className="p-2 rounded-lg bg-gray-50" style={{ color }}>
+          <Icon fontSize="small" />
+        </div>
+
+        <h2 className="text-xs md:text-base font-medium text-gray-700">{title}</h2>
       </div>
 
-      <p className={`value flex md:text-xl md:mt-1 ${textColor}`}>
-        <span className="font-bold md:ml-1 md:font-normal">{currencyFormatter.format(amount)}</span>
-      </p>
+      {/* RIGHT / AMOUNT */}
+      <p className="text-sm md:text-xl font-semibold text-gray-900">{currencyFormatter.format(amount)}</p>
     </div>
   );
 }
 
 function BalanceSection() {
   const dispatch = useDispatch();
-
   const { dashboard } = useSelector((state) => state.wallet);
 
   useEffect(() => {
@@ -32,37 +51,33 @@ function BalanceSection() {
       id: 1,
       title: 'Balance',
       amount: dashboard?.balance || 0,
-      iconSrc: '/assets/dashboard/balance.svg',
-      textColor: 'text-slate-800',
+      icon: AccountBalanceWalletIcon,
+      color: '#1f2937',
     },
     {
       id: 2,
       title: 'Income',
       amount: dashboard?.income || 0,
-      iconSrc: '/assets/dashboard/income.svg',
-      textColor: 'text-emerald-600',
+      icon: TrendingUpIcon,
+      color: '#059669',
     },
     {
       id: 3,
       title: 'Expense',
       amount: dashboard?.expense || 0,
-      iconSrc: '/assets/dashboard/expense.svg',
-      textColor: 'text-rose-600',
+      icon: TrendingDownIcon,
+      color: '#e11d48',
     },
   ];
 
   return (
-    <section className="relative flex">
-      <div className="absolute top-0 left-0 right-0 h-30 bg-blue-700 md:bg-gray-50 border-t md:border-none border-gray-200 z-0"></div>
-
-      <div className="container w-full h-full relative z-10 flex flex-col items-center justify-center">
-        <div className="balance-card h-30 md:relative md:top-2 bg-white relative w-5/6 flex gap-8 text-xs py-5 justify-between px-6 rounded-2xl top-10 md:h-auto md:w-full md:max-w-4xl md:bg-transparent md:gap-2 md:px-0 md:py-0 md:justify-center">
+    <section className="relative max-sm:pb-8 max-sm:rounded-b-2xl max-sm:w-78 pt-4 md:pt-6 bg-gradient-to-b from-blue-700 to-blue-600 md:from-transparent md:to-transparent">
+      <div className="container mx-auto px-4">
+        <div className="w-full max-w-5xl mx-auto flex flex-col gap-3 md:grid md:grid-cols-3 md:gap-6">
           {data.map((item) => (
-            <StatCard key={item.id} title={item.title} amount={item.amount} iconSrc={item.iconSrc} textColor={item.textColor} />
+            <StatCard key={item.id} title={item.title} amount={item.amount} icon={item.icon} color={item.color} />
           ))}
         </div>
-
-        <img className="absolute -bottom-10 rounded-b-2xl w-5/6 md:hidden" src="/assets/wave.svg" alt="wave icon" />
       </div>
     </section>
   );

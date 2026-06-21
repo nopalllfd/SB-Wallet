@@ -1,33 +1,46 @@
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router';
 
+// MUI ICONS
+import AddCardIcon from '@mui/icons-material/AddCard';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+
+function ActionButton({ icon: Icon, label, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="
+        group flex items-center gap-2 
+        bg-blue-700 text-white 
+        px-4 py-1 rounded-xl md:rounded-lg
+        shadow-sm hover:shadow-md
+        transition-all duration-300
+        active:scale-[0.98]
+      "
+    >
+      <span className="p-1 rounded-md group-hover:scale-110 transition-transform">
+        <Icon fontSize="small" />
+      </span>
+      <p className="text-sm font-medium">{label}</p>
+    </button>
+  );
+}
+
 function ButtonSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="mt-16 px-8 md:px-2 md:mt-2 md:border md:border-gray-200 md:rounded-md md:bg-white md:py-2">
-      <div className="flex w-full gap-4 items-center">
-        <h1 className="text-md font-semibold max-md:hidden md:w-1/2 ">Fast Service</h1>
-        <div className="flex w-full gap-2 md:justify-end">
-          <Button
-            buttonColor={'bg-blue-700'}
-            buttonTextColor={'text-white'}
-            className={'rounded-xl md:rounded-md flex max-md:justify-around justify-between items-center !w-1/2 md:!w-auto'}
-            onClick={() => navigate('/topup')}
-          >
-            <img src={'assets/utils/topup.svg'} alt="top up icon" className="w-4" />
-            <p>Top Up</p>
-          </Button>
-          <Button
-            buttonColor={'bg-blue-700'}
-            buttonTextColor={'text-white'}
-            className={'rounded-xl md:rounded-md flex max-md:justify-around justify-between md:gap-2 md:px-2 md:pe-4 items-center !w-1/2 md:!w-auto'}
-            onClick={() => navigate('/transfer')}
-          >
-            <img src={'assets/utils/transfer.svg'} alt="transfer icon" className="w-4" />
+    <section className="max-sm:mt-2 mt-10 md:mt-6 px-4">
+      <div className="mx-auto max-w-5xl md:bg-white md:border md:border-gray-100 md:shadow-sm md:rounded-xl md:p-4">
+        <div className="flex items-center justify-between">
+          <h1 className="text-sm md:text-base font-semibold text-gray-700 hidden md:block">Fast Service</h1>
 
-            <p>Transfer</p>
-          </Button>
+          {/* FIX HERE */}
+          <div className="flex w-full md:w-auto gap-3 justify-center md:justify-end">
+            <ActionButton icon={AddCardIcon} label="Top Up" onClick={() => navigate('/topup')} />
+
+            <ActionButton icon={SwapHorizIcon} label="Transfer" onClick={() => navigate('/transfer')} />
+          </div>
         </div>
       </div>
     </section>

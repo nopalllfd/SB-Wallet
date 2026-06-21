@@ -7,8 +7,8 @@ import { DashboardLayout } from '../Layouts/DashboardLayout';
 function DashboardPage() {
   return (
     <DashboardLayout>
-      <div className="md:grid md:grid-cols-3 md:gap-2">
-        <div className="flex flex-col gap-6 md:col-span-2">
+      <div className="md:grid md:grid-cols-3">
+        <div className="flex flex-col gap-4 md:col-span-2">
           <BalanceSection />
           <ButtonSection />
           <ChartSection />

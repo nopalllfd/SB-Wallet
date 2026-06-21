@@ -1,9 +1,11 @@
+import HistoryIcon from '@mui/icons-material/History';
+
 function HeaderSectionDesktopOnly() {
   return (
-    <header className="hidden md:block">
-      <div className="flex gap-4 mb-6">
-        <img src="/assets/utils/history-blue.svg" alt="history icon" />
-        <h2 className="font-semibold text-gray-900">Transactions History</h2>
+    <header className="hidden md:block mb-4">
+      <div className="flex items-center gap-2 text-gray-800">
+        <HistoryIcon />
+        <h2 className="font-semibold">Transactions History</h2>
       </div>
     </header>
   );
