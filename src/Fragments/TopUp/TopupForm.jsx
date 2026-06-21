@@ -47,7 +47,7 @@ function TopupForm({ onChange, amount, onPaymentSelect, isSubmitted }) {
         {methods?.map((p) => (
           <label
             key={p.id}
-            className={`flex items-center gap-3 border rounded-lg p-3 cursor-pointer transition
+            className={`flex items-center gap-3 border-gray-200 rounded-lg p-3 cursor-pointer transition
             ${selected === p.id ? 'border-blue-500 bg-blue-50' : 'bg-white hover:bg-gray-50'}`}
           >
             <input
