@@ -155,7 +155,7 @@ function Header() {
       )}
       {/* MOBILE DASHBOARD */}
       {isBurgerOpen && isDashboardArea && (
-        <nav className="fixed left-1/2 -translate-x-1/2 top-20 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">
+        <nav className="fixed px-2 left-1/2 -translate-x-1/2 top-18 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">
           {navItems.map((item, idx) => (
             <NavMenuItem key={idx} to={`/${item.path}`}>
               {item.name}
