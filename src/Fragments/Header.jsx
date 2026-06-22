@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import BrandHeader from './BrandHeader';
 import { Button } from '../components/Button';
-import { Link, useNavigate, useLocation } from 'react-router';
+import { Link, useNavigate, useLocation, matchPath } from 'react-router';
 import { NavMenuItem } from '../components/NavMenuItems';
 import ProfileHeader from './ProfileHeader';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,18 +16,23 @@ function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // =========================
-  // CLEAN PATH NORMALIZATION
-  // =========================
   const cleanPath = location.pathname.split('?')[0].replace(/\/+$/, '');
 
   const { isAuthenticated = false } = useSelector((state) => state.auth || {});
-  // =========================
-  // DASHBOARD AREA ROUTES
-  // =========================
-  const dashboardRoutes = ['/dashboard', '/transfer', '/topup', '/history', '/profile', '/profile/change/pin', '/profile/change/password'];
 
-  const isDashboardArea = dashboardRoutes.includes(cleanPath);
+  // Dashboard routes (support dynamic params)
+  const dashboardRoutes = [
+    '/dashboard',
+    '/transfer',
+    '/transfer/:id',
+    '/topup',
+    '/history',
+    '/profile',
+    '/profile/change/pin',
+    '/profile/change/password',
+  ];
+
+  const isDashboardArea = dashboardRoutes.some((route) => matchPath(route, cleanPath));
 
   const handleClick = () => setIsBurgerOpen(!isBurgerOpen);
 
@@ -37,14 +42,19 @@ function Header() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleLogout = async () => {
     try {
       await dispatch(logoutUser()).unwrap();
       dispatch(logout());
+
       toast.success('Logout berhasil');
+
       setIsBurgerOpen(false);
       navigate('/auth/login');
     } catch {
@@ -65,36 +75,33 @@ function Header() {
       {/* TOP BAR */}
       <div
         className={`
-    flex items-center justify-between
-    px-3 md:px-10 py-4 md:py-3
-    transition-all duration-300 ease-out
-    w-full
-    ${
-      isScrolled
-        ? `
-          bg-blue-700/30
-          backdrop-blur-3xl
-          shadow-[0_20px_50px_rgba(0,0,0,0.35)]
-          border border-blue-400/30
-          max-w-[92%]
-          mt-3
-          rounded-2xl
-        `
-        : `
-          bg-blue-700
+          flex items-center justify-between
+          px-3 md:px-10 py-4 md:py-3
+          transition-all duration-300 ease-out
           w-full
-          mt-0
-          rounded-none
-        `
-    }
-  `}
+          ${
+            isScrolled
+              ? `
+                bg-blue-700/30
+                backdrop-blur-3xl
+                shadow-[0_20px_50px_rgba(0,0,0,0.35)]
+                border border-blue-400/30
+                max-w-[92%]
+                mt-3
+                rounded-2xl
+              `
+              : `
+                bg-blue-700
+                w-full
+                mt-0
+                rounded-none
+              `
+          }
+        `}
       >
-        {/* =========================
-      DASHBOARD AREA
-  ========================= */}
         {isDashboardArea ? (
           <>
-            {/* Desktop: Brand + Profile */}
+            {/* Desktop */}
             <div className="hidden md:block flex-shrink-0">
               <BrandHeader textColor="text-white" />
             </div>
@@ -110,7 +117,7 @@ function Header() {
               <BrandHeader textColor="text-white" />
             </div>
 
-            {/* Auth Buttons */}
+            {/* Desktop Auth */}
             <div className="hidden md:flex items-center gap-2 flex-shrink-0">
               {isAuthenticated ? (
                 <Link to="/dashboard">
@@ -140,6 +147,7 @@ function Header() {
           </button>
         </div>
       </div>
+
       {/* MOBILE AUTH */}
       {isBurgerOpen && !isDashboardArea && (
         <nav className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">
@@ -153,6 +161,7 @@ function Header() {
           )}
         </nav>
       )}
+
       {/* MOBILE DASHBOARD */}
       {isBurgerOpen && isDashboardArea && (
         <nav className="fixed px-2 left-1/2 -translate-x-1/2 top-18 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">

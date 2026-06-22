@@ -7,7 +7,7 @@ function TransferDetailPage() {
     <DashboardLayout locationDetail="transfer">
       <main
         className="
-        px-4 md:px-6
+        px-6 md:px-6
         py-6
         flex flex-col gap-6
         w-full
