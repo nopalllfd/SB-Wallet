@@ -101,7 +101,7 @@ function Header() {
         </div>
 
         {/* PROFILE ONLY ON REAL DASHBOARD PAGE */}
-        {isRealDashboardPage && (
+        {isDashboardArea && (
           <div className="flex flex-1 justify-end">
             <ProfileHeader />
           </div>
