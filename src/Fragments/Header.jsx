@@ -118,7 +118,7 @@ function Header() {
             </div>
 
             {/* Desktop Auth */}
-            <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+            <div className="hidden md:flex items-center gap-2 flex-shrink-0 ${">
               {isAuthenticated ? (
                 <Link to="/dashboard">
                   <Button className="rounded-xl !px-6 !py-2">Dashboard</Button>
@@ -150,7 +150,9 @@ function Header() {
 
       {/* MOBILE AUTH */}
       {isBurgerOpen && !isDashboardArea && (
-        <nav className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">
+        <nav
+          className={`fixed  ${isScrolled ? 'top-22' : 'top-20'}  left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]`}
+        >
           {isAuthenticated ? (
             <NavMenuItem to="/dashboard">Dashboard</NavMenuItem>
           ) : (
