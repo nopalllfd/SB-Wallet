@@ -9,7 +9,7 @@ import RegisterForm from '../../Fragments/Auth/Register/RegisterForm';
 function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-blue-500 md:bg-white px-4 py-6">
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-white px-4 py-6">
         <AuthLayouts>
           <BrandHeader />
           <AuthTitle>Start Accessing Banking Needs With All Devices and All Platforms With 30.000+ Users</AuthTitle>
