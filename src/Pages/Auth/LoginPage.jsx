@@ -9,7 +9,7 @@ import LoginForm from '../../Fragments/Auth/Login/LoginForm';
 function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-blue-500 md:bg-white px-4 py-6">
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-white px-4 py-6">
         <AuthLayouts>
           <BrandHeader />
           <AuthTitle>Hello Welcome Back 👋</AuthTitle>
