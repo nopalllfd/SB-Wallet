@@ -29,12 +29,6 @@ function Header() {
 
   const isDashboardArea = dashboardRoutes.includes(cleanPath);
 
-  // =========================
-  // ONLY TRUE DASHBOARD PAGE
-  // (ini FIX UTAMA)
-  // =========================
-  const isRealDashboardPage = cleanPath === '/dashboard';
-
   const handleClick = () => setIsBurgerOpen(!isBurgerOpen);
 
   useEffect(() => {
@@ -71,73 +65,81 @@ function Header() {
       {/* TOP BAR */}
       <div
         className={`
-          flex items-center justify-between
-          px-3 md:px-10 py-4 md:py-3
-          transition-all duration-300 ease-out
+    flex items-center justify-between
+    px-3 md:px-10 py-4 md:py-3
+    transition-all duration-300 ease-out
+    w-full
+    ${
+      isScrolled
+        ? `
+          bg-blue-700/30
+          backdrop-blur-3xl
+          shadow-[0_20px_50px_rgba(0,0,0,0.35)]
+          border border-blue-400/30
+          max-w-[92%]
+          mt-3
+          rounded-2xl
+        `
+        : `
+          bg-blue-700
           w-full
-          ${
-            isScrolled
-              ? `
-                bg-blue-700/30
-                backdrop-blur-3xl
-                shadow-[0_20px_50px_rgba(0,0,0,0.35)]
-                border border-blue-400/30
-                max-w-[92%]
-                mt-3
-                rounded-2xl
-              `
-              : `
-                bg-blue-700
-                w-full
-                mt-0
-                rounded-none
-              `
-          }
-        `}
+          mt-0
+          rounded-none
+        `
+    }
+  `}
       >
-        {/* LEFT */}
-        <div className="flex-shrink-0">
-          <BrandHeader textColor="text-white" />
-        </div>
+        {/* =========================
+      DASHBOARD AREA
+  ========================= */}
+        {isDashboardArea ? (
+          <>
+            {/* Desktop: Brand + Profile */}
+            <div className="hidden md:block flex-shrink-0">
+              <BrandHeader textColor="text-white" />
+            </div>
 
-        {/* PROFILE ONLY ON REAL DASHBOARD PAGE */}
-        {isDashboardArea && (
-          <div className="flex flex-1 justify-end">
-            <ProfileHeader />
-          </div>
+            <div className="flex-1 flex justify-start md:justify-end">
+              <ProfileHeader />
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Brand */}
+            <div className="flex-shrink-0">
+              <BrandHeader textColor="text-white" />
+            </div>
+
+            {/* Auth Buttons */}
+            <div className="hidden md:flex items-center gap-2 flex-shrink-0">
+              {isAuthenticated ? (
+                <Link to="/dashboard">
+                  <Button className="rounded-xl !px-6 !py-2">Dashboard</Button>
+                </Link>
+              ) : (
+                <>
+                  <Link to="/auth/login">
+                    <Button className="rounded-xl !px-6 !py-2">Sign In</Button>
+                  </Link>
+
+                  <Link to="/auth/register">
+                    <Button buttonColor="bg-transparent" buttonTextColor="text-white" border="border border-white" className="rounded-xl !px-6 !py-2">
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </>
         )}
 
-        {/* AUTH BUTTONS */}
-        {/* AUTH BUTTONS */}
-        {!isDashboardArea && (
-          <div className="hidden md:flex items-center gap-2 flex-shrink-0">
-            {isAuthenticated ? (
-              <Link to="/dashboard">
-                <Button className="rounded-xl !px-6 !py-2">Dashboard</Button>
-              </Link>
-            ) : (
-              <>
-                <Link to="/auth/login">
-                  <Button className="rounded-xl !px-6 !py-2">Sign In</Button>
-                </Link>
-
-                <Link to="/auth/register">
-                  <Button buttonColor="bg-transparent" buttonTextColor="text-white" border="border border-white" className="rounded-xl !px-6 !py-2">
-                    Sign Up
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
-        )}
-        {/* BURGER */}
+        {/* Burger */}
         <div className="md:hidden ml-2 flex-shrink-0">
           <button onClick={handleClick}>
             <img src="/assets/burger-bar.svg" alt="burger bar icon" />
           </button>
         </div>
       </div>
-      {/* MOBILE AUTH */}
       {/* MOBILE AUTH */}
       {isBurgerOpen && !isDashboardArea && (
         <nav className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4 w-[92%]">
