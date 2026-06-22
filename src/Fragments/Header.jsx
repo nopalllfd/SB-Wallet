@@ -151,7 +151,7 @@ function Header() {
       {/* MOBILE AUTH */}
       {isBurgerOpen && !isDashboardArea && (
         <nav
-          className={`fixed  ${isScrolled ? 'top-24 w-[88%]' : 'top-20 w-[92%]'}  left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4`}
+          className={`fixed  ${isScrolled ? 'top-23 w-[86%]' : 'top-20 w-[92%]'}  left-1/2 -translate-x-1/2 z-50 bg-white rounded-xl shadow-xl flex flex-col py-4`}
         >
           {isAuthenticated ? (
             <NavMenuItem to="/dashboard">Dashboard</NavMenuItem>
