@@ -126,7 +126,7 @@ function Header() {
               ) : (
                 <>
                   <Link to="/auth/login">
-                    <Button className="rounded-xl !px-6 !py-2">Sign In</Button>
+                    <Button className="rounded-xl text-blue-500 !px-6 !py-2">Sign In</Button>
                   </Link>
 
                   <Link to="/auth/register">
